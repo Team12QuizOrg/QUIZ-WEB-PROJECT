@@ -5,6 +5,7 @@ import { createUserHandle, getUserByHandle } from '../../services/users.services
 import { registerUser } from '../../services/auth.services';
 import { useNavigate } from 'react-router-dom';
 import codes from '../../codes/codes';
+import { MAX_NAME_LENGTH, MAX_USERNAME_LENGTH, MIN_NAME_LENGTH, MIN_PASSWORD_LENGTH, MIN_USERNAME_LENGTH, PHONE_NUMBER_LENGTH } from '../../common/constants';
 
 export default function SignUp() {
     const { setContext } = useContext(AppContext);
@@ -59,22 +60,29 @@ export default function SignUp() {
             return;
         }
 
-        if (!form.handle && form.handle.length < 4 && form.handle.length > 32) {
-            alert('Handle is required and must be between 4 and 32 characters');
+        if (!form.handle || form.handle.length <  MIN_USERNAME_LENGTH || form.handle.length > MAX_USERNAME_LENGTH) {
+            alert('Handle is required and must be between 3 and 30 characters');
             return;
         }
 
-        if (!form.password && form.password.length < 6) {
+        if (!form.password || form.password.length < MIN_PASSWORD_LENGTH) {
             alert('Password is required and must be at least 6 characters long');
             return;
         }
-        if (!form.firstName && form.firstName.length < 4 && form.firstName.length > 32) {
-            alert('First Name is required and must be between 4 and 32 characters')
+
+        if (!form.firstName || form.firstName.length < MIN_NAME_LENGTH || form.firstName.length > MAX_NAME_LENGTH) {
+            alert('First Name is required and must be between 1 and 30 characters')
         }
-        if (!form.lastName && form.lastName.length < 4 && form.lastName.length > 32) {
-            alert('Last Name is required and must be between 4 and 32 characters')
+
+        if (!form.lastName || form.lastName.length < MIN_NAME_LENGTH || form.lastName.length > MAX_NAME_LENGTH) {
+            alert('Last Name is required and must be between 1 and 30 characters')
         }
-        if(!codes.includes(form.code)) {
+
+        if (!form.phone || form.phone.length !== PHONE_NUMBER_LENGTH) {
+            alert('Phone number is required and must be 10 characters')
+        }
+
+        if(form.userType === 'teacher' && !codes.includes(form.code)) {
             alert("Invalid code!")
             return;
         }
