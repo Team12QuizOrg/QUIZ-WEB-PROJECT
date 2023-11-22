@@ -1,6 +1,6 @@
 import { getDownloadURL,  ref, uploadBytes } from "firebase/storage";
 import { onAuthStateChanged } from "firebase/auth";
-import { storage, auth } from "../congif/firebase-config";
+import { storage, auth } from "../config/firebase-config";
 import { useEffect, useState } from "react";
 import {addUserPhotoToData} from "./users.services"
 export function useAuth() {
