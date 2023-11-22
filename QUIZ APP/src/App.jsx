@@ -9,6 +9,7 @@ import Home from './views/Home/Home';
 import SignIn from './views/SignIn/SignIn';
 import SignUp from './views/SignUp/SignUp';
 import NavBar from './components/NavBar/NavBar';
+import Profile from './views/Profile/Profile';
 import { getUserData } from './services/users.services';
 import './App.css'
 
@@ -42,28 +43,28 @@ function App() {
   }, [user]);
   return (
     <div>
-    <AppContext.Provider value={{ ...appState, setContext: setAppState}}>
-    <NavBar></NavBar>    
-    <Routes>
-        <Route path="/home" element={<Home />} />
-        <Route path="/" element={<Home />} />
-        {/* <Route path="/quizzes" element={<AuthenticatedRoute><Quizzes /></AuthenticatedRoute>} />
+      <AppContext.Provider value={{ ...appState, setContext: setAppState }}>
+        <NavBar></NavBar>
+        <Routes>
+          <Route path="/home" element={<Home />} />
+          <Route path="/" element={<Home />} />
+          {/* <Route path="/quizzes" element={<AuthenticatedRoute><Quizzes /></AuthenticatedRoute>} />
         <Route path="/quizzes/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />
         <Route path="/about" element={<AuthenticatedRoute><About /></AuthenticatedRoute>} /> */}
-        <Route path="/signin" element={<SignIn />} />
-        <Route path="/signup" element={<SignUp />} />
-        {user === null && <Route path="/signin" element={<SignIn />} />}
-        {user === null && <Route path="/signup" element={<SignUp />} />}
-        {/* <Route path="/reset" element={<ResetPassword />} />
-        <Route path='/:profile' element={<AuthenticatedRoute><MyProfile /></AuthenticatedRoute>} />
-        <Route path='/:profile/usersposts' element={<AuthenticatedRoute><UsersPost /></AuthenticatedRoute>} />
+          <Route path="/signin" element={<SignIn />} />
+          <Route path="/signup" element={<SignUp />} />
+          {user === null && <Route path="/signin" element={<SignIn />} />}
+          {user === null && <Route path="/signup" element={<SignUp />} />}
+          {/* <Route path="/reset" element={<ResetPassword />} />*/}
+          <Route path='/:profile' element={<AuthenticatedRoute><Profile /></AuthenticatedRoute>} />
+          {/* <Route path='/:profile/usersposts' element={<AuthenticatedRoute><UsersPost /></AuthenticatedRoute>} />
         <Route path='/:profile/userscomments' element={<AuthenticatedRoute><UsersComments /></AuthenticatedRoute>} />
         <Route path='/adminPanel' element={<AuthenticatedRoute><AdminPanel /></AuthenticatedRoute>} />
-        <Route path="*" element={<Error />} /> */}
-    </Routes>
-    {/* <Footer></Footer> */}
-    </AppContext.Provider>
-  </div>
+        <Route path="*" element={<Error />} />  */}
+        </Routes>
+        {/* <Footer></Footer> */}
+      </AppContext.Provider>
+    </div>
   )
 }
 

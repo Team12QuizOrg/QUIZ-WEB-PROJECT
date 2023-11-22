@@ -18,9 +18,9 @@ export default function SignUp() {
         firstName: '',
         lastName: '',
         phone: '',
-        profilePic: null, 
-        userType: 'student', 
-        code: '', 
+        photoURL: '',
+        userType: 'student',
+        code: '',
     });
     const updateForm = (field) => (e) => {
         setForm({
@@ -36,7 +36,7 @@ export default function SignUp() {
         });
         setShowCodeInput(newUserType === 'teacher');
     }
-   
+
     function validateEmail(email) {
         var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(gmail\.com|yahoo\.com|abv\.bg)$/;
         return re.test(String(email).toLowerCase());
@@ -60,7 +60,7 @@ export default function SignUp() {
             return;
         }
 
-        if (!form.handle || form.handle.length <  MIN_USERNAME_LENGTH || form.handle.length > MAX_USERNAME_LENGTH) {
+        if (!form.handle || form.handle.length < MIN_USERNAME_LENGTH || form.handle.length > MAX_USERNAME_LENGTH) {
             alert('Handle is required and must be between 3 and 30 characters');
             return;
         }
@@ -82,7 +82,7 @@ export default function SignUp() {
             alert('Phone number is required and must be 10 characters')
         }
 
-        if(form.userType === 'teacher' && !codes.includes(form.code)) {
+        if (form.userType === 'teacher' && !codes.includes(form.code)) {
             alert("Invalid code!")
             return;
         }

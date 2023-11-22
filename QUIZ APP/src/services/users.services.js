@@ -1,6 +1,5 @@
 import { get, update, set, ref, query, equalTo, orderByChild, } from 'firebase/database';
-import { db } from '../congif/firebase-config';
-
+import { db } from "../congif/firebase-config";
 
 export const getUserByHandle = (handle) => {
 
@@ -9,7 +8,7 @@ export const getUserByHandle = (handle) => {
 
 export const createUserHandle = (handle, uid, email, firstName, lastName, phone, userType) => {
 
-  return set(ref(db, `users/${handle}`), { handle, uid, email, firstName, lastName, phone, userType, isAdmin: false, isBlocked: false, createdOn: Date.now(), likedPosts: {} , commentedPosts: {}})
+  return set(ref(db, `users/${handle}`), { handle, uid, email, firstName, lastName, phone, userType, isAdmin: false, isBlocked: false, createdOn: Date.now(), likedPosts: {} , commentedPosts: {}, photoURL: ''})
 };
 
 export const getUserData = (uid) => {
@@ -77,7 +76,7 @@ export const unBlockUser = (handle) => {
 };
 
 export const editUser = (handle,  {firstName, lastName, phoneNumber }) => {
-  const userRef = ref(db, `users/${handle}`);
+  const userRef = ref(db, `/users/${handle}`);
   if(phoneNumber.length < 10 && phoneNumber.length > 10) {
     alert("Invalid phone number");
     return;
@@ -93,3 +92,14 @@ export const editUser = (handle,  {firstName, lastName, phoneNumber }) => {
     console.error('Error changing user fields', error);
   });
 };
+
+export const addUserPhotoToData = (handle, photoURL) => {
+  return update(ref(db), {
+    [`users/${handle}/photoURL`]: photoURL,
+  })
+
+  .then(() => {})
+  .catch((error) => {
+    console.error('Error changing user fields', error);
+  });
+}
