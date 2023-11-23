@@ -4,6 +4,20 @@ import AppContext from "../../context/AuthContext";
 import { useContext, useState } from "react";
 import { loginUser } from "../../services/auth.services";
 import { useNavigate } from "react-router-dom";
+import {
+    Flex,
+    Box,
+    FormControl,
+    FormLabel,
+    Input,
+    Checkbox,
+    Stack,
+    Button,
+    Heading,
+    Text,
+    useColorModeValue,
+} from '@chakra-ui/react'
+
 export default function SignIn() {
     const [form, setForm] = useState({
         email: '',
@@ -47,15 +61,58 @@ export default function SignIn() {
 
 
     return (
-        <div className='signin-wrapper'>
-            <div className='form'>
-                <label htmlFor='email'>Email</label>
-                <input type='email' name='email' id='email' value={form.email} onChange={updateForm('email')} />
-                <label htmlFor='password'>Password</label>
-                <input type='password' name='password' id='password' value={form.password} onChange={updateForm('password')} />
-                <p className="forgot-pass" onClick={handleReset}>Forgot Password?</p>
-                <button className='login-btn' onClick={onLogin} >Login</button>
-            </div>
-        </div>
+        <Flex
+            minH={'100vh'}
+            align={'center'}
+            justify={'center'}
+            bg={useColorModeValue('brand.100', 'gray.800')}>
+            <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
+                <Stack align={'center'}>
+                    <Heading fontSize={'4xl'} color={'brand.200'}>Sign in to your account</Heading>
+                    <Text fontSize={'lg'} color={'gray.600'}>
+                        to enjoy all of our cool <Text bgGradient="linear(to-r, red.400,pink.400)" bgClip="text">features</Text> ✌️
+                    </Text>
+                </Stack>
+                <Box
+                    rounded={'lg'}
+                    bg={useColorModeValue('white', 'gray.700')}
+                    boxShadow={'lg'}
+                    p={8}>
+                    <Stack spacing={4}>
+                        <FormControl id="email">
+                            <FormLabel color={'brand.200'}>Email address</FormLabel>
+                            <Input type="email" value={form.email} onChange={updateForm('email')} />
+                        </FormControl>
+                        <FormControl id="password">
+                            <FormLabel color={'brand.200'}>Password</FormLabel>
+                            <Input type="password" value={form.password} onChange={updateForm('password')} />
+                        </FormControl>
+                        <Stack spacing={10}>
+                            <Stack
+                                direction={{ base: 'column', sm: 'row' }}
+                                align={'start'}
+                                justify={'end'}>
+
+                                <Text onClick={handleReset} bgGradient="linear(to-r, red.400,pink.400)" bgClip="text">Forgot password?</Text>
+                            </Stack>
+                            <Button
+                                onClick={onLogin}
+                                fontFamily={'heading'}
+                                cursor={'pointer'}
+                                mt={8}
+                                w={'full'}
+                                bgGradient="linear(to-r, red.400,pink.400)"
+                                color={'white'}
+                                _hover={{
+                                    bgGradient: 'linear(to-r, red.400,pink.400)',
+                                    boxShadow: 'xl',
+                                }}>
+                                Sign in
+                            </Button>
+                        </Stack>
+                    </Stack>
+                </Box>
+            </Stack>
+        </Flex>
     );
 }

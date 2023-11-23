@@ -4,14 +4,18 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import './index.css'
 import { ChakraProvider } from '@chakra-ui/react'
+import theme from './theme/Theme.js'
+
 
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <ChakraProvider>
-    <BrowserRouter>
-    <App />
-    </BrowserRouter>
+    <ChakraProvider
+      theme={theme}
+      style={{ position: 'fixed', width: '100%', height: '100%' }}>
+      <BrowserRouter>
+        <App />
+      </BrowserRouter>
     </ChakraProvider>
   </React.StrictMode>,
 )

@@ -25,11 +25,13 @@ import {
     PopoverTrigger,
     PopoverContent,
     useBreakpointValue,
+    Image
 
 } from '@chakra-ui/react'
 import {
     ChevronDownIcon,
     ChevronRightIcon,
+    AddIcon,
 } from '@chakra-ui/icons'
 
 export default function NavBar() {
@@ -54,9 +56,10 @@ export default function NavBar() {
 
     return (
         <Box>
-            <Flex h={16} alignItems={'center'} justifyContent={'space-between'}>
-                <HStack spacing={8} alignItems={'center'}>
-                    <Box>Logo</Box>
+            <Flex h={16} alignItems={'center'} justifyContent={'space-between'} bg='brand.100'>
+                <HStack spacing={8} alignItems={'center'} color="black" fontSize={['0.8em', '1em', '1.2em']} >
+                    <Box> <Image className="logo-image" src="assets\logo2.png" alt="logo" w={10} h={10} maxW={40} maxH={40} onClick={() => navigate(`/home`)}
+                        rounded={'full'} /></Box>
 
                     <Menu>
                         <MenuButton
@@ -64,16 +67,36 @@ export default function NavBar() {
                             rounded={'full'}
                             variant={'link'}
                             cursor={'pointer'}
+                            fontWeight={'bold'}
+                            _hover={{
+                                textDecoration: 'none',
+                                bg: 'brand.200',
+                            }}
+                            _active={{
+                                bg: "brand.300",
+                                transform: "scale(0.98)",
+                            }}
+
+
                         >
                             Home
                         </MenuButton>
                     </Menu>
                     <Menu>
                         <MenuButton
-                            onClick={() => navigate(`/quizzes`)}
+                            // onClick={() => navigate(`/quizzes`)}
                             rounded={'full'}
                             variant={'link'}
                             cursor={'pointer'}
+                            fontWeight={'bold'}
+                            _hover={{
+                                textDecoration: 'none',
+                                bg: 'brand.200',
+                            }}
+                            _active={{
+                                bg: "brand.300",
+                                transform: "scale(0.98)",
+                            }}
                         >
                             Quizzes
                         </MenuButton>
@@ -92,6 +115,15 @@ export default function NavBar() {
                             rounded={'full'}
                             variant={'link'}
                             cursor={'pointer'}
+                            fontWeight={'bold'}
+                            _hover={{
+                                textDecoration: 'none',
+                                bg: 'brand.200',
+                            }}
+                            _active={{
+                                bg: "brand.300",
+                                transform: "scale(0.98)",
+                            }}
                         >
                             About
                         </MenuButton>
@@ -99,6 +131,9 @@ export default function NavBar() {
                     </Menu>
                 </HStack>
                 <Spacer />
+                {/* тук ще бъде сърч бара */}
+                <Spacer />
+
                 <HStack spacing="10px">
                     {user === null && (
                         <>
@@ -112,26 +147,40 @@ export default function NavBar() {
                     )}
                     {user !== null && (
                         <>
-                            <Menu>
-                                <MenuButton
-                                    as={Button}
-                                    rounded={'full'}
-                                    variant={'link'}
-                                    cursor={'pointer'}
-                                    minW={0}>
+
+                            <>
+                                <Menu>
+                                    <MenuButton
+                                        as={Button}
+                                        rounded={'full'}
+                                        variant={'link'}
+                                        cursor={'pointer'}
+                                        minW={0}>
 
 
-                                    {userData ? (<Avatar size={'sm'} src={userData.photoURL} />) : 'My profile'}
-                                </MenuButton>
+                                        {userData ? (<Avatar size={'sm'} src={userData.photoURL} />) : 'My profile'}
+                                    </MenuButton>
 
 
-                                <MenuList>
-                                    <MenuItem onClick={() => navigate(`/${(userData.handle)}`)}>My Profile</MenuItem>
-                                    <MenuDivider />
-                                    <MenuItem onClick={onLogout}>Log Out</MenuItem>
-                                </MenuList>
-                            </Menu>
+                                    <MenuList>
 
+                                        <MenuItem onClick={() => navigate(`/${(userData.handle)}`)} color={'brand.200'} fontWeight={'bold'}
+                                            _hover={{
+                                                textDecoration: 'none',
+                                                color: 'brand.100',
+                                                bg: 'brand.200',
+                                            }}>My Profile</MenuItem>
+                                        <MenuDivider />
+                                        <MenuItem onClick={onLogout} color={'brand.200'} fontWeight={'bold'}
+                                            _hover={{
+                                                textDecoration: 'none',
+                                                color: 'brand.100',
+                                                bg: 'brand.200',
+                                            }}>Log Out</MenuItem>
+                                    </MenuList>
+                                </Menu>
+
+                            </>
                         </>
                     )}
                 </HStack>
