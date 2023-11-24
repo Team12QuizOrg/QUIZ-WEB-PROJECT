@@ -2,6 +2,12 @@ import { useEffect, useState } from "react";
 import { upload } from "../../services/photo.services";
 import { useContext } from "react";
 import AppContext from "../../context/AuthContext";
+import {
+
+    Image,
+    Input,
+    Button,
+} from '@chakra-ui/react'
 
 const UploadPhoto = () => {
     const { userData } = useContext(AppContext);
@@ -28,11 +34,17 @@ const UploadPhoto = () => {
     }, [userData])
 
     return (
-        <div className="fields">
-            <input type="file" onChange={handleChange} />
-            <button disabled={loading || !photo} onClick={handleClick}>Upload</button>
-            <img src={photoURL} alt="Avatar" className="avatar" width={70} height={70} />
-        </div>
+        <>
+            <Input type="file" onChange={handleChange} variant="filled"
+                focusBorderColor="black"
+                bg="brand.300"
+                placeholder="Min: 5"
+                color={'brand.400'}
+                border={'1px'}
+                borderColor={'brand.400'} />
+            <Button disabled={loading || !photo} onClick={handleClick} color='black' >Upload</Button>
+            <Image src={photoURL} alt="Avatar" className="avatar" width={70} height={70} />
+        </>
     );
 }
 export default UploadPhoto;
