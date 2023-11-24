@@ -36,7 +36,7 @@ export default function ListFeedback() {
             <Container maxW={'7xl'} py={16} as={Stack} spacing={12}>
                 <Stack spacing={0} align={'center'}>
                     <Heading color={'brand.400'} fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>Our Clients Speak</Heading>
-                    <Text color={'brand.200'} ontSize={{ base: '2xl', md: '3xl', lg: '4xl' }}>We have been working with clients around the world</Text>
+                    <Text color={'brand.200'} fontSize={{ base: '2xl', md: '3xl', lg: '4xl' }}>We have been working with clients around the world</Text>
                 </Stack>
 
                 <Stack
@@ -47,7 +47,7 @@ export default function ListFeedback() {
 
 
                             <Stack
-                                bg={'gray.300'}
+                                bg={'gray.200'}
                                 boxShadow={'lg'}
                                 p={8}
                                 rounded={'xl'}

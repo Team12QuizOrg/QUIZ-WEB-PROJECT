@@ -2,7 +2,7 @@ import { useState } from 'react';
 import AppContext from '../../context/AuthContext';
 import { useContext } from 'react';
 import { addFeedback } from '../../services/feedback.services';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, FormLabel, Input, Textarea, FormControl, Button, } from '@chakra-ui/react';
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, FormLabel, Textarea, FormControl, Button, } from '@chakra-ui/react';
 
 const AddFeedback = () => {
     const { isOpen, onOpen, onClose } = useDisclosure();
