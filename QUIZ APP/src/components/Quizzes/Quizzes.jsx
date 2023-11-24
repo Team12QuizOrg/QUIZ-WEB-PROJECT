@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
 import AppContext from "../../context/AuthContext"
-import { getAllQuizzes } from "../../services/quiz-services";
+import { getAllQuizzes } from "../../services/quiz.services";
 import AllQuizzes from "../AllQuizzes/AllQuizzes";
 
 const Quizzes = ({ isLogged }) => {
