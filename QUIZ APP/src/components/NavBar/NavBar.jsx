@@ -25,7 +25,8 @@ import {
     PopoverTrigger,
     PopoverContent,
     useBreakpointValue,
-    Image
+    Image,
+    Heading
 
 } from '@chakra-ui/react'
 import {
@@ -57,9 +58,12 @@ export default function NavBar() {
     return (
         <Box>
             <Flex h={16} alignItems={'center'} justifyContent={'space-between'} bg='brand.100'>
-                <HStack spacing={8} alignItems={'center'} color="black" fontSize={['0.8em', '1em', '1.2em']} >
-                    <Box> <Image className="logo-image" src="assets\logo2.png" alt="logo" w={10} h={10} maxW={40} maxH={40} onClick={() => navigate(`/home`)}
-                        rounded={'full'} /></Box>
+                <HStack spacing={8} alignItems={'bottom'} color="black" fontSize={['0.8em', '1em', '1.2em']} >
+                    <HStack spacing={0} alignItems={'bottom'} >
+                        <Image className="logo-image" src="assets\logo2.png" alt="logo" w={10} h={10} maxW={40} maxH={40} onClick={() => navigate(`/home`)}
+                            rounded={'full'} />
+                        <Heading fontSize={'4xl'} color={'brand.400'}>Solvr</Heading>
+                    </HStack>
 
                     <Menu>
                         <MenuButton
