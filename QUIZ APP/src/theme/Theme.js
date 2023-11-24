@@ -15,6 +15,7 @@ const theme = extendTheme({
       100: "#F8F4F3",
       200: "#F7B315",
       300: "#dddfe2",
+      400: "black",
       // ...
       900: "#1a202c",
     },
