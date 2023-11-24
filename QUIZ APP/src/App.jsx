@@ -11,6 +11,7 @@ import SignUp from './views/SignUp/SignUp';
 import NavBar from './components/NavBar/NavBar';
 import Profile from './views/Profile/Profile';
 import About from './views/About/About';
+import Footer from './components/Footer/Footer';
 import { getUserData } from './services/users.services';
 import QuizzPage from './views/QuizzPage/QuizzPage';
 import './App.css'
@@ -66,7 +67,7 @@ function App() {
         <Route path='/adminPanel' element={<AuthenticatedRoute><AdminPanel /></AuthenticatedRoute>} />
         <Route path="*" element={<Error />} />  */}
         </Routes>
-        {/* <Footer></Footer> */}
+        <Footer></Footer>
       </AppContext.Provider>
     </div>
   )
