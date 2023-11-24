@@ -106,7 +106,7 @@ export default function SliderHome() {
                             maxW={{ base: '80%', lg: '50%' }}
                         >
                             <Spacer />
-                            <Heading textAlign={"start"} fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }} color={'brand.200'} >
+                            <Heading textAlign={"start"} fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }} color={'brand.400'} >
                                 Create quizzes in just few steps
                             </Heading>
                             <Text textAlign={"start"} fontSize={{ base: 'md', lg: 'xl' }} color={"brand.400"}>
@@ -139,7 +139,7 @@ export default function SliderHome() {
                                 maxW={{ base: '80%', lg: '50%' }}
                             >
                                 <Spacer />
-                                <Heading textAlign={"start"} fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }} color={'brand.200'} >
+                                <Heading textAlign={"start"} fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }} color={'brand.400'} >
                                     {card.title}
                                 </Heading>
                                 <Text textAlign={"start"} fontSize={{ base: 'md', lg: 'xl' }} color={"GrayText"}>

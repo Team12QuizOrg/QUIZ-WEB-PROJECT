@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth } from './congif/firebase-config';
+import { auth } from './config/firebase-config';
 import AuthenticatedRoute from './hoc/AuthenticatedRoute';
 import AppContext from './context/AuthContext';
 import { Route } from 'react-router-dom';
@@ -10,6 +10,7 @@ import SignIn from './views/SignIn/SignIn';
 import SignUp from './views/SignUp/SignUp';
 import NavBar from './components/NavBar/NavBar';
 import Profile from './views/Profile/Profile';
+import About from './views/About/About';
 import { getUserData } from './services/users.services';
 import './App.css'
 
@@ -49,8 +50,8 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Home />} />
           {/* <Route path="/quizzes" element={<AuthenticatedRoute><Quizzes /></AuthenticatedRoute>} />
-        <Route path="/quizzes/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />
-        <Route path="/about" element={<AuthenticatedRoute><About /></AuthenticatedRoute>} /> */}
+        <Route path="/quizzes/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />*/}
+          <Route path="/about" element={<AuthenticatedRoute><About /></AuthenticatedRoute>} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           {user === null && <Route path="/signin" element={<SignIn />} />}

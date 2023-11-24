@@ -81,11 +81,11 @@ export default function SignIn() {
                     <Stack spacing={4}>
                         <FormControl id="email">
                             <FormLabel color={'brand.200'}>Email address</FormLabel>
-                            <Input type="email" value={form.email} onChange={updateForm('email')} />
+                            <Input color={'brand.400'} type="email" value={form.email} onChange={updateForm('email')} />
                         </FormControl>
                         <FormControl id="password">
                             <FormLabel color={'brand.200'}>Password</FormLabel>
-                            <Input type="password" value={form.password} onChange={updateForm('password')} />
+                            <Input color={'brand.400'} type="password" value={form.password} onChange={updateForm('password')} />
                         </FormControl>
                         <Stack spacing={10}>
                             <Stack
