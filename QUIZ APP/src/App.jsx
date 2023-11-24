@@ -12,6 +12,7 @@ import NavBar from './components/NavBar/NavBar';
 import Profile from './views/Profile/Profile';
 import About from './views/About/About';
 import { getUserData } from './services/users.services';
+import QuizzPage from './views/QuizzPage/QuizzPage';
 import './App.css'
 
 
@@ -49,6 +50,8 @@ function App() {
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Home />} />
+
+          <Route path="/quizzes/All Quizzes" element={<QuizzPage />} />
           {/* <Route path="/quizzes" element={<AuthenticatedRoute><Quizzes /></AuthenticatedRoute>} />
         <Route path="/quizzes/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />*/}
           <Route path="/about" element={<AuthenticatedRoute><About /></AuthenticatedRoute>} />

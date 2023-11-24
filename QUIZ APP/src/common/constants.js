@@ -8,4 +8,8 @@ export const MAX_PASSWORD_LENGTH = 32;
 export const PHONE_NUMBER_LENGTH = 10;
 export const MIN_QUIZ_TITLE_LENGTH = 3;
 export const MAX_QUIZ_TITLE_LENGTH = 30;
+export const REGEX_EMAIL_CHECK= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(gmail\.com|yahoo\.com|abv\.bg)$/
 
+export const DEFAULT_AVATAR_URL ='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
+
+export const ITEMS_PER_PAGE = 5;

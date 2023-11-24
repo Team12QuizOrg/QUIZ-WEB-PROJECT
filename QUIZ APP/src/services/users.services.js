@@ -1,5 +1,6 @@
-import { get, update, set, ref, query, equalTo, orderByChild, } from 'firebase/database';
+import { get, update, set, ref, query, equalTo, orderByChild, push, child } from 'firebase/database';
 import { db } from "../config/firebase-config";
+import { DEFAULT_AVATAR_URL } from '../common/constants';
 
 export const getUserByHandle = (handle) => {
 
@@ -8,7 +9,7 @@ export const getUserByHandle = (handle) => {
 
 export const createUserHandle = (handle, uid, email, firstName, lastName, phone, userType) => {
 
-  return set(ref(db, `users/${handle}`), { handle, uid, email, firstName, lastName, phone, userType, isAdmin: false, isBlocked: false, createdOn: Date.now(), likedPosts: {} , commentedPosts: {}, photoURL: ''})
+  return set(ref(db, `users/${handle}`), { handle, uid, email, firstName, lastName, phone, userType, isAdmin: false, isBlocked: false, createdOn: Date.now(), likedPosts: {} , commentedPosts: {}, photoURL: DEFAULT_AVATAR_URL})
 };
 
 export const getUserData = (uid) => {

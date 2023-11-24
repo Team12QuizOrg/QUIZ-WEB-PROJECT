@@ -198,15 +198,11 @@ export default function NavBar() {
 
 const NAV_ITEMS = [
     {
-        label: 'Mathematics',
-        to: '/quizzes/mathematics',
+        label: 'All Categories',
+        to: '/quizzes/categories',
     },
     {
-        label: 'History',
-        to: '/quizzes/mathematics',
-    },
-    {
-        label: 'Biology',
-        to: '/quizzes/mathematics',
+        label: 'All Quizzes',
+        to: '/quizzes/quizzes',
     },
 ]
