@@ -10,5 +10,9 @@ const AppContext = createContext({
     setUsers:() =>{
 
     },
+    quzzes: null,
+    setQuizzes: () => {
+      
+    }
 });
 export default AppContext;

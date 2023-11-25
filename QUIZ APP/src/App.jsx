@@ -12,19 +12,23 @@ import NavBar from './components/NavBar/NavBar';
 import Profile from './views/Profile/Profile';
 import About from './views/About/About';
 import Footer from './components/Footer/Footer';
+import AdminPanel from './views/AdminPanel/AdminPanel';
+import Error from './views/Error/Error';
 import { getUserData } from './services/users.services';
+import { getAllUserData } from './services/users.services';
 import QuizzPage from './views/QuizzPage/QuizzPage';
 import './App.css'
 import './App.css'
 import SingleQuizView from './components/SingleQuizView/SingleQuizView';
 import SolvingQuizView from './components/SolvingQuizView/SolvingQuizView';
 import Quizzes from './components/Quizzes/Quizzes';
+import { getAllQuizzes } from './services/quiz.services';
 
 
 
 function App() {
   const [user] = useAuthState(auth);
-  const [posts, setPosts] = useState([]);
+  const [quizzes, setQuizzes] = useState([]);
   const [users, setUsers] = useState([])
   const [appState, setAppState] = useState({
     user,
@@ -33,6 +37,17 @@ function App() {
   if (appState.user !== user) {
     setAppState({ user });
   }
+
+  useEffect(() => {
+    getAllUserData()
+      .then((res) => setUsers(res))
+      .catch((err) => console.error(`Problem fetching all users`, err))
+  })
+  useEffect(() => {
+    getAllQuizzes()
+      .then(res => setQuizzes(res))
+      .catch(err => console.error('error fetching posts: ', err))
+  }, [quizzes])
   useEffect(() => {
     if (user === null) return;
 
@@ -51,14 +66,14 @@ function App() {
   }, [user]);
   return (
     <div>
-      <AppContext.Provider value={{ ...appState, setContext: setAppState }}>
+      <AppContext.Provider value={{ ...appState, setContext: setAppState, users: users, quizzes: quizzes }}>
         <NavBar></NavBar>
         <Routes>
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Home />} />
 
           <Route path="/quizzes/AllQuizzes" element={<AuthenticatedRoute><Quizzes /></AuthenticatedRoute>} />
-          <Route path="/quizzes/AllQuizzes/:id"element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />
+          <Route path="/quizzes/AllQuizzes/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes/:id/:id" element={<AuthenticatedRoute><SolvingQuizView /></AuthenticatedRoute>} />
           <Route path="/about" element={<AuthenticatedRoute><About /></AuthenticatedRoute>} />
           <Route path="/signin" element={<SignIn />} />
@@ -68,9 +83,9 @@ function App() {
           {/* <Route path="/reset" element={<ResetPassword />} />*/}
           <Route path='/:profile' element={<AuthenticatedRoute><Profile /></AuthenticatedRoute>} />
           {/* <Route path='/:profile/usersposts' element={<AuthenticatedRoute><UsersPost /></AuthenticatedRoute>} />
-        <Route path='/:profile/userscomments' element={<AuthenticatedRoute><UsersComments /></AuthenticatedRoute>} />
-        <Route path='/adminPanel' element={<AuthenticatedRoute><AdminPanel /></AuthenticatedRoute>} />
-        <Route path="*" element={<Error />} />  */}
+        <Route path='/:profile/userscomments' element={<AuthenticatedRoute><UsersComments /></AuthenticatedRoute>} />*/}
+          <Route path='/adminPanel' element={<AuthenticatedRoute><AdminPanel /></AuthenticatedRoute>} />
+          <Route path="*" element={<Error />} />
         </Routes>
         <Footer></Footer>
       </AppContext.Provider>

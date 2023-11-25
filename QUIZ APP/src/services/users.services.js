@@ -37,7 +37,6 @@ const fromPostsDocument = snapshot => {
       ...user,
       id: key,
       createdOn: new Date(),
-      likedBy: user.likedBy ? Object.keys(user.likedBy) : [],
     };
   });
 }
@@ -73,6 +72,16 @@ export const unBlockUser = (handle) => {
     .then(() => {})
     .catch((error) => {
       console.error('Error blocking user', error);
+    });
+};
+export const makeEducator = (handle) => {
+  const isAEducatorRef = ref(db, `/users/${handle}/`);
+  return update(isAEducatorRef, {
+    userType: "teacher",
+  }) 
+    .then(() => {})
+    .catch((error) => {
+      console.error('Error making user an admin', error);
     });
 };
 

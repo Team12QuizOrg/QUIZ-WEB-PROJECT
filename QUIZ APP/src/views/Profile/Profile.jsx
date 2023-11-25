@@ -3,11 +3,11 @@ import { useContext, useState, useEffect } from 'react';
 import AppContext from '../../context/AuthContext';
 import { blockUser, getUserByHandle } from '../../services/users.services';
 import { useParams, useNavigate, NavLink } from 'react-router-dom';
-import { makeAdmin } from '../../services/users.services';
+import { makeAdmin, makeEducator } from '../../services/users.services';
 import { unBlockUser } from '../../services/users.services';
 import EditProfile from '../../components/EditProfile/EditProfile';
 import { formatDate } from "../../services/users.services";
-import { PhoneIcon, SettingsIcon, WarningIcon, StarIcon } from '@chakra-ui/icons'
+import { PhoneIcon, SettingsIcon, WarningIcon, StarIcon, PlusSquareIcon, NotAllowedIcon } from '@chakra-ui/icons'
 
 
 
@@ -41,6 +41,9 @@ const Profile = () => {
     }
     const handleUnblock = (handle) => {
         unBlockUser(handle)
+    }
+    const handleEducator = (handle) => {
+        makeEducator(handle);
     }
     const handleEditProfile = (updatedValues) => {
         setCurrentUser((prevUser) => ({
@@ -122,9 +125,26 @@ const Profile = () => {
                                 </Button>
                                 <Button onClick={() => currentUser.isBlocked
                                     ? handleUnblock(currentUser.handle)
-                                    : handleBlock(currentUser.handle)} flex='1' variant='ghost' leftIcon={<WarningIcon />}>
+                                    : handleBlock(currentUser.handle)} flex='1' variant='ghost' leftIcon={<NotAllowedIcon />}>
                                     {currentUser.isBlocked ? 'Unblock user' : 'Block user'}
                                 </Button>
+
+                            </CardFooter>
+                        )}
+                        {userData.userType === 'teacher' && currentUser.userType === "student" && (
+                            <CardFooter
+                                justify='space-between'
+                                flexWrap='wrap'
+                                sx={{
+                                    '& > button': {
+                                        minW: '136px',
+                                    },
+                                }}
+                            >
+                                <Button onClick={() => handleEducator(currentUser.handle)} flex='1' variant='ghost' leftIcon={<PlusSquareIcon />}>
+                                    Make Educator
+                                </Button>
+
 
                             </CardFooter>
                         )}
@@ -212,94 +232,6 @@ const Profile = () => {
                 )}
             </GridItem>
         </Grid></>
-        // <div>
-        //     <>
-        //         <Flex as="nav" p="10px" mb="60px" alignItems="center" justifyContent={'center'} border="1px solid gray.50" borderRadius="10px"
-        //             boxShadow="0 4px 6px rgba(0, 0, 0, 0.1)">
-        //             <HStack spacing="10px" >
-        //                 <NavLink style={{ color: 'green', fontSize: "1.2em" }} to={`/${(currentUser.handle)}/usersposts`} >Posts</NavLink>
-        //                 <NavLink style={{ color: 'green', fontSize: "1.2em" }} to={`/${(currentUser.handle)}/userscomments`} >Comments</NavLink>
-        //                 {userData.isAdmin && (currentUser.handle === userData.handle) && <NavLink style={{ color: 'green', fontSize: "1.2em" }} to="/adminPanel" >Admin panel</NavLink>}
-        //             </HStack>
-        //         </Flex>
-
-        //         <Card>
-        //             <CardHeader>
-        //                 <Heading size='md'>Username: {currentUser.handle}</Heading>
-        //             </CardHeader>
-        //             <Image src={currentUser.photoURL} alt="Avatar" className="avatar" width={70} height={70} />
-        //             <CardBody >
-        //                 <Stack divider={<StackDivider />} spacing='4' alignItems="center" justifyContent={'center'}>
-        //                     <Box>
-        //                         <Text pt='2' fontSize='sm'>
-        //                             Email:
-        //                         </Text>
-        //                         <Heading size='xs' textTransform='uppercase'>
-        //                             {currentUser.email}
-        //                         </Heading>
-        //                     </Box>
-        //                     <Box>
-        //                         <Text pt='2' fontSize='sm'>
-        //                             Created on:
-        //                         </Text>
-        //                         <Heading size='xs' textTransform='uppercase'>
-        //                             {formatDate(currentUser.createdOn)}
-        //                         </Heading>
-        //                     </Box>
-        //                     <Box>
-        //                         <Text pt='2' fontSize='sm'>
-        //                             First name:
-        //                         </Text>
-        //                         <Heading size='xs' textTransform='uppercase'>
-        //                             {currentUser.firstName}
-        //                         </Heading>
-        //                     </Box>
-        //                     <Box>
-        //                         <Text pt='2' fontSize='sm'>
-        //                             Last name:
-        //                         </Text>
-        //                         <Heading size='xs' textTransform='uppercase'>
-        //                             {currentUser.lastName}
-        //                         </Heading>
-        //                     </Box>
-        //                     {userData.isAdmin && <Box>
-        //                         <Text pt='2' fontSize='sm'>
-        //                             Phone number:  {userData.phoneNumber}
-        //                         </Text>
-
-        //                     </Box>}
-        //                 </Stack>
-        //             </CardBody>
-        //             <Divider />
-
-        //             <CardFooter>
-        //                 <ButtonGroup spacing='2'>
-        //                     {currentUser.handle === userData.handle && <EditProfile user={currentUser.handle} originalFirstName={currentUser.firstName} originalLastName={currentUser.lastName} onEditProfile={handleEditProfile} />}
-        //                     {userData.isAdmin && !currentUser.isAdmin && (
-        //                         <><Button variant='solid' colorScheme='blue'
-        //                             onClick={() => handleAdmin(currentUser.handle)}
-        //                         >
-        //                             Make Admin
-        //                         </Button><Button variant='solid' colorScheme='blue'
-        //                             onClick={() => currentUser.isBlocked
-        //                                 ? handleUnblock(currentUser.handle)
-        //                                 : handleBlock(currentUser.handle)}
-        //                         >
-        //                                 {currentUser.isBlocked ? 'Unblock user' : 'Block user'}
-        //                             </Button>
-        //                             <Spacer></Spacer>
-        //                         </>
-        //                     )}
-        //                 </ButtonGroup>
-
-        //             </CardFooter>
-        //         </Card>
-        //     </>
-        //     <div className="uploadPhoto">
-        //         <UploadPhoto />
-        //     </div>
-
-        // </div>
     )
 }
 export default Profile;

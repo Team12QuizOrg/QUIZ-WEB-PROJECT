@@ -174,7 +174,14 @@ export default function NavBar() {
                                                 color: 'brand.100',
                                                 bg: 'brand.200',
                                             }}>My Profile</MenuItem>
+
                                         <MenuDivider />
+                                        {userData && userData.isAdmin && <><MenuItem onClick={() => navigate(`/adminPanel`)} color={'brand.200'} fontWeight={'bold'}
+                                            _hover={{
+                                                textDecoration: 'none',
+                                                color: 'brand.100',
+                                                bg: 'brand.200',
+                                            }}>Admin panel</MenuItem><MenuDivider /></>}
                                         <MenuItem onClick={onLogout} color={'brand.200'} fontWeight={'bold'}
                                             _hover={{
                                                 textDecoration: 'none',
