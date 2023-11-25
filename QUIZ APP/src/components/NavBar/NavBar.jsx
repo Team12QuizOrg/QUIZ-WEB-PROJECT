@@ -1,10 +1,20 @@
 import './NavBar.css';
 // import { Form, NavLink } from 'react-router-dom';
 import { logoutUser } from '../../services/auth.services';
+import SearchBar from '../SearchBar/SearchBar';
 import { useState, useContext, useEffect } from 'react';
 import AppContext from '../../context/AuthContext';
 import { useNavigate, NavLink, Link } from 'react-router-dom';
 import {
+    Popover,
+    PopoverTrigger,
+    PopoverContent,
+    PopoverHeader,
+    PopoverBody,
+    PopoverFooter,
+    PopoverArrow,
+    PopoverCloseButton,
+    PopoverAnchor,
     Box,
     Flex,
     Avatar,
@@ -21,9 +31,7 @@ import {
     Spacer,
     Collapse,
     Icon,
-    Popover,
-    PopoverTrigger,
-    PopoverContent,
+
     useBreakpointValue,
     Image,
     Heading
@@ -36,11 +44,14 @@ import {
 } from '@chakra-ui/icons'
 
 export default function NavBar() {
-    const { user, userData, setContext } = useContext(AppContext);
+    const { user, userData, setContext, openQuizzes } = useContext(AppContext);
+    const [searchResults, setSearchResults] = useState(null);
     // const [photo, setPhoto] = useState()
 
     const navigate = useNavigate();
-
+    const handleSearchResults = (results) => {
+        setSearchResults(results);
+    }
     // useEffect(() => {
     //     setPhoto(userData.photoURL)
     // }, [])
@@ -135,7 +146,20 @@ export default function NavBar() {
                     </Menu>
                 </HStack>
                 <Spacer />
-                {/* тук ще бъде сърч бара */}
+                <SearchBar searchingFor={openQuizzes}
+                    onSearchResults={handleSearchResults}
+                    selectedOption='quizzes' />
+                <Popover>
+                    <PopoverTrigger>
+                        <Button>Search</Button>
+                    </PopoverTrigger>
+                    <PopoverContent>
+                        {searchResults && searchResults.length > 0 ? (searchResults.map((quiz) => (
+                            <PopoverHeader key={quiz.id} onClick={() => navigate(`/quizzes/AllQuizzes/${quiz.id}"`)} color={'brand.400'} fontWeight={'bold'}> {quiz.title}</PopoverHeader>
+                        ))) : "No results found"}
+                    </PopoverContent>
+                </Popover>
+
                 <Spacer />
 
                 <HStack spacing="10px">

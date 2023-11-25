@@ -12,7 +12,11 @@ const AppContext = createContext({
     },
     quzzes: null,
     setQuizzes: () => {
-      
-    }
+
+    },
+    openQuizzes: null,
+    setOpenQuizzes: () => {
+
+    },
 });
 export default AppContext;

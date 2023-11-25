@@ -29,6 +29,7 @@ import { getAllQuizzes } from './services/quiz.services';
 function App() {
   const [user] = useAuthState(auth);
   const [quizzes, setQuizzes] = useState([]);
+  const [openQuizzes, setOpenQuizzes] = useState([]);
   const [users, setUsers] = useState([])
   const [appState, setAppState] = useState({
     user,
@@ -45,7 +46,11 @@ function App() {
   })
   useEffect(() => {
     getAllQuizzes()
-      .then(res => setQuizzes(res))
+      .then(res => {
+        setQuizzes(res);
+        const openQ = res.filter((quiz) => quiz.selectedOption === "Open")
+        setOpenQuizzes(openQ);
+      })
       .catch(err => console.error('error fetching posts: ', err))
   }, [quizzes])
   useEffect(() => {
@@ -66,7 +71,7 @@ function App() {
   }, [user]);
   return (
     <div>
-      <AppContext.Provider value={{ ...appState, setContext: setAppState, users: users, quizzes: quizzes }}>
+      <AppContext.Provider value={{ ...appState, setContext: setAppState, users: users, quizzes: quizzes, openQuizzes: openQuizzes }}>
         <NavBar></NavBar>
         <Routes>
           <Route path="/home" element={<Home />} />

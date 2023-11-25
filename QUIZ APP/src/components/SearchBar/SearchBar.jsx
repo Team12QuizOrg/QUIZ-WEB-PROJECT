@@ -15,10 +15,9 @@ const SearchBar = ({ searchingFor, onSearchResults, selectedOption }) => {
             searchResults = searchByEmail(searchText);
         } else if (selectedOption === "first-name") {
             searchResults = searchByName(searchText);
+        } else if (selectedOption === "quizzes") {
+            searchResults = searchByQuizzes(searchText);
         }
-        // else if (selectedOption === "posts") {
-        //     searchResults = searchByPosts(searchText);
-        // }
 
         onSearchResults(searchResults);
     }
@@ -33,9 +32,9 @@ const SearchBar = ({ searchingFor, onSearchResults, selectedOption }) => {
         return searchingFor.filter(user => user.firstName.includes(searchText));
     }
 
-    // const searchByPosts = (searchText) => {
-    //     return searchingFor.filter(quiz => post.title.includes(searchText));
-    // }
+    const searchByQuizzes = (searchText) => {
+        return searchingFor.filter(quiz => quiz.title.includes(searchText));
+    }
 
     return (
         <Input
@@ -45,7 +44,7 @@ const SearchBar = ({ searchingFor, onSearchResults, selectedOption }) => {
             _placeholder={{ color: 'inherit' }}
             value={search}
             onChange={handleInputChange}
-            mb={25}
+            width={300}
         />
 
     );
