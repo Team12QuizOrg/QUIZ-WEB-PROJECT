@@ -11,10 +11,12 @@ import {
 import { useState, useEffect } from 'react'
 import { getAllFeedback } from '../../services/feedback.services'
 import GetAvatar from '../GetAvatar/GetAvatar'
+import { useNavigate } from "react-router-dom";
 
 
 export default function ListFeedback() {
     const [feedbacks, setFeedbacks] = useState()
+    const navigate = useNavigate();
 
     useEffect(() => {
         getAllFeedback()
@@ -80,7 +82,7 @@ export default function ListFeedback() {
                             <Flex align={'center'} mt={8} direction={'column'}>
                                 <GetAvatar handle={feedback.user} />
                                 <Stack spacing={-1} align={'center'}>
-                                    <Text fontWeight={600} color={'brand.200'}>{feedback.user}</Text>
+                                    <Text fontWeight={600} color={'brand.200'} onClick={() => navigate(`/${(feedback.user)}`)}>{feedback.user}</Text>
 
                                 </Stack>
                             </Flex>

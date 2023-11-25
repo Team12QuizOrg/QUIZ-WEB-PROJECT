@@ -76,7 +76,7 @@ export const unBlockUser = (handle) => {
     });
 };
 
-export const editUser = (handle,  {firstName, lastName, phoneNumber }) => {
+export const editUser = (handle,  {firstName, lastName, caption, phoneNumber }) => {
   const userRef = ref(db, `/users/${handle}`);
   if(phoneNumber.length < 10 && phoneNumber.length > 10) {
     alert("Invalid phone number");
@@ -86,6 +86,7 @@ export const editUser = (handle,  {firstName, lastName, phoneNumber }) => {
   return update(userRef, {
     firstName: firstName,
     lastName: lastName,
+    caption: caption,
     phoneNumber: phoneNumber
   })
   .then(() => {})
@@ -104,3 +105,20 @@ export const addUserPhotoToData = (handle, photoURL) => {
     console.error('Error changing user fields', error);
   });
 }
+
+export const formatDate = (timestamp) => {
+  const dateObj = new Date(timestamp);
+
+  const options = {
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: 'numeric',
+    minute: 'numeric',
+    hour12: true, // Use 12-hour format
+  };
+
+  const formattedDate = dateObj.toLocaleString(undefined, options);
+
+  return formattedDate;
+};
