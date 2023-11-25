@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import {
     Box,
     IconButton,
@@ -11,7 +11,10 @@ import {
     Spacer,
 } from '@chakra-ui/react'
 import { BiLeftArrowAlt, BiRightArrowAlt } from 'react-icons/bi'
+import { getAllUserData } from "../../services/users.services";
 import Slider from 'react-slick'
+import { getAllQuizzes } from '../../services/quiz.services';
+import { getAllCategories } from '../../services/category.services';
 
 const settings = {
     dots: true,
@@ -28,25 +31,40 @@ const settings = {
 export default function SliderHome() {
 
     const [slider, setSlider] = useState()
+    const [users, setUsers] = useState([]);
+    const [quizzes, setQuizzes] = useState([]);
+    const [categories, setCategories] = useState([]);
     const top = useBreakpointValue({ base: '90%', md: '50%' })
     const side = useBreakpointValue({ base: '30%', md: '40px' })
+    useEffect(() => {
+        getAllUserData()
+            .then((res) => {
+                setUsers(res);
+                return getAllQuizzes();
+            })
+            .then((res) => {
+                setQuizzes(res);
+                return getAllCategories();
+            })
+            .then((res) => setCategories(res))
+            .catch((err) => console.error('Error fetching data:', err));
+    }, []);
+    // useEffect(() => {
+    //     getAllUserData()
+    //         .then((res) => setUsers(res))
+    //         .catch((err) => console.error(`Problem fetching all posts`, err))
+    // }, [users])
+    // useEffect(() => {
+    //     getAllQuizzes()
+    //         .then((res) => setQuizzes(res))
+    //         .catch((err) => console.error(`Problem fetching all quizzes`, err))
+    // }, [users])
 
-    const cards = [
-
-        {
-            title: 'Design Projects 2',
-            text: "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.",
-            logo: 'assets/logo2.png',
-            image: 'assets/back1.png',
-        },
-        {
-            title: 'Design Projects 3',
-            text: "The project board is an exclusive resource for contract work. It's perfect for freelancers, agencies, and moonlighters.",
-            logo: 'assets/logo2.png',
-            image: 'assets/back1.png',
-        },
-    ]
-
+    // useEffect(() => {
+    //     getAllCategories()
+    //         .then((res) => setCategories(res))
+    //         .catch((err) => console.error(`Problem fetching all quizzes`, err))
+    // }, [users])
     return (
         <Box position={'relative'} height={'600px'} width={'full'} overflow={'hidden'}>
             {/* CSS files for react-slick */}
@@ -138,12 +156,29 @@ export default function SliderHome() {
                             maxW={{ base: '80%', lg: '50%' }}
                         >
                             <Spacer />
-                            <Heading textAlign={"start"} fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }} color={'brand.400'} >
-                                Creators and Quizers are joining every day
+                            <Heading textAlign={"start"} fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }} color={'brand.200'} >
+
+                                Connect with our growing network! {' '}
+                                <br />
+                                <Text as={'span'} color={'brand.200'} >{users ? users.length : '0'}</Text>
+                                <Text as={'span'} color={'brand.400'} > members,</Text>
+                                <Text as={'span'} color={'brand.200'} >
+                                    {quizzes ? quizzes.length : '0'}{' '}
+                                </Text>
+                                <Text as={'span'} color={'brand.400'} >
+                                    quizzes from{' '}
+                                </Text>
+                                <Text as={'span'} color={'brand.200'} >
+                                    {categories ? categories.length : "0"}{' '}
+                                </Text>
+                                <Text as={'span'} color={'brand.400'} >
+                                    categories and counting!{' '}
+                                </Text>
+
                             </Heading>
-                            <Text textAlign={"start"} fontSize={{ base: 'md', lg: 'xl' }} color={"GrayText"}>
+                            {/* <Text textAlign={"start"} fontSize={{ base: 'md', lg: 'xl' }} color={"GrayText"}>
                                 be  part of us
-                            </Text>
+                            </Text> */}
                         </Stack>
 
                         <Image src={'assets/logo2.png'} justifyContent={'center'} w={60} h={60} rounded={'full'} order={{ base: 0, lg: 1 }} alignItems={{ base: 'center', lg: 'start' }} boxShadow={"0 4px 6px rgba(0, 0, 0, 0.1)"} />
@@ -182,40 +217,7 @@ export default function SliderHome() {
 
                     </Flex>
                 </Box>
-                {/* {cards.map((card, index) => (
-                    <Box
-                        key={index}
-                        height={'6xl'}
-                        position={"relative"}
-                        backgroundPosition={"center"}
-                        backgroundRepeat={"no-repeat"}
-                        backgroundSize={"cover"}
-                        backgroundImage={`url(${card.image})`}>
 
-                        <Flex size={"container.lg"} height={"600px"}
-                            direction={{ base: 'column', lg: 'row' }}
-                            justify={"center"}
-                            align={"center"} >
-                            <Stack spacing={"20px"}
-                                alignItems={"center"}
-                                p={"4"}
-                                direction={"column"}
-                                maxW={{ base: '80%', lg: '50%' }}
-                            >
-                                <Spacer />
-                                <Heading textAlign={"start"} fontSize={{ base: '4xl', md: '5xl', lg: '6xl' }} color={'brand.400'} >
-                                    {card.title}
-                                </Heading>
-                                <Text textAlign={"start"} fontSize={{ base: 'md', lg: 'xl' }} color={"GrayText"}>
-                                    {card.text}
-                                </Text>
-                            </Stack>
-
-                            <Image src={card.logo} justifyContent={'center'} w={60} h={60} rounded={'full'} order={{ base: 0, lg: 1 }} alignItems={{ base: 'center', lg: 'start' }} boxShadow={"0 4px 6px rgba(0, 0, 0, 0.1)"} />
-
-                        </Flex>
-                    </Box>
-                ))} */}
             </Slider >
         </Box >
     )
