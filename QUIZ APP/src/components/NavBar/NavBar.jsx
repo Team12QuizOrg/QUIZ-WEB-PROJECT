@@ -42,6 +42,7 @@ import {
     ChevronRightIcon,
     AddIcon,
 } from '@chakra-ui/icons'
+import SearchQuizzes from '../SearchQuizzes/SearchQuizzes';
 
 export default function NavBar() {
     const { user, userData, setContext, openQuizzes } = useContext(AppContext);
@@ -146,19 +147,7 @@ export default function NavBar() {
                     </Menu>
                 </HStack>
                 <Spacer />
-                <SearchBar searchingFor={openQuizzes}
-                    onSearchResults={handleSearchResults}
-                    selectedOption='quizzes' />
-                <Popover>
-                    <PopoverTrigger>
-                        <Button>Search</Button>
-                    </PopoverTrigger>
-                    <PopoverContent>
-                        {searchResults && searchResults.length > 0 ? (searchResults.map((quiz) => (
-                            <PopoverHeader key={quiz.id} onClick={() => navigate(`/quizzes/AllQuizzes/${quiz.id}"`)} color={'brand.400'} fontWeight={'bold'}> {quiz.title}</PopoverHeader>
-                        ))) : "No results found"}
-                    </PopoverContent>
-                </Popover>
+                <SearchQuizzes />
 
                 <Spacer />
 
