@@ -15,6 +15,11 @@ import Footer from './components/Footer/Footer';
 import { getUserData } from './services/users.services';
 import QuizzPage from './views/QuizzPage/QuizzPage';
 import './App.css'
+import './App.css'
+import SingleQuizView from './components/SingleQuizView/SingleQuizView';
+import SolvingQuizView from './components/SolvingQuizView/SolvingQuizView';
+import Quizzes from './components/Quizzes/Quizzes';
+
 
 
 function App() {
@@ -52,9 +57,9 @@ function App() {
           <Route path="/home" element={<Home />} />
           <Route path="/" element={<Home />} />
 
-          <Route path="/quizzes/All Quizzes" element={<QuizzPage />} />
-          {/* <Route path="/quizzes" element={<AuthenticatedRoute><Quizzes /></AuthenticatedRoute>} />
-        <Route path="/quizzes/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />*/}
+          <Route path="/quizzes/AllQuizzes" element={<AuthenticatedRoute><Quizzes /></AuthenticatedRoute>} />
+          <Route path="/quizzes/AllQuizzes/:id"element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />
+          <Route path="/quizzes/AllQuizzes/:id/:id" element={<AuthenticatedRoute><SolvingQuizView /></AuthenticatedRoute>} />
           <Route path="/about" element={<AuthenticatedRoute><About /></AuthenticatedRoute>} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />

@@ -106,7 +106,7 @@ export default function NavBar() {
                         </MenuButton>
                         <MenuList>
                             {NAV_ITEMS.map((navItem) => (
-                                <MenuItem onClick={() => navigate(`/quizzes/${navItem.label}`)} key={navItem.label} >{navItem.label}      <Spacer />     <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
+                                <MenuItem onClick={() => navigate(`${navItem.to}`)} key={navItem.to} >{navItem.label}      <Spacer />     <Icon color={'pink.400'} w={5} h={5} as={ChevronRightIcon} />
                                 </MenuItem>
 
                             ))}
@@ -203,6 +203,6 @@ const NAV_ITEMS = [
     },
     {
         label: 'All Quizzes',
-        to: '/quizzes/quizzes',
+        to: '/quizzes/AllQuizzes',
     },
 ]
