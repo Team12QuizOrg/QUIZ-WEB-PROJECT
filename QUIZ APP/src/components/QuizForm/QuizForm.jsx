@@ -2,35 +2,35 @@ import { useContext, useState, useEffect } from "react";
 import AppContext from "../../context/AuthContext";
 import { createQuestion } from "../../services/quiz.services";
 import { createQuiz } from "../../services/quiz.services";
-import {
-  FormControl,
-  FormLabel,
-  Input,
-  Select,
-  Box,
-  Radio,
-  RadioGroup,
-  Stack,
-  Heading,
-  Button,
-  Text,
-  Grid,
-  Flex,
-  HStack,
-  Checkbox,
-  Center,
-} from "@chakra-ui/react";
+import { Box, Grid, Flex, Center, Image } from "@chakra-ui/react";
 import {
   createCategory,
   getAllCategories,
 } from "../../services/category.services";
+import CreateButton from "./CreateButton/CreateButton";
+import ChooseTypeRadio from "./ChooseTypeRadio/ChooseTypeRadio";
+import QuizName from "./QuizName/QuizName";
+import CreateNewCategoryButton from "./CreateNewCategoryButton/CreateNewCategoryButton";
+import CreateNewCategory from "./CreateNewCategory/CreateNewCategory";
+import ChooseExistingCategory from "./ChooseExistingCategory/ChooseExistingCategory";
+import SetTimeLimit from "./SetTimeLimit/SetTimeLimit";
+import ChooseNumberOfQuestions from "./ChooseNumberOfQuestions/ChooseNumberOfQuestions";
+import ChooseTotalPoints from "./ChooseTotalPoints/ChooseTotalPoints";
+import ChooseOpenEnded from "./ChooseOpenEnded/ChooseOpenEnded";
+import WriteQuestion from "./WriteQuestion/WriteQuestion";
+import ChooseCorrectOption from "./ChooseCorrectOption/ChooseCorrectOption";
+import AddQuestionButton from "./AddQuestionButton/AddQuestionButton";
+import SubmitButton from "./SubmitButton/SubmitButton";
+import CancelButton from "./CancelButton/CancelButton";
+import CreateQuestionButton from "./CreateQuestionsButton/CreateQuestionButton";
+import CreateOptions from "./CreateOptions/CreateOptions";
 
 const QuizForm = () => {
   const { user, userData } = useContext(AppContext);
   const [showForm, setShowForm] = useState(false);
   const [quizName, setQuizName] = useState("");
-  const [numQuestions, setNumQuestions] = useState("");
-  const [totalPoints, setTotalPoints] = useState("");
+  const [numQuestions, setNumQuestions] = useState(1);
+  const [totalPoints, setTotalPoints] = useState(1);
 
   const [currentQuestion, setCurrentQuestion] = useState({
     question: "",
@@ -41,11 +41,10 @@ const QuizForm = () => {
   const [questionNum, setQuestionNum] = useState(1);
 
   const [selectedOption, setSelectedOption] = useState("Open");
-  const [timeLimit, setTimeLimit] = useState("");
+  const [timeLimit, setTimeLimit] = useState(30);
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
 
-  const [newCategory, setNewCategory] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("");
   const [activeButton, setActiveButton] = useState("chose");
 
@@ -65,23 +64,9 @@ const QuizForm = () => {
     setSelectedCategory(value);
   };
 
-  //   const handleNewCategoryChange = (e) => {
-  //     setNewCategory(e.target.value);
-  //     setSelectedCategory(""); // Clear the selected category when a new category is entered
-  //   };
-
   useEffect(() => {
     getAllCategories().then((res) => setCategories(Object.entries(res)));
   }, [categories]);
-
-  const handleTest = (e) => {
-    e.preventDefault();
-    console.log(categories);
-  };
-
-  //   function onValueChange(event) {
-  //     setSelectedOption(event.target.value);
-  //   }
 
   const handleQuestionChange = (value) => {
     setCurrentQuestion((prevQuestion) => ({
@@ -114,6 +99,7 @@ const QuizForm = () => {
     });
     setQuestionNum(questionNum + 1);
   };
+
   const showFormHandler = () => {
     setShowForm(true);
   };
@@ -131,7 +117,7 @@ const QuizForm = () => {
       category ? category : selectedCategory
     )
       .then((quiz) => {
-        const questionPromises = questions.map((question) => {
+        questions.map((question) => {
           return createQuestion(question, quiz.id);
         });
 
@@ -147,134 +133,102 @@ const QuizForm = () => {
       });
     setQuestionNum(1);
     setQuizName("");
+    setTimeLimit(30);
+    setTotalPoints(1);
+    setNumQuestions(1);
   };
 
   return (
     <Grid
       templateColumns="1fr"
-      alignItems="center" // Corrected attribute name
-      maxWidth="800px"
+      alignItems="center"
       margin="auto"
       p={4}
-      borderRadius="3%"
-      boxShadow="md"
-      borderColor="brand.200" // Corrected attribute name
-      borderWidth={"thick"} // Optional: Set border width
-      color="black" // Black text color
+      w={"100%"}
+      color="black"
     >
       {!showForm ? (
-        <Button
-          onClick={showFormHandler}
-          colorScheme="black"
+        // Make  the button smallerand nicer
+        <Box alignItems="center" w={"100%"}>
+          <CreateButton func={showFormHandler} width={5} />
+        </Box>
+      ) : (
+        <Box
+          padding={"20px"}
+          colorscheme="black"
           variant="solid"
           size="md"
           gridColumn="span 2"
-          background={"blue.400"}
+          borderRadius="3%"
+          boxShadow="md"
+          borderColor="brand.200"
+          borderWidth={"thick"}
+          alignItems="center"
+          maxW="100%" 
         >
-          Create Quiz
-        </Button>
-      ) : (
-        <form>
           <Box
             display="flex"
             flexDirection="row"
             justifyContent="space-between"
             gridColumn="span 2"
-            w={450}
+            maxW="100%"
             mb={4}
+            alignItems="center"
           >
             <Center>
               <div>
-                <FormControl color="black" mb={2} flex="2" paddingRight={4}>
-                  <FormLabel fontSize="lg">Quiz Name:</FormLabel>
-                  <Input
-                    color="black"
-                    type="text"
-                    value={quizName}
-                    onChange={(e) => setQuizName(e.target.value)}
-                    variant="filled"
-                    focusBorderColor="black"
-                    size="md"
-                    bg="brand.300"
-                  />
-                </FormControl>
+                <QuizName
+                  quizName={quizName}
+                  setQuizName={(e) => setQuizName(e.target.value)}
+                />
+              </div>
+            </Center>
+            <Center>
+              <div>
+                <Image
+                  className="logo-image"
+                  src="assets\logo2.png"
+                  alt="logo"
+                  w={10}
+                  h={10}
+                  maxW={40}
+                  maxH={40}
+                  rounded={"full"}
+                />
               </div>
             </Center>
 
             <Center>
               <div>
-                <RadioGroup
-                  colorScheme="yellow"
-                  onChange={setSelectedOption}
-                  value={selectedOption}
-                  gridColumn="span 2"
-                  spacing={4}
-                >
-                  <FormLabel fontSize="lg">Type of quiz:</FormLabel>
-                  <HStack spacing={4}>
-                    <Radio value="Private">
-                      <Text color="black">Private</Text>
-                    </Radio>
-                    <Radio value="Open">
-                      <Text color="black">Open</Text>
-                    </Radio>
-                  </HStack>
-                </RadioGroup>
+                <ChooseTypeRadio
+                  setSelectedOption={setSelectedOption}
+                  selectedOption={selectedOption}
+                />
               </div>
             </Center>
           </Box>
-
-          {/* Your buttons with added spacing */}
-          <Button
-            onClick={() => handleButtonClick("create")}
-            mr={4}
-            background={"blue.400"}
-          >
-            Create New Category
-          </Button>
-
-          <Button
-            onClick={() => handleButtonClick("choose")}
-            background={"blue.400"}
-          >
-            Choose Existing Category
-          </Button>
+          <CreateNewCategoryButton
+            func={() => handleButtonClick("create")}
+            label={"Create new category"}
+          />
+          <CreateNewCategoryButton
+            func={() => handleButtonClick("choose")}
+            label={"Choose category"}
+          />
 
           {activeButton === "create" && (
-            <FormControl color="black" mb={2} gridColumn="span 2">
-              <FormLabel fontSize="lg">Create new category:</FormLabel>
-              <Input
-                color="black"
-                type="text"
-                value={category}
-                onChange={(e) => setCategory(e.target.value)}
-                variant="filled"
-                focusBorderColor="black"
-                bg="brand.300"
-              />
-            </FormControl>
+            <CreateNewCategory
+              category={category}
+              func={(e) => setCategory(e.target.value)}
+            />
           )}
 
           {activeButton === "choose" && (
-            <FormControl color="black" mb={2} gridColumn="span 2">
-              <FormLabel fontSize="lg">Choose an existing one:</FormLabel>
-              <Select
-                color="black"
-                value={selectedCategory}
-                onChange={(e) => handleCategoryChange(e.target.value)}
-                variant="filled"
-                focusBorderColor="black"
-              >
-                <option value="" color="black">
-                  Choose an existing one
-                </option>
-                {categories.map((cat) => (
-                  <option key={cat[1].category} color="black">
-                    {cat[1].category}
-                  </option>
-                ))}
-              </Select>
-            </FormControl>
+            <ChooseExistingCategory
+              selectedCategory={selectedCategory}
+              func={(e) => handleCategoryChange(e.target.value)}
+              categories={categories}
+            />
           )}
 
           <Flex
@@ -283,174 +237,75 @@ const QuizForm = () => {
             gridColumn="span 2"
             width={"maxWidth"}
           >
-            <FormControl color="black" mb={2} flex="1" maxW="100%">
-              <FormLabel fontSize="medium" h={10}>
-                Time limit in hours:
-              </FormLabel>
-              <Input
-                type="text"
-                value={timeLimit}
-                onChange={(e) => setTimeLimit(e.target.value)}
-                variant="filled"
-                focusBorderColor="black"
-                bg="brand.300"
-                placeholder="Min: 30 minutes, Max: 24 hours"
-              />
-            </FormControl>
+            <SetTimeLimit
+              timeLimit={timeLimit}
+              func={(e) => setTimeLimit(e.target.value)}
+            />
 
-            <FormControl color="black" mb={2} flex="1" ml={4} maxW="30%">
-              <FormLabel fontSize="medium" h={10}>
-                Number of Questions:
-              </FormLabel>
-              <Input
-                color="black"
-                type="number"
-                value={numQuestions}
-                onChange={(e) => setNumQuestions(Number(e.target.value))}
-                variant="filled"
-                focusBorderColor="black"
-                bg="brand.300"
-                placeholder="Min: 5"
-              />
-            </FormControl>
+            <ChooseNumberOfQuestions
+              numQuestions={numQuestions}
+              func={(e) => setNumQuestions(Number(e.target.value))}
+            />
 
-            <FormControl color="black" mb={2} flex="1" ml={4} maxW="30%">
-              <FormLabel fontSize="medium" h={10}>
-                Total Points:
-              </FormLabel>
-              <Input
-                type="number"
-                value={totalPoints}
-                onChange={(e) => setTotalPoints(Number(e.target.value))}
-                variant="filled"
-                focusBorderColor="black"
-                bg="brand.300"
-                placeholder="Min: 5"
-              />
-            </FormControl>
+            <ChooseTotalPoints
+              totalPoints={totalPoints}
+              func={(e) => setTotalPoints(Number(e.target.value))}
+            />
           </Flex>
 
-          <Button
-            onClick={handleQuestionsButtonClick}
-            mb={4}
-            background={"blue.400"}
-          >
-            Show Questions
-          </Button>
+          <CreateQuestionButton func={handleQuestionsButtonClick} />
 
           {showQuestions && questionNum <= numQuestions && (
             <>
-              <Box>
-                <HStack spacing={4}>
-                  <Checkbox
-                    colorScheme="yellow"
-                    isChecked={isOpen}
-                    onChange={() => setIsOpen(!isOpen)}
-                  >
-                    <Text color="black">Open ended</Text>
-                  </Checkbox>
-                </HStack>
-              </Box>
-              <FormControl color="black" mb={2} gridColumn="span 2">
-                <Box mb={2} gridColumn="span 2">
-                  {questionNum <= numQuestions ? (
-                    <Text color="black">This is question ℕ {questionNum} </Text>
-                  ) : (
-                    <Text color="black">You should submit now!!🎈🎈🎈</Text>
-                  )}
-                </Box>
-                <FormLabel fontSize="lg">Question:</FormLabel>
-                <Input
-                  type="text"
-                  value={currentQuestion.question}
-                  onChange={(e) => handleQuestionChange(e.target.value)}
-                  variant="filled"
-                  focusBorderColor="black"
-                  bg="brand.300"
-                />
-              </FormControl>
+              <ChooseOpenEnded
+                isOpen={isOpen}
+                func={() => setIsOpen(!isOpen)}
+              />
+
+              <WriteQuestion
+                questionNum={questionNum}
+                numQuestions={numQuestions}
+                currentQuestion={currentQuestion}
+                func={(e) => handleQuestionChange(e.target.value)}
+              />
 
               {!isOpen && (
                 <>
                   <Box>
                     {currentQuestion.options.map((option, optionIndex) => (
-                      <FormControl key={optionIndex} color="black" mb={2}>
-                        <FormLabel fontSize="lg">
-                          Option {optionIndex + 1}:
-                        </FormLabel>
-                        <Input
-                          type="text"
-                          value={option}
-                          onChange={(e) =>
-                            handleOptionChange(optionIndex, e.target.value)
-                          }
-                          variant="filled"
-                          focusBorderColor="black"
-                          bg="brand.300"
-                        />
-                      </FormControl>
+                      <CreateOptions
+                        key={optionIndex}
+                        optionIndex={optionIndex}
+                        option={option}
+                        func={(e) =>
+                          handleOptionChange(optionIndex, e.target.value)
+                        }
+                      />
                     ))}
                   </Box>
-                  <FormControl color="black" mb={2}>
-                    <FormLabel fontSize="lg">Correct Answer:</FormLabel>
-                    <Input
-                      type="text"
-                      value={currentQuestion.correctAnswer}
-                      onChange={(e) =>
-                        handleCorrectAnswerChange(e.target.value)
-                      }
-                      variant="filled"
-                      focusBorderColor="black"
-                      bg="brand.300"
-                    />
-                  </FormControl>
-                </>
+
+                  <ChooseCorrectOption
+                    currentQuestion={currentQuestion}
+                    func={(e) => handleCorrectAnswerChange(e.target.value)}
+                  />
+                </> 
               )}
-              {questionNum <= numQuestions && (
-                <Button
-                  type="button"
-                  w={120}
-                  onClick={addQuestion}
-                  colorScheme="black"
-                  variant="solid"
-                  size="md"
-                  mt={2}
-                  background={"blue.400"}
-                >
-                  Add Question
-                </Button>
-              )}
+              <Box>
+                {questionNum > numQuestions && (
+                  <SubmitButton func={handleSubmit} />
+                )}
+              </Box>
+              <Box>
+                {questionNum <= numQuestions && (
+                  <AddQuestionButton func={addQuestion} />
+                )}
+              </Box>
             </>
           )}
           <Box>
-            {questionNum > numQuestions && (
-              <Button
-                w={120}
-                onClick={handleSubmit}
-                colorScheme="black"
-                variant="solid"
-                size="md"
-                mt={2}
-                background={"blue.400"}
-              >
-                Submit
-              </Button>
-            )}
+            <CancelButton func={() => setShowForm(false)} />
           </Box>
-          <Box>
-            <Button
-              type="button"
-              onClick={() => setShowForm(false)}
-              colorScheme="black"
-              variant="solid"
-              size="md"
-              mt={2}
-              background={"blue.400"}
-            >
-              Cancel
-            </Button>
-          </Box>
-        </form>
+        </Box>
       )}
     </Grid>
   );
