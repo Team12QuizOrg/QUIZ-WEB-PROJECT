@@ -1,59 +1,66 @@
 
-import { useContext, useState } from 'react';
-import AppContext from '../../context/AuthContext';
+import { useState, useEffect } from 'react';
 import SearchBar from '../../components/SearchBar/SearchBar';
 import { useNavigate } from 'react-router-dom';
 import ListUsers from '../../components/ListUsers/ListUsers';
-
+import { getAllUserData } from '../../services/users.services';
+import { Radio, RadioGroup, Stack, VStack, Text } from '@chakra-ui/react'
 export default function AdminPanel() {
-    const { users } = useContext(AppContext)
+    // const { users } = useContext(AppContext)
+    const [users, setUsers] = useState([])
     const [searchResults, setSearchResults] = useState(null);
     const [selectedOption, setSelectedOption] = useState('option1');
-    const navigate = useNavigate();
+
     const handleSearchResults = (results) => {
         setSearchResults(results);
     }
 
+    useEffect(() => {
+        getAllUserData()
+            .then((res) => setUsers(res))
+            .catch((err) => console.error(`Problem fetching all users`, err))
+    }, [])
     return (
-        <>
-            <div className='admin-search-panel'>
-                <div>
-                    <label color='black'>
-                        <input
+        <><>
 
-                            type="radio"
-                            name="searchOption"
-                            value="username"
-                            checked={selectedOption === 'username'}
-                            onChange={() => setSelectedOption("username")}
-                        /> Username
-                    </label>
-                    <label>
-                        <input
-                            type="radio"
-                            name="searchOption"
-                            value="email"
-                            checked={selectedOption === 'email'}
-                            onChange={() => setSelectedOption("email")}
-                        /> Email
-                    </label>
-                    <label>
-                        <input
-                            type="radio"
-                            name="searchOption"
-                            value="first-name"
-                            checked={selectedOption === 'first-name'}
-                            onChange={() => setSelectedOption("first-name")}
-                        /> First name
-                    </label>
-                </div>
+            <RadioGroup defaultValue='username' mt={30} />
+            <VStack>
+                <Stack spacing={5} direction='row'>
+                    <Radio
+
+                        defaultChecked
+                        name="searchOption"
+                        value="username"
+                        isChecked={selectedOption === 'username'}
+                        onChange={() => setSelectedOption("username")}
+                    > <Text color="black"> Username</Text> </Radio>
+
+                    <Radio
+
+                        name="searchOption"
+                        value="email"
+                        isChecked={selectedOption === 'email'}
+                        onChange={() => setSelectedOption("email")}
+                    > <Text color="black"> Email</Text> </Radio>
+
+                    <Radio
+                        color={'brand.200'}
+
+                        name="searchOption"
+                        value="first-name"
+                        isChecked={selectedOption === 'first-name'}
+                        onChange={() => setSelectedOption("first-name")}
+                    > <Text color="black"> First name</Text> </Radio>
+
+                </Stack>
+
                 <SearchBar searchingFor={users}
                     onSearchResults={handleSearchResults}
                     selectedOption={selectedOption} />
-            </div>
-            <div>
+            </VStack>
+        </><>
                 {searchResults && <ListUsers users={searchResults} selectedOption={selectedOption} />}
-            </div>
-        </>
+            </></>
+
     )
 }

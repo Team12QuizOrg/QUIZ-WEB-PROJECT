@@ -41,11 +41,11 @@ const AddFeedback = () => {
                             <ModalBody>
                                 <form className="comment-container" onSubmit={handleSubmit}>
                                     <FormControl>
-                                        <FormLabel>Write a comment...</FormLabel>
+                                        <FormLabel>Add your feedback here...</FormLabel>
                                         <Textarea
                                             color={'brand.400'}
                                             type="text"
-                                            placeholder="Write a comment..."
+                                            placeholder="If you want to share your experience or have any recommendations ... feel free to do it here! "
                                             value={feedback}
                                             onChange={handleInputChange}
                                             rows={15}

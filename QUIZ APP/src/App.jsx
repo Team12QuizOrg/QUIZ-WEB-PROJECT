@@ -28,9 +28,9 @@ import { getAllQuizzes } from './services/quiz.services';
 
 function App() {
   const [user] = useAuthState(auth);
-  const [quizzes, setQuizzes] = useState([]);
-  const [openQuizzes, setOpenQuizzes] = useState([]);
-  const [users, setUsers] = useState([])
+  // const [quizzes, setQuizzes] = useState([]);
+  // const [openQuizzes, setOpenQuizzes] = useState([]);
+  // const [users, setUsers] = useState([])
   const [appState, setAppState] = useState({
     user,
     userData: null,
@@ -39,20 +39,20 @@ function App() {
     setAppState({ user });
   }
 
-  useEffect(() => {
-    getAllUserData()
-      .then((res) => setUsers(res))
-      .catch((err) => console.error(`Problem fetching all users`, err))
-  })
-  useEffect(() => {
-    getAllQuizzes()
-      .then(res => {
-        setQuizzes(res);
-        const openQ = res.filter((quiz) => quiz.selectedOption === "Open")
-        setOpenQuizzes(openQ);
-      })
-      .catch(err => console.error('error fetching posts: ', err))
-  }, [quizzes])
+  // useEffect(() => {
+  //   getAllUserData()
+  //     .then((res) => setUsers(res))
+  //     .catch((err) => console.error(`Problem fetching all users`, err))
+  // })
+  // useEffect(() => {
+  //   getAllQuizzes()
+  //     .then(res => {
+  //       setQuizzes(res);
+  //       const openQ = res.filter((quiz) => quiz.selectedOption === "Open")
+  //       setOpenQuizzes(openQ);
+  //     })
+  //     .catch(err => console.error('error fetching posts: ', err))
+  // }, [quizzes])
   useEffect(() => {
     if (user === null) return;
 
@@ -71,7 +71,7 @@ function App() {
   }, [user]);
   return (
     <div>
-      <AppContext.Provider value={{ ...appState, setContext: setAppState, users: users, quizzes: quizzes, openQuizzes: openQuizzes }}>
+      <AppContext.Provider value={{ ...appState, setContext: setAppState, }}>
         <NavBar></NavBar>
         <Routes>
           <Route path="/home" element={<Home />} />
