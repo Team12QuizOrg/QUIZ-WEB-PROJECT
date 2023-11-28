@@ -1,6 +1,9 @@
 import { useContext, useState, useEffect } from "react";
 import AppContext from "../../context/AuthContext";
-import { createQuestion } from "../../services/quiz.services";
+import {
+  createQuestion,
+  getAllQuestionsByCategory,
+} from "../../services/quiz.services";
 import { createQuiz } from "../../services/quiz.services";
 import { Box, Grid, Flex, Center, Image } from "@chakra-ui/react";
 import {
@@ -24,6 +27,7 @@ import SubmitButton from "./SubmitButton/SubmitButton";
 import CancelButton from "./CancelButton/CancelButton";
 import CreateQuestionButton from "./CreateQuestionsButton/CreateQuestionButton";
 import CreateOptions from "./CreateOptions/CreateOptions";
+// import ChooseQuestions from "./ChooseQuestions/ChooseQuestions";
 
 const QuizForm = () => {
   const { user, userData } = useContext(AppContext);
@@ -50,6 +54,10 @@ const QuizForm = () => {
 
   const [showQuestions, setShowQuestions] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
+  const [isOpenForChoosingCategory, setIsOpenForChoosingCategory] =
+    useState(false);
+
+  const [questions2, setQuestions2] = useState({});
 
   const handleQuestionsButtonClick = () => {
     setShowQuestions(!showQuestions);
@@ -62,7 +70,9 @@ const QuizForm = () => {
 
   const handleCategoryChange = (value) => {
     setSelectedCategory(value);
+    getAllQuestionsByCategory(value).then((res) => setQuestions2(res));
   };
+
 
   useEffect(() => {
     getAllCategories().then((res) => setCategories(Object.entries(res)));
@@ -118,7 +128,11 @@ const QuizForm = () => {
     )
       .then((quiz) => {
         questions.map((question) => {
-          return createQuestion(question, quiz.id);
+          return createQuestion(
+            question,
+            quiz.id,
+            category ? category : selectedCategory
+          );
         });
 
         {
@@ -136,6 +150,9 @@ const QuizForm = () => {
     setTimeLimit(30);
     setTotalPoints(1);
     setNumQuestions(1);
+    setIsOpen(false);
+    setCategory("");
+    setShowQuestions(false);
   };
 
   return (
@@ -164,7 +181,7 @@ const QuizForm = () => {
           borderColor="brand.200"
           borderWidth={"thick"}
           alignItems="center"
-          maxW="100%" 
+          maxW="100%"
         >
           <Box
             display="flex"
@@ -257,26 +274,30 @@ const QuizForm = () => {
 
           {showQuestions && questionNum <= numQuestions && (
             <>
-              <ChooseOpenEnded
-                isOpen={isOpen}
-                func={() => setIsOpen(!isOpen)}
-              />
+              {/* <ChooseOpenEnded
+                isOpen={isOpenForChoosingCategory}
+                func={() =>
+                  setIsOpenForChoosingCategory(!isOpenForChoosingCategory)
+                }
+              /> */}
 
-              <WriteQuestion
-                questionNum={questionNum}
-                numQuestions={numQuestions}
-                currentQuestion={currentQuestion}
-                func={(e) => handleQuestionChange(e.target.value)}
-              />
-
-              {!isOpen && (
+              {!isOpen && !isOpenForChoosingCategory && (
                 <>
                   <Box>
-                    {currentQuestion.options.map((option, optionIndex) => (
+                    <WriteQuestion
+                      questionNum={questionNum}
+                      numQuestions={numQuestions}
+                      currentQuestion={currentQuestion}
+                      func={(e) => handleQuestionChange(e.target.value)}
+                      questions={questions2}
+                      
+                    />
+                    {currentQuestion.options.map((option, optionIndex, historyOption) => (
                       <CreateOptions
                         key={optionIndex}
                         optionIndex={optionIndex}
                         option={option}
+                        value = {historyOption[optionIndex]}
                         func={(e) =>
                           handleOptionChange(optionIndex, e.target.value)
                         }
@@ -288,13 +309,8 @@ const QuizForm = () => {
                     currentQuestion={currentQuestion}
                     func={(e) => handleCorrectAnswerChange(e.target.value)}
                   />
-                </> 
+                </>
               )}
-              <Box>
-                {questionNum > numQuestions && (
-                  <SubmitButton func={handleSubmit} />
-                )}
-              </Box>
               <Box>
                 {questionNum <= numQuestions && (
                   <AddQuestionButton func={addQuestion} />
@@ -302,6 +318,11 @@ const QuizForm = () => {
               </Box>
             </>
           )}
+          <Box>
+            {questionNum === numQuestions + 1 && (
+              <SubmitButton func={handleSubmit} />
+            )}
+          </Box>
           <Box>
             <CancelButton func={() => setShowForm(false)} />
           </Box>
