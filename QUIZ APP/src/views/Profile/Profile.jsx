@@ -7,11 +7,12 @@ import { makeAdmin, makeEducator } from '../../services/users.services';
 import { unBlockUser } from '../../services/users.services';
 import EditProfile from '../../components/EditProfile/EditProfile';
 import { formatDate } from "../../services/users.services";
-import { PhoneIcon, SettingsIcon, WarningIcon, StarIcon, PlusSquareIcon, NotAllowedIcon } from '@chakra-ui/icons'
+import { PhoneIcon, StarIcon, PlusSquareIcon, NotAllowedIcon } from '@chakra-ui/icons'
+import CreateGroup from "../../components/CreateGroup/CreateGroup";
 
 
+import { Center, Grid, GridItem, IconButton, Avatar, Flex, Heading, Divider, Box, Text, Image, Button, ButtonGroup, Spacer, Stack, HStack, StackDivider, Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react"
 
-import { Center, Menu, MenuItem, MenuButton, MenuList, Grid, GridItem, IconButton, Avatar, Flex, Heading, Divider, Box, Text, Image, Button, ButtonGroup, Spacer, Stack, HStack, StackDivider, Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react"
 
 const Profile = () => {
     const { user, userData } = useContext(AppContext)
@@ -52,6 +53,10 @@ const Profile = () => {
         }));
     };
 
+
+    const handleAddToGroup = (handle) => {
+
+    }
     return (
         <><Grid
             minHeight={'100vh'}
@@ -195,40 +200,48 @@ const Profile = () => {
                     </Card>
                 )}
                 {currentUser.userType === "teacher" && (
-                    <Card>
-                        <CardHeader>
-                            <Heading size='md'>GROUPS</Heading>
-                        </CardHeader>
-                        {/* тук ще му мапваме ентитито с резултатите  */}
-                        <CardBody>
-                            <Stack divider={<StackDivider />} spacing='4'>
-                                <Box>
-                                    <Heading size='xs' textTransform='uppercase'>
-                                        Summary
-                                    </Heading>
-                                    <Text pt='2' fontSize='sm'>
-                                        View a summary of all your clients over the last month.
-                                    </Text>
-                                </Box>
-                                <Box>
-                                    <Heading size='xs' textTransform='uppercase'>
-                                        Overview
-                                    </Heading>
-                                    <Text pt='2' fontSize='sm'>
-                                        Check out the overview of your clients.
-                                    </Text>
-                                </Box>
-                                <Box>
-                                    <Heading size='xs' textTransform='uppercase'>
-                                        Analysis
-                                    </Heading>
-                                    <Text pt='2' fontSize='sm'>
-                                        See a detailed analysis of all your business clients.
-                                    </Text>
-                                </Box>
-                            </Stack>
-                        </CardBody>
-                    </Card>
+                    <>
+                        {currentUser.handle === userData.handle &&
+                            <CreateGroup></CreateGroup>
+                        }
+                        {currentUser.handle !== userData.handle &&
+                            <Button onClick={() => handleAddToGroup(currentUser.handle)} bg={'brand.200'} > Add to Group</Button>
+                        }
+                        <Card>
+                            <CardHeader>
+                                <Heading size='md'>GROUPS</Heading>
+                            </CardHeader>
+                            {/* тук ще му мапваме ентитито с резултатите  */}
+                            <CardBody>
+                                <Stack divider={<StackDivider />} spacing='4'>
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            Summary
+                                        </Heading>
+                                        <Text pt='2' fontSize='sm'>
+                                            View a summary of all your clients over the last month.
+                                        </Text>
+                                    </Box>
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            Overview
+                                        </Heading>
+                                        <Text pt='2' fontSize='sm'>
+                                            Check out the overview of your clients.
+                                        </Text>
+                                    </Box>
+                                    <Box>
+                                        <Heading size='xs' textTransform='uppercase'>
+                                            Analysis
+                                        </Heading>
+                                        <Text pt='2' fontSize='sm'>
+                                            See a detailed analysis of all your business clients.
+                                        </Text>
+                                    </Box>
+                                </Stack>
+                            </CardBody>
+                        </Card>
+                    </>
                 )}
             </GridItem>
         </Grid></>
