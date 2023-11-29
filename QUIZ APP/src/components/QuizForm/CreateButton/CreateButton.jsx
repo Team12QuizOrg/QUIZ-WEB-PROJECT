@@ -15,6 +15,7 @@ const CreateButton = ({ func }) => {
       borderWidth={"thick"}
       alignItems="center"
       background={"blue.400"}
+      rounded={'md'}
       w={'16%'}
     >
       Create Quiz

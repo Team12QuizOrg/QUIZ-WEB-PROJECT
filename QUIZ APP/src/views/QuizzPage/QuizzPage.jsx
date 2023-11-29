@@ -12,7 +12,7 @@ const QuizzPage = () => {
     return (
         <div>
             <div><Quizzes isLogged={isLoggedIn} /></div>
-            <div><QuizForm></QuizForm></div>
+            <div></div>
             <div></div>
             <div></div>
             <div></div>

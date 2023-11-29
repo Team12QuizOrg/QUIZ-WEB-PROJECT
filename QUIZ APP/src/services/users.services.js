@@ -6,7 +6,6 @@ export const getUserByHandle = (handle) => {
 
   return get(ref(db, `users/${handle}`));
 };
-
 export const createUserHandle = (handle, uid, email, firstName, lastName, phone, userType) => {
 
   return set(ref(db, `users/${handle}`), { handle, uid, email, firstName, lastName, phone, userType, isAdmin: false, isBlocked: false, createdOn: Date.now(), likedPosts: {} , commentedPosts: {}, photoURL: DEFAULT_AVATAR_URL})
@@ -130,4 +129,45 @@ export const formatDate = (timestamp) => {
   const formattedDate = dateObj.toLocaleString(undefined, options);
 
   return formattedDate;
+};
+
+export const createQuizState = (handle, quizData, quizId) => {
+  const userRef = ref(db, `users/${handle}`);
+
+  return get(userRef)
+    .then((userDataSnapshot) => {
+      if (userDataSnapshot.exists()) {
+        const userData = userDataSnapshot.val();
+
+    
+        userData.quizState = userData.quizState || {};
+        userData.quizState[quizId] = quizData;
+
+        return update(userRef, userData).then(() => userData);
+      } else {
+        console.error('User not found');
+        return null;
+      }
+    })
+    .catch((error) => {
+      console.error('Error creating/updating quiz state:', error);
+      throw error;
+    });
+};
+
+export const getQuizState = (handle, quizId) => {
+  const userRef = ref(db, `users/${handle}/quizState/${quizId}`);
+
+  return get(userRef)
+    .then((userDataSnapshot) => {
+      if (userDataSnapshot.exists()) {
+        return userDataSnapshot.val() || {};
+      } else {
+        return {};
+      }
+    })
+    .catch((error) => {
+      console.error('Error getting quiz state:', error);
+      throw error;
+    });
 };
