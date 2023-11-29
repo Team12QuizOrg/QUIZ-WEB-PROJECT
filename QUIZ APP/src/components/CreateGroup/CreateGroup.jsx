@@ -10,9 +10,7 @@ const CreateGroup = () => {
     const { userData } = useContext(AppContext);
 
     const handleOpen = () => {
-        if (!userData || !userData.isBlocked) {
-            onOpen();
-        }
+        onOpen();
     };
 
     const handleInputChange = (e) => {
@@ -25,43 +23,38 @@ const CreateGroup = () => {
         addGroup(userData.handle, groupName);
         setGroupName('');
         onClose();
+        alert('Group created successfully')
     };
 
     return (
         <>
-            {userData && userData.isBlocked ? (
-                <p className="blocked-user-message">User is blocked and cannot comment.</p>
-            ) : (
-                <>
-                    <Button onClick={handleOpen} bg={'brand.200'}> Create Group</Button>
-                    <Modal isOpen={isOpen} onClose={onClose}>
-                        <ModalOverlay />
-                        <ModalContent>
-                            <ModalHeader>Create Group</ModalHeader>
-                            <ModalCloseButton />
-                            <ModalBody>
-                                <form className="comment-container" onSubmit={handleSubmit}>
-                                    <FormControl>
-                                        <FormLabel>Group name</FormLabel>
-                                        <Input
-                                            color={'brand.400'}
-                                            type="text"
-                                            placeholder=" "
-                                            value={groupName}
-                                            onChange={handleInputChange}
-                                            rows={15}
-                                            cols={15}
-                                        />
-                                    </FormControl>
-                                    <Button type="submit" >
-                                        Submit
-                                    </Button>
-                                </form>
-                            </ModalBody>
-                        </ModalContent>
-                    </Modal>
-                </>
-            )}
+            <Button onClick={handleOpen} bg={'brand.200'} > Create Group</Button>
+            <Modal isOpen={isOpen} onClose={onClose} >
+                <ModalOverlay />
+                <ModalContent>
+                    <ModalHeader>Create Group</ModalHeader>
+                    <ModalCloseButton />
+                    <ModalBody>
+                        <form className="comment-container" onSubmit={handleSubmit}>
+                            <FormControl>
+                                <FormLabel>Group name</FormLabel>
+                                <Input
+                                    color={'brand.400'}
+                                    type="text"
+                                    placeholder=" "
+                                    value={groupName}
+                                    onChange={handleInputChange}
+                                    rows={15}
+                                    cols={15}
+                                />
+                            </FormControl>
+                            <Button type="submit" onMouseLeave={onClose}>
+                                Submit
+                            </Button>
+                        </form>
+                    </ModalBody>
+                </ModalContent>
+            </Modal>
         </>
     );
 };

@@ -10,13 +10,14 @@ import { formatDate } from "../../services/users.services";
 import { PhoneIcon, StarIcon, PlusSquareIcon, NotAllowedIcon } from '@chakra-ui/icons'
 import CreateGroup from "../../components/CreateGroup/CreateGroup";
 
-
-import { Center, Grid, GridItem, IconButton, Avatar, Flex, Heading, Divider, Box, Text, Image, Button, ButtonGroup, Spacer, Stack, HStack, StackDivider, Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react"
+import { Center, Grid, GridItem, IconButton, VStack, Avatar, Flex, Heading, Divider, Box, Text, Image, Button, ButtonGroup, Spacer, Stack, HStack, StackDivider, Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react"
+import ListGroup from "../../components/ListGroups/ListGroups";
 
 
 const Profile = () => {
     const { user, userData } = useContext(AppContext)
     const [currentUser, setCurrentUser] = useState("")
+    // const [groups, setGroups] = useState()
     const { profile } = useParams();
     const navigate = useNavigate();
 
@@ -34,6 +35,7 @@ const Profile = () => {
             .catch(e => console.log(e.message));
     }, []);
 
+    // console.log(currentUser.usersGroups)
     const handleBlock = (handle) => {
         blockUser(handle)
     }
@@ -53,12 +55,8 @@ const Profile = () => {
         }));
     };
 
-
-    const handleAddToGroup = (handle) => {
-
-    }
     return (
-        <><Grid
+        <Grid
             minHeight={'100vh'}
             templateRows='repeat(1, 1fr)'
             templateColumns='repeat(6, 1fr)'
@@ -200,51 +198,30 @@ const Profile = () => {
                     </Card>
                 )}
                 {currentUser.userType === "teacher" && (
-                    <>
+                    <Card>
                         {currentUser.handle === userData.handle &&
                             <CreateGroup></CreateGroup>
                         }
-                        {currentUser.handle !== userData.handle &&
+                        {/* {currentUser.handle !== userData.handle &&
                             <Button onClick={() => handleAddToGroup(currentUser.handle)} bg={'brand.200'} > Add to Group</Button>
-                        }
-                        <Card>
-                            <CardHeader>
-                                <Heading size='md'>GROUPS</Heading>
-                            </CardHeader>
-                            {/* тук ще му мапваме ентитито с резултатите  */}
-                            <CardBody>
-                                <Stack divider={<StackDivider />} spacing='4'>
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            Summary
-                                        </Heading>
-                                        <Text pt='2' fontSize='sm'>
-                                            View a summary of all your clients over the last month.
-                                        </Text>
-                                    </Box>
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            Overview
-                                        </Heading>
-                                        <Text pt='2' fontSize='sm'>
-                                            Check out the overview of your clients.
-                                        </Text>
-                                    </Box>
-                                    <Box>
-                                        <Heading size='xs' textTransform='uppercase'>
-                                            Analysis
-                                        </Heading>
-                                        <Text pt='2' fontSize='sm'>
-                                            See a detailed analysis of all your business clients.
-                                        </Text>
-                                    </Box>
-                                </Stack>
-                            </CardBody>
-                        </Card>
-                    </>
+                        } */}
+
+                        <CardHeader>
+                            <Heading size='md'>GROUPS</Heading>
+                        </CardHeader>
+                        <CardBody>
+
+
+                            <ListGroup user={currentUser} ></ListGroup>
+
+
+
+
+                        </CardBody>
+                    </Card>
                 )}
             </GridItem>
-        </Grid></>
+        </Grid>
     )
 }
 export default Profile;
