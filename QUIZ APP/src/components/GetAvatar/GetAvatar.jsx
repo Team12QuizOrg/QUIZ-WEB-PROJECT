@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { getUserByHandle } from "../../services/users.services";
-import { Avatar } from '@chakra-ui/react'
+import { Avatar, Center } from '@chakra-ui/react'
 import { useContext } from "react";
 import AppContext from "../../context/AuthContext";
 
@@ -20,7 +20,8 @@ const GetAvatar = ({ handle }) => {
     }, [userData]);
 
     return (
-        < Avatar src={avatar} mb={2} />
+        <Center>< Avatar src={avatar} mb={2} /></Center>
+
     )
 }
 export default GetAvatar;

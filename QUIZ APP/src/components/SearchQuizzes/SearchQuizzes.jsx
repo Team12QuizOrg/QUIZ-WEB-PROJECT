@@ -21,23 +21,37 @@ export default function SearchQuizzes() {
             .catch(err => console.error('error fetching posts: ', err))
     }, [quizzes])
     const handleSearchResults = (results) => {
-        setSearchResults(results);
+        setSearchResults(results)
+
+
     }
     return (
         <>
-            <SearchBar searchingFor={openQuizzes}
-                onSearchResults={handleSearchResults}
-                selectedOption='quizzes' />
-            <Popover>
+            <SearchBar searchingFor={openQuizzes} onSearchResults={handleSearchResults} selectedOption='quizzes' />
+            <Popover onClose={() => setSearchResults(null)}>
                 <PopoverTrigger>
                     <Button>Search</Button>
                 </PopoverTrigger>
-                <PopoverContent>
-                    {searchResults && searchResults.length > 0 ? (searchResults.map((quiz) => (
-                        <PopoverHeader key={quiz.id} onClick={() => navigate(`/quizzes/AllQuizzes/${quiz.id}"`)} color={'brand.400'} fontWeight={'bold'}> {quiz.title}</PopoverHeader>
-                    ))) : (<Text color={'brand.400'}>No results found</Text>)}
-                </PopoverContent>
-            </Popover></>
+                {searchResults && searchResults.length > 0 && (
+                    <PopoverContent>
+                        {searchResults.map((quiz) => (
+                            <PopoverHeader
+                                key={quiz.id}
+                                onClick={() => {
+                                    navigate(`/quizzes/AllQuizzes/${quiz.id}`);
+                                    setSearchResults(null);
+                                }}
+                                color={'brand.400'}
+                                fontWeight={'bold'}
+                                cursor="pointer"
+                            >
+                                {quiz.title}
+                            </PopoverHeader>
+                        ))}
+                    </PopoverContent>
+                )}
+            </Popover>
+        </>
 
 
 
