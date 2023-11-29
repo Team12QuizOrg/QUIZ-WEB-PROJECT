@@ -16,7 +16,8 @@ export default function AddGroupMember({ group, groupId, currentMembers }) {
     useEffect(() => {
         getAllUserData()
             .then(res => {
-                setUsers(res);
+                const educators = res.filter((user) => user.userType === "teacher")
+                setUsers(educators);
 
             })
             .catch(err => console.error('error fetching posts: ', err))
