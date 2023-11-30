@@ -5,7 +5,7 @@ import {
   getAllQuestionsByCategory,
 } from "../../services/quiz.services";
 import { createQuiz } from "../../services/quiz.services";
-import { Box, Grid, Flex, Center, Image } from "@chakra-ui/react";
+import { Box, Grid, Flex, Center, Image, Text } from "@chakra-ui/react";
 import {
   createCategory,
   getAllCategories,
@@ -19,7 +19,7 @@ import ChooseExistingCategory from "./ChooseExistingCategory/ChooseExistingCateg
 import SetTimeLimit from "./SetTimeLimit/SetTimeLimit";
 import ChooseNumberOfQuestions from "./ChooseNumberOfQuestions/ChooseNumberOfQuestions";
 import ChooseTotalPoints from "./ChooseTotalPoints/ChooseTotalPoints";
-import ChooseOpenEnded from "./ChooseOpenEnded/ChooseOpenEnded";
+import ChooseCategoryButton from "./ChooseCategoryButton/ChooseCategoryButton";
 import WriteQuestion from "./WriteQuestion/WriteQuestion";
 import ChooseCorrectOption from "./ChooseCorrectOption/ChooseCorrectOption";
 import AddQuestionButton from "./AddQuestionButton/AddQuestionButton";
@@ -72,7 +72,6 @@ const QuizForm = () => {
     setSelectedCategory(value);
     getAllQuestionsByCategory(value).then((res) => setQuestions2(res));
   };
-
 
   useEffect(() => {
     getAllCategories().then((res) => setCategories(Object.entries(res)));
@@ -164,170 +163,157 @@ const QuizForm = () => {
       w={"100%"}
       color="black"
     >
-      {!showForm ? (
-        // Make  the button smallerand nicer
-        <Box alignItems="center" w={"100%"}>
-          <CreateButton func={showFormHandler} width={5} />
-        </Box>
-      ) : (
+      <Box
+        padding={"20px"}
+        colorscheme="black"
+        variant="solid"
+        size="md"
+        gridColumn="span 2"
+        borderRadius="3%"
+        boxShadow="md"
+        borderColor="brand.200"
+        borderWidth={"thick"}
+        alignItems="center"
+        maxW="100%"
+      >
         <Box
-          padding={"20px"}
-          colorscheme="black"
-          variant="solid"
-          size="md"
+          display="flex"
+          flexDirection="row"
+          justifyContent="space-between"
           gridColumn="span 2"
-          borderRadius="3%"
-          boxShadow="md"
-          borderColor="brand.200"
-          borderWidth={"thick"}
-          alignItems="center"
           maxW="100%"
+          mb={4}
+          alignItems="center"
         >
-          <Box
-            display="flex"
-            flexDirection="row"
-            justifyContent="space-between"
-            gridColumn="span 2"
-            maxW="100%"
-            mb={4}
-            alignItems="center"
-          >
-            <Center>
-              <div>
-                <QuizName
-                  quizName={quizName}
-                  setQuizName={(e) => setQuizName(e.target.value)}
-                />
-              </div>
-            </Center>
-            <Center>
-              <div>
-                <Image
-                  className="logo-image"
-                  src="assets\logo2.png"
-                  alt="logo"
-                  w={10}
-                  h={10}
-                  maxW={40}
-                  maxH={40}
-                  rounded={"full"}
-                />
-              </div>
-            </Center>
+          <Center>
+            <div>
+              <QuizName
+                quizName={quizName}
+                setQuizName={(e) => setQuizName(e.target.value)}
+              />
+            </div>
+          </Center>
+          <Center>
+            <div>
+              <Image
+                className="logo-image"
+                src="assets\logo2.png"
+                alt="logo"
+                w={10}
+                h={10}
+                maxW={40}
+                maxH={40}
+                rounded={"full"}
+              />
+            </div>
+          </Center>
 
-            <Center>
-              <div>
-                <ChooseTypeRadio
-                  setSelectedOption={setSelectedOption}
-                  selectedOption={selectedOption}
-                />
-              </div>
-            </Center>
-          </Box>
-          <CreateNewCategoryButton
-            func={() => handleButtonClick("create")}
-            label={"Create new category"}
+          <Center>
+            <div>
+              <ChooseTypeRadio
+                setSelectedOption={setSelectedOption}
+                selectedOption={selectedOption}
+              />
+            </div>
+          </Center>
+        </Box>
+        <CreateNewCategoryButton
+          func={() => handleButtonClick("create")}
+          label={"Create new category"}
+        />
+        <ChooseCategoryButton
+          func={() => handleButtonClick("choose")}
+          label={"Choose category"}
+        />
+
+        {activeButton === "create" && (
+          <CreateNewCategory
+            category={category}
+            func={(e) => setCategory(e.target.value)}
           />
-          <CreateNewCategoryButton
-            func={() => handleButtonClick("choose")}
-            label={"Choose category"}
+        )}
+
+        {activeButton === "choose" && (
+          <ChooseExistingCategory
+            selectedCategory={selectedCategory}
+            func={(e) => handleCategoryChange(e.target.value)}
+            categories={categories}
+          />
+        )}
+
+        <Flex
+          flexDirection="row"
+          justifyContent="space-between"
+          gridColumn="span 2"
+          width={"maxWidth"}
+        >
+          <SetTimeLimit
+            timeLimit={timeLimit}
+            func={(e) => setTimeLimit(e.target.value)}
           />
 
-          {activeButton === "create" && (
-            <CreateNewCategory
-              category={category}
-              func={(e) => setCategory(e.target.value)}
-            />
-          )}
+          <ChooseNumberOfQuestions
+            numQuestions={numQuestions}
+            func={(e) => setNumQuestions(Number(e.target.value))}
+          />
 
-          {activeButton === "choose" && (
-            <ChooseExistingCategory
-              selectedCategory={selectedCategory}
-              func={(e) => handleCategoryChange(e.target.value)}
-              categories={categories}
-            />
-          )}
+          <ChooseTotalPoints
+            totalPoints={totalPoints}
+            func={(e) => setTotalPoints(Number(e.target.value))}
+          />
+        </Flex>
 
-          <Flex
-            flexDirection="row"
-            justifyContent="space-between"
-            gridColumn="span 2"
-            width={"maxWidth"}
-          >
-            <SetTimeLimit
-              timeLimit={timeLimit}
-              func={(e) => setTimeLimit(e.target.value)}
-            />
+        <CreateQuestionButton func={handleQuestionsButtonClick} />
 
-            <ChooseNumberOfQuestions
-              numQuestions={numQuestions}
-              func={(e) => setNumQuestions(Number(e.target.value))}
-            />
-
-            <ChooseTotalPoints
-              totalPoints={totalPoints}
-              func={(e) => setTotalPoints(Number(e.target.value))}
-            />
-          </Flex>
-
-          <CreateQuestionButton func={handleQuestionsButtonClick} />
-
-          {showQuestions && questionNum <= numQuestions && (
-            <>
-              {/* <ChooseOpenEnded
-                isOpen={isOpenForChoosingCategory}
-                func={() =>
-                  setIsOpenForChoosingCategory(!isOpenForChoosingCategory)
-                }
-              /> */}
-
-              {!isOpen && !isOpenForChoosingCategory && (
-                <>
-                  <Box>
-                    <WriteQuestion
-                      questionNum={questionNum}
-                      numQuestions={numQuestions}
-                      currentQuestion={currentQuestion}
-                      func={(e) => handleQuestionChange(e.target.value)}
-                      questions={questions2}
-                      
-                    />
-                    {currentQuestion.options.map((option, optionIndex, historyOption) => (
+        {showQuestions && questionNum <= numQuestions && (
+          <>
+            {!isOpen && !isOpenForChoosingCategory && (
+              <>
+                <Box>
+                  <WriteQuestion
+                    questionNum={questionNum}
+                    numQuestions={numQuestions}
+                    currentQuestion={currentQuestion}
+                    func={(e) => handleQuestionChange(e.target.value)}
+                    questions={questions2}
+                  />
+                  {currentQuestion.options.map(
+                    (option, optionIndex, historyOption) => (
                       <CreateOptions
                         key={optionIndex}
                         optionIndex={optionIndex}
                         option={option}
-                        value = {historyOption[optionIndex]}
+                        value={historyOption[optionIndex]}
                         func={(e) =>
                           handleOptionChange(optionIndex, e.target.value)
                         }
                       />
-                    ))}
-                  </Box>
+                    )
+                  )}
+                </Box>
 
-                  <ChooseCorrectOption
-                    currentQuestion={currentQuestion}
-                    func={(e) => handleCorrectAnswerChange(e.target.value)}
-                  />
-                </>
-              )}
-              <Box>
-                {questionNum <= numQuestions && (
-                  <AddQuestionButton func={addQuestion} />
-                )}
-              </Box>
-            </>
-          )}
-          <Box>
-            {questionNum === numQuestions + 1 && (
-              <SubmitButton func={handleSubmit} />
+                <ChooseCorrectOption
+                  currentQuestion={currentQuestion}
+                  func={(e) => handleCorrectAnswerChange(e.target.value)}
+                />
+              </>
             )}
-          </Box>
-          <Box>
-            <CancelButton func={() => setShowForm(false)} />
-          </Box>
+            <Box>
+              {questionNum <= numQuestions && (
+                <AddQuestionButton func={addQuestion} />
+              )}
+            </Box>
+          </>
+        )}
+        <Box>
+          {questionNum === numQuestions + 1 && (
+            <SubmitButton func={handleSubmit} />
+          )}
         </Box>
-      )}
+        <Box>
+          <CancelButton func={() => setShowForm(false)} />
+        </Box>
+      </Box>
     </Grid>
   );
 };
