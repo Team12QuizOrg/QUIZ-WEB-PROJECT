@@ -1,19 +1,20 @@
 
 import { useContext, useState, useEffect } from 'react';
 import AppContext from '../../context/AuthContext';
-import { blockUser, getUserByHandle } from '../../services/users.services';
+import { getUserByHandle, makeEducator } from '../../services/users.services';
 import { useParams, useNavigate, NavLink } from 'react-router-dom';
-import { makeAdmin, makeEducator } from '../../services/users.services';
-import { unBlockUser } from '../../services/users.services';
+
 import EditProfile from '../../components/EditProfile/EditProfile';
 
-import { StarIcon, PlusSquareIcon, NotAllowedIcon } from '@chakra-ui/icons'
+import { PlusSquareIcon, } from '@chakra-ui/icons'
 import CreateGroup from "../../components/CreateGroup/CreateGroup";
 
 import { Center, Grid, GridItem, Avatar, Flex, Heading, Text, Image, Button, Spacer, HStack, Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react"
 import ListGroup from "../../components/ListGroups/ListGroups";
 import UserScoreBoard from "../../components/UserScoreBoard/UserScoreBoard";
 import UsersQuizzes from "../../components/UsersQuizzes/UsersQuizzes";
+import UserInfo from '../../components/UserInfo/UserInfo';
+import AdminButtons from './AdminButtons/AdminButtons';
 
 
 const Profile = () => {
@@ -37,24 +38,16 @@ const Profile = () => {
             .catch(e => console.log(e.message));
     }, []);
 
-    const handleBlock = (handle) => {
-        blockUser(handle)
-    }
-    const handleAdmin = (handle) => {
-        makeAdmin(handle);
-    }
-    const handleUnblock = (handle) => {
-        unBlockUser(handle)
-    }
-    const handleEducator = (handle) => {
-        makeEducator(handle);
-    }
+
     const handleEditProfile = (updatedValues) => {
         setCurrentUser((prevUser) => ({
             ...prevUser,
             ...updatedValues,
         }));
     };
+    const handleEducator = (handle) => {
+        makeEducator(handle);
+    }
 
     return (
         <Grid
@@ -84,59 +77,33 @@ const Profile = () => {
                             </Flex>
                         </CardHeader>
                         <CardBody>
-                            <HStack>
-                                <Heading textAlign={"start"} fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}> {currentUser.firstName}{' '}{currentUser.lastName}</Heading>
-                                <Spacer></Spacer>
-                                <Heading textAlign={"start"} fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}> {currentUser.email}</Heading>
-                            </HStack>
-                            {currentUser.caption && <Text textAlign={"start"} >
-                                {currentUser.caption}
-                            </Text>
-                            }
+                            <UserInfo currentUser={currentUser} />
                         </CardBody>
                         <Image
                             objectFit='cover'
                             src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
                             alt='Chakra UI'
                         />
-                        {userData.isAdmin && !currentUser.isAdmin && (
-                            <CardFooter
-                                justify='space-between'
-                                flexWrap='wrap'
-                                sx={{
-                                    '& > button': {
-                                        minW: '136px',
-                                    },
-                                }}
-                            >
-                                <Button onClick={() => handleAdmin(currentUser.handle)} flex='1' variant='ghost' leftIcon={<StarIcon />}>
-                                    Make Admin
-                                </Button>
-                                <Button onClick={() => currentUser.isBlocked
-                                    ? handleUnblock(currentUser.handle)
-                                    : handleBlock(currentUser.handle)} flex='1' variant='ghost' leftIcon={<NotAllowedIcon />}>
-                                    {currentUser.isBlocked ? 'Unblock user' : 'Block user'}
-                                </Button>
 
-                            </CardFooter>
-                        )}
-                        {userData.userType === 'teacher' && currentUser.userType === "student" && (
-                            <CardFooter
-                                justify='space-between'
-                                flexWrap='wrap'
-                                sx={{
-                                    '& > button': {
-                                        minW: '136px',
-                                    },
-                                }}
-                            >
+                        <CardFooter
+                            justify='space-between'
+                            flexWrap='wrap'
+                            sx={{
+                                '& > button': {
+                                    minW: '136px',
+                                },
+                            }}
+                        >
+                            {userData.isAdmin && !currentUser.isAdmin && (
+                                <AdminButtons currentUser={currentUser} />
+                            )}
+
+                            {userData.userType === 'teacher' && currentUser.userType === "student" && (
                                 <Button onClick={() => handleEducator(currentUser.handle)} flex='1' variant='ghost' leftIcon={<PlusSquareIcon />}>
                                     Make Educator
                                 </Button>
-
-
-                            </CardFooter>
-                        )}
+                            )}
+                        </CardFooter>
                     </Card>
                 </Center>
             </GridItem>
