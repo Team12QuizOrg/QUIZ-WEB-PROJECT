@@ -18,7 +18,6 @@ import { ChevronRightIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { ITEMS_PER_PAGE } from "../../common/constants";
 import { addParticipant } from "../../services/quiz.services";
 import AppContext from "../../context/AuthContext";
-import QuizForm from "../QuizForm/QuizForm";
 import { formatDate } from "../../services/users.services";
 
 
@@ -124,7 +123,6 @@ const AllQuizzes = ({ quizzes }) => {
 
   return (
     <div>
-      <div><QuizForm></QuizForm></div>
       <Text fontSize="xl" fontWeight="bold" mb={4} align={'left'}>
         All Quizzes
       </Text>
