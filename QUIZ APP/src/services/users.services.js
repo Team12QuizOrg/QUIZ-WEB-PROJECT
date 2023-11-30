@@ -171,3 +171,50 @@ export const getQuizState = (handle, quizId) => {
       throw error;
     });
 };
+
+
+export const getUserScoreBoard = (handle) => {
+  const userRef = ref(db, `users/${handle}/scoreBoards`);
+
+  return get(userRef)
+    .then((userDataSnapshot) => {
+      if (!userDataSnapshot.exists()) {
+        return [];
+      }
+
+      const usersDocument = userDataSnapshot.val();
+      const quizResults = Object.keys(usersDocument).map((key) => {
+        const group = usersDocument[key];
+  
+        return group; 
+      });
+
+    
+      return quizResults;
+    })
+    .catch((error) => {
+      console.error('Error getting quiz state:', error);
+      throw error;
+    });
+};
+
+export const getUsersQuizzes = (handle) => {
+  const userRef = ref(db, `users/${handle}/quizState`);
+
+  return get(userRef)
+    .then((userDataSnapshot) => {
+      if (!userDataSnapshot.exists()) {
+        return [];
+      }
+
+      const usersDocument = userDataSnapshot.val();
+      const quizResults = Object.keys(usersDocument).map((key) => {
+        const group = usersDocument[key];
+  
+        return group; 
+      });
+
+    
+      return quizResults;
+})
+};
