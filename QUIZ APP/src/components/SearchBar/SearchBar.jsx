@@ -44,7 +44,8 @@ const SearchBar = ({ searchingFor, onSearchResults, selectedOption }) => {
             _placeholder={{ color: 'inherit' }}
             value={search}
             onChange={handleInputChange}
-            width={300}
+
+
         />
 
     );

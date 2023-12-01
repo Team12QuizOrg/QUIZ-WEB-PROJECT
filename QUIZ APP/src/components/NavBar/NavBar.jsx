@@ -1,55 +1,23 @@
-import "./NavBar.css";
-// import { Form, NavLink } from 'react-router-dom';
 import { logoutUser } from "../../services/auth.services";
-import SearchBar from "../SearchBar/SearchBar";
-import { useState, useContext, useEffect } from "react";
+import { useState, useContext } from "react";
 import AppContext from "../../context/AuthContext";
-import { useNavigate, NavLink, Link } from "react-router-dom";
-import {
-  Popover,
-  PopoverTrigger,
-  PopoverContent,
-  PopoverHeader,
-  PopoverBody,
-  PopoverFooter,
-  PopoverArrow,
-  PopoverCloseButton,
-  PopoverAnchor,
-  Box,
-  Flex,
-  Avatar,
-  HStack,
-  Button,
-  Menu,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuDivider,
-  useDisclosure,
-  useColorModeValue,
-  Stack,
-  Spacer,
-  Collapse,
-  Icon,
-  useBreakpointValue,
-  Image,
-  Heading,
-} from "@chakra-ui/react";
-import { ChevronDownIcon, ChevronRightIcon, AddIcon } from "@chakra-ui/icons";
+import { useNavigate } from "react-router-dom";
+import { Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Box, Flex, HStack, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, useColorModeValue, Stack, Spacer, Image, Heading, } from "@chakra-ui/react";
+import { ChevronRightIcon, HamburgerIcon } from "@chakra-ui/icons";
 import SearchQuizzes from "../SearchQuizzes/SearchQuizzes";
+import NavLinks from "../NavLinks/NavLinks";
+import NavUser from "../NavUser/NavUser";
 
 export default function NavBar() {
   const { user, userData, setContext, openQuizzes } = useContext(AppContext);
   const [searchResults, setSearchResults] = useState(null);
-  // const [photo, setPhoto] = useState()
 
+  const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
   const handleSearchResults = (results) => {
     setSearchResults(results);
   };
-  // useEffect(() => {
-  //     setPhoto(userData.photoURL)
-  // }, [])
+
   const onLogout = () => {
     logoutUser().then(() => {
       setContext({
@@ -63,230 +31,59 @@ export default function NavBar() {
     <Box>
       <Flex
         h={16}
-        alignItems={"center"}
-        justifyContent={"space-between"}
+        alignItems={['center', 'center', 'center']}
+        justifyContent={'space-between'}
         bg="brand.100"
+        px={[4, 4, 8]}
+        py={2}
       >
-        <HStack
-          spacing={8}
-          alignItems={"bottom"}
-          color="black"
-          fontSize={["0.8em", "1em", "1.2em"]}
+        <Button
+          display={['block', 'block', 'none']}
+          alignItems={['left', 'left', 'none']}
+          onClick={onOpen}
+          variant={'link'}
+          fontSize={['xl', 'xl', '4xl']}
+          color={'brand.400'}
         >
-          <HStack spacing={0} alignItems={"bottom"}>
-            <Image
-              className="logo-image"
-              src="assets\logo2.png"
-              alt="logo"
-              w={10}
-              h={10}
-              maxW={40}
-              maxH={40}
-              onClick={() => navigate(`/home`)}
-              rounded={"full"}
-            />
-            <Heading fontSize={"4xl"} color={"brand.400"}>
-              Solvr
-            </Heading>
-          </HStack>
-
-          <Menu>
-            <MenuButton
-              onClick={() => navigate(`/home`)}
-              rounded={"full"}
-              variant={"link"}
-              cursor={"pointer"}
-              fontWeight={"bold"}
-              _hover={{
-                textDecoration: "none",
-                bg: "brand.200",
-              }}
-              _active={{
-                bg: "brand.300",
-                transform: "scale(0.98)",
-              }}
-            >
-              Home
-            </MenuButton>
-          </Menu>
-          <Menu>
-            <Menu></Menu>
-            <MenuButton
-              // onClick={() => navigate(`/quizzes`)}
-              rounded={"full"}
-              variant={"link"}
-              cursor={"pointer"}
-              fontWeight={"bold"}
-              _hover={{
-                textDecoration: "none",
-                bg: "brand.200",
-              }}
-              _active={{
-                bg: "brand.300",
-                transform: "scale(0.98)",
-              }}
-            >
-              Quizzes
-            </MenuButton>
-            <MenuList>
-              {NAV_ITEMS.map((navItem) => (
-                <MenuItem
-                  onClick={() => navigate(`${navItem.to}`)}
-                  key={navItem.to}
-                >
-                  {navItem.label} <Spacer />{" "}
-                  <Icon color={"pink.400"} w={5} h={5} as={ChevronRightIcon} />
-                </MenuItem>
-              ))}
-            </MenuList>
-          </Menu>
-          {userData && userData.userType === "teacher" && (
-            <Menu>
-              <MenuButton
-                onClick={() => navigate(`/form`)}
-                rounded={"full"}
-                variant={"link"}
-                cursor={"pointer"}
-                fontWeight={"bold"}
-                _hover={{
-                  textDecoration: "none",
-                  bg: "brand.200",
-                }}
-                _active={{
-                  bg: "brand.300",
-                  transform: "scale(0.98)",
-                }}
-              >
-                QuizForm
-              </MenuButton>
-            </Menu>
-          )}
-          <Menu>
-            <MenuButton
-              onClick={() => navigate(`/about`)}
-              rounded={"full"}
-              variant={"link"}
-              cursor={"pointer"}
-              fontWeight={"bold"}
-              _hover={{
-                textDecoration: "none",
-                bg: "brand.200",
-              }}
-              _active={{
-                bg: "brand.300",
-                transform: "scale(0.98)",
-              }}
-            >
-              About
-            </MenuButton>
-          </Menu>
+          <HamburgerIcon />
+        </Button>
+        <HStack spacing={0} alignItems={['center', 'center', 'center']}>
+          <Image
+            className="logo-image"
+            src="assets\logo2.png"
+            alt="logo"
+            maxW={50}
+            maxH={50}
+            onClick={() => navigate(`/home`)}
+            rounded={"full"}
+          />
+          <Heading fontSize={['xl', '1xl', '2xl']} color={"brand.400"}>
+            Solvr
+          </Heading>
         </HStack>
-        <Spacer />
-        <SearchQuizzes />
-
-        <Spacer />
-
-        <HStack spacing="10px">
-          {user === null && (
-            <>
-              <Button
-                variant="solid"
-                color="green"
-                fontSize="1.5em"
-                onClick={() => navigate("/signin")}
-              >
-                Sign In
+        <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+          <DrawerOverlay />
+          <DrawerContent>
+            <DrawerHeader>
+              <Button onClick={onClose} variant={'link'} fontSize={'xl'} color={'brand.400'}>
+                <ChevronRightIcon />
               </Button>
-              <Button
-                variant="solid"
-                color="yellow.500"
-                fontSize="1.5em"
-                onClick={() => navigate("/signup")}
-              >
-                Sign Up
-              </Button>
-            </>
-          )}
-          {user !== null && (
-            <>
-              <>
-                <Menu>
-                  <MenuButton
-                    as={Button}
-                    rounded={"full"}
-                    variant={"link"}
-                    cursor={"pointer"}
-                    minW={0}
-                  >
-                    {userData ? (
-                      <Avatar size={"sm"} src={userData.photoURL} />
-                    ) : (
-                      "My profile"
-                    )}
-                  </MenuButton>
-
-                  <MenuList>
-                    <MenuItem
-                      onClick={() => navigate(`/${userData.handle}`)}
-                      color={"brand.200"}
-                      fontWeight={"bold"}
-                      _hover={{
-                        textDecoration: "none",
-                        color: "brand.100",
-                        bg: "brand.200",
-                      }}
-                    >
-                      My Profile
-                    </MenuItem>
-
-                    <MenuDivider />
-                    {userData && userData.isAdmin && (
-                      <>
-                        <MenuItem
-                          onClick={() => navigate(`/adminPanel`)}
-                          color={"brand.200"}
-                          fontWeight={"bold"}
-                          _hover={{
-                            textDecoration: "none",
-                            color: "brand.100",
-                            bg: "brand.200",
-                          }}
-                        >
-                          Admin panel
-                        </MenuItem>
-                        <MenuDivider />
-                      </>
-                    )}
-                    <MenuItem
-                      onClick={onLogout}
-                      color={"brand.200"}
-                      fontWeight={"bold"}
-                      _hover={{
-                        textDecoration: "none",
-                        color: "brand.100",
-                        bg: "brand.200",
-                      }}
-                    >
-                      Log Out
-                    </MenuItem>
-                  </MenuList>
-                </Menu>
-              </>
-            </>
-          )}
+            </DrawerHeader>
+            <DrawerBody>
+              <NavUser></NavUser>
+              <NavLinks display={['block', 'block', 'none']} />
+              <SearchQuizzes />
+            </DrawerBody>
+          </DrawerContent>
+        </Drawer>
+        <NavLinks display={['none', 'none', 'block']} ></NavLinks>
+        <HStack spacing="10px" display={['none', 'none', 'flex']}>
+          <Spacer />
+          <SearchQuizzes />
+          <Spacer />
+          <NavUser></NavUser>
         </HStack>
-      </Flex>
-    </Box>
+      </Flex >
+    </Box >
   );
 }
-
-const NAV_ITEMS = [
-  {
-    label: "All Categories",
-    to: "/quizzes/categories",
-  },
-  {
-    label: "All Quizzes",
-    to: "/quizzes/AllQuizzes",
-  },
-];

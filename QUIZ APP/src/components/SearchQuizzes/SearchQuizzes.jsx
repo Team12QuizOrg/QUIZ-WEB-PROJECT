@@ -2,7 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
 import { Text, Popover, PopoverTrigger, PopoverHeader, PopoverContent, Button } from '@chakra-ui/react'
 import { useState, useContext, useEffect } from 'react';
-import AppContext from '../../context/AuthContext';
+import { IconButton } from '@chakra-ui/react'
+import { SearchIcon } from "@chakra-ui/icons";
 import { getAllQuizzes } from '../../services/quiz.services';
 export default function SearchQuizzes() {
     const [searchResults, setSearchResults] = useState(null);
@@ -27,10 +28,10 @@ export default function SearchQuizzes() {
     }
     return (
         <>
-            <SearchBar searchingFor={openQuizzes} onSearchResults={handleSearchResults} selectedOption='quizzes' />
+            <SearchBar searchingFor={openQuizzes} onSearchResults={handleSearchResults} selectedOption='quizzes' width={['100', '200', '350']} />
             <Popover onClose={() => setSearchResults(null)}>
                 <PopoverTrigger>
-                    <Button>Search</Button>
+                    <IconButton size={["md", 'md', 'md']} variant='outline' icon={<SearchIcon />} />
                 </PopoverTrigger>
                 {searchResults && searchResults.length > 0 && (
                     <PopoverContent>
