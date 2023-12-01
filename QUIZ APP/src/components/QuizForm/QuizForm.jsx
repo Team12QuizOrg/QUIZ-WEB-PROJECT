@@ -10,7 +10,6 @@ import {
   createCategory,
   getAllCategories,
 } from "../../services/category.services";
-import CreateButton from "./CreateButton/CreateButton";
 import ChooseTypeRadio from "./ChooseTypeRadio/ChooseTypeRadio";
 import QuizName from "./QuizName/QuizName";
 import CreateNewCategoryButton from "./CreateNewCategoryButton/CreateNewCategoryButton";
@@ -27,6 +26,7 @@ import SubmitButton from "./SubmitButton/SubmitButton";
 import CancelButton from "./CancelButton/CancelButton";
 import CreateQuestionButton from "./CreateQuestionsButton/CreateQuestionButton";
 import CreateOptions from "./CreateOptions/CreateOptions";
+import SetQuizTimer from "./SetQuizTimer/SetQuizTimer";
 
 const QuizForm = () => {
   const { user, userData } = useContext(AppContext);
@@ -44,9 +44,10 @@ const QuizForm = () => {
   const [questionNum, setQuestionNum] = useState(1);
 
   const [selectedOption, setSelectedOption] = useState("Open");
-  const [timeLimit, setTimeLimit] = useState(30);
   const [availability, setAvailability] = useState(1);
   const [unit, setUnit] = useState("hours");
+  const [unitTimer, setUnitTimer] = useState("minutes");
+  const [timerLimit, setTimerLimit] = useState(30);
 
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
@@ -125,6 +126,7 @@ const QuizForm = () => {
       totalPoints,
       selectedOption,
       unit === "days" ? availability * 24 : availability,
+      unitTimer === "hours" ? timerLimit * 60 : timerLimit,
       category ? category : selectedCategory
     )
       .then((quiz) => {
@@ -148,7 +150,7 @@ const QuizForm = () => {
       });
     setQuestionNum(1);
     setQuizName("");
-    setTimeLimit(30);
+    setTimerLimit(30);
     setTotalPoints(1);
     setNumQuestions(1);
     setIsOpen(false);
@@ -255,6 +257,12 @@ const QuizForm = () => {
             onChangeTime={(value) => setAvailability(value)}
             onChangeUnit={(selectedUnit) => setUnit(selectedUnit)}
           />
+          <SetQuizTimer
+            time={timerLimit}
+            unitTimer={unitTimer}
+            onChangeTime={(value) => setTimerLimit(value)}
+            onChangeUnit={(selectedUnit) => setUnitTimer(selectedUnit)}
+          ></SetQuizTimer>
           <ChooseNumberOfQuestions
             numQuestions={numQuestions}
             func={(e) => setNumQuestions(Number(e.target.value))}
