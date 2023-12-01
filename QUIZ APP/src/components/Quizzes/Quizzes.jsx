@@ -11,6 +11,7 @@ const Quizzes = ({ isLogged }) => {
   const [privateQuizzes, setPrivateQuizzes] = useState();
   const [finishedQuizzes, setFinishedQuizzes] = useState(); // filter all finished quizzes for educator
   const [mostPopular, setMostPopular] = useState(); //filter the most solved quizzes
+  const [participatedQuizzes, setParticipatedQuizzes] = useState();
   //students view
   const [targetedQuizzes, setTargetedQuizzes] = useState(); // needs to filter from the user entity category of most solved quizzes so then we can show some random quizzes of this type
   //educator view
@@ -22,10 +23,10 @@ const Quizzes = ({ isLogged }) => {
         setAllQuizzes(res);
         // Display Open Q
         const filteredOpenQuizzes = res.filter((quiz) => quiz.selectedOption === "Open");
-        setOpenQuizzes(filteredOpenQuizzes);
+        setOpenQuizzes(filteredOpenQuizzes || {});
         // Display Ongoing Q
         const filteredOngoingQuizzes = res.filter((quiz) => quiz.state === "ongoing");
-        setActiveQuizzes(filteredOngoingQuizzes);
+        setActiveQuizzes(filteredOngoingQuizzes || {});
         // Display Popular Q
         const filteredPopularQuizzes = res.filter((quiz) => Object.keys(quiz.scoreBoards).length > 0);
         const sortedPopularQuizzes = filteredPopularQuizzes.sort(
@@ -33,7 +34,10 @@ const Quizzes = ({ isLogged }) => {
         );
 
         const topPopularQuizzes = sortedPopularQuizzes.slice(0, 5);
-        setMostPopular(topPopularQuizzes);
+        setMostPopular(topPopularQuizzes || {});
+
+        const filterParticipatedQuizzes = res.filter((quiz) => Object.keys(quiz.participants).length > 0);
+        setParticipatedQuizzes(filterParticipatedQuizzes);
         // Add more filtered quizzes
       })
       .catch((error) => {
@@ -41,27 +45,32 @@ const Quizzes = ({ isLogged }) => {
       });
   }, []);
 
+  //Ongoing
   return (
     <Box>
-      <Box mb="50px">
-        {!isLogged ? (
-          <AllQuizzes quizzes={openQuizzes} catName={'Open Quizzes'} />
-        ) : (
-          <AllQuizzes quizzes={allQuizzes} catName={'All Quizzes'} />
-        )}
+      <Box>
+        {!isLogged &&
+          <Box mb="50px">
+            <AllQuizzes quizzes={openQuizzes} catName={'Open Quizzes'} />
+          </Box>}  
       </Box>
       <Box mb="50px">
-        {!isLogged ? (
+        {isLogged ? (
           <AllQuizzes quizzes={activeQuizzes} catName={'Ongoing Quizzes'} />
-        ) : (
-          <Text>You need to Log In to view all Ongoing Quizzes</Text>
-        )}
+        ) : 
+          null}
       </Box>
       <Box mb="50px">
-        {!isLogged ? (
+        {isLogged ? (
+          <AllQuizzes quizzes={participatedQuizzes} catName={'Participated Quizzes'} />
+        ) : 
+        null}
+      </Box>
+      <Box mb="50px">
+        {isLogged ? (
           <AllQuizzes quizzes={mostPopular} catName={'Most Popular Quizzes'} />
         ) : (
-          <Text>You need to Log In to view all Popular Quizzes</Text>
+          <Text>You need to Log In to view all Quizzes</Text>
         )}
       </Box>
     </Box>

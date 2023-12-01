@@ -31,6 +31,7 @@ const SingleQuizView = () => {
   const [currentUser, setCurrentUser] = useState();
   const [scoreBoards, setScoreBoards] = useState([]);
   const [getCat, setGetCat] = useState();
+  const [state, setState] = useState("false");
   const getCatName = `Similar Quizzes to "${quiz?.title}":`;
 
   useEffect(() => {
@@ -39,18 +40,21 @@ const SingleQuizView = () => {
         setQuiz(res);
         setScoreBoards(res.scoreBoards || []);
       })
+      .then((res) => setState(!state))
       .catch((err) => console.error(err));
-  }, [id]);
+  }, [quiz]);
 
   useEffect(() => {
     getAllQuizzes()
       .then((res) => {
         const filterSimQuizzes = res.filter((singleQ) => {
-          const isNotCurrentQuiz = singleQ.id !== quiz.id;
-          const isSameCategory = singleQ.category === quiz.category;
-          return isNotCurrentQuiz && isSameCategory;
+          if (singleQ && quiz) {
+            const isNotCurrentQuiz = singleQ.id !== quiz.id;
+            const isSameCategory = singleQ.category === quiz.category;
+            return isNotCurrentQuiz && isSameCategory;
+          }
         });
-        setGetCat(filterSimQuizzes);
+        setGetCat(filterSimQuizzes || {});
       })
   }, [])
 
@@ -137,19 +141,13 @@ const SingleQuizView = () => {
                   <br></br>
                   <Text>Available till: {formatDate(quiz.timeLimit)}</Text>
                   <br></br>
-                  <Text>
-                    <label>Paricipants</label>
-                    <select>
-                      <option value={""}></option>
-                      {quiz?.participants.map((participant, index) => (
-                        <option key={index} value={participant}>
-                          {participant} {/* Replace with the property containing the user's name */}
-                        </option>
-                      ))}
-                    </select>
-                  </Text>
+
                   <Center>
-                    <Button onClick={() => handleQuizClick(quiz.id)}>Enroll</Button>
+                    {quiz?.state === "ongoing" ? (
+                      <Button onClick={() => handleQuizClick(quiz.id)}>Enroll</Button>
+                    ) : (
+                      <Text> You missed the deadline </Text>
+                    )}
                   </Center>
                 </>
               )}
@@ -234,3 +232,16 @@ const SingleQuizView = () => {
   );
 }
 export default SingleQuizView;
+
+
+// <Text>
+// <label>Paricipants</label>
+// <select>
+//   <option value={""}></option>
+//   {quiz?.participants.map((participant, index) => (
+//     <option key={index} value={participant}>
+//       {participant} {/* Replace with the property containing the user's name */}
+//     </option>
+//   ))}
+// </select>
+// </Text>

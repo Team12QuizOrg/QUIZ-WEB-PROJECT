@@ -61,6 +61,7 @@ export const createQuiz = (title, handle, numQuestions, totalPoints, selectedOpt
       const newQuestionId = categorySnapshot.key;
   
       const updates = {};
+    
       updates[`questions/${category}/${newQuestionId}`] = questionData;
   
       return update(ref(db), updates)
@@ -153,6 +154,20 @@ export const addParticipant = (quizId, handle) => {
     } else {
       return quiz;
     }
+  });
+};
+export const getQuestionById = (quizId, questionId) => {
+  const questionRef = ref(db, `quizzes/${quizId}/questions/${questionId}`);
+
+  return get(questionRef).then((result) => {
+    if (!result.exists()) {
+      throw new Error(`Question with id ${questionId} does not exist for quiz ${quizId}!`);
+    }
+
+    const question = result.val();
+    question.id = questionId;
+
+    return question;
   });
 };
 

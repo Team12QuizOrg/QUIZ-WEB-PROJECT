@@ -9,6 +9,7 @@ const QuizzPage = () => {
         setIsLoggedIn(user !== null);
     }, [user]);
 
+
     return (
         <div>
             <div><Quizzes isLogged={isLoggedIn} /></div>
