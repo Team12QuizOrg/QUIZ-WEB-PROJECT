@@ -27,7 +27,6 @@ import SubmitButton from "./SubmitButton/SubmitButton";
 import CancelButton from "./CancelButton/CancelButton";
 import CreateQuestionButton from "./CreateQuestionsButton/CreateQuestionButton";
 import CreateOptions from "./CreateOptions/CreateOptions";
-// import ChooseQuestions from "./ChooseQuestions/ChooseQuestions";
 
 const QuizForm = () => {
   const { user, userData } = useContext(AppContext);
@@ -46,6 +45,9 @@ const QuizForm = () => {
 
   const [selectedOption, setSelectedOption] = useState("Open");
   const [timeLimit, setTimeLimit] = useState(30);
+  const [availability, setAvailability] = useState(1);
+  const [unit, setUnit] = useState("hours");
+
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
 
@@ -122,7 +124,7 @@ const QuizForm = () => {
       numQuestions,
       totalPoints,
       selectedOption,
-      timeLimit,
+      unit === "days" ? availability * 24 : availability,
       category ? category : selectedCategory
     )
       .then((quiz) => {
@@ -248,10 +250,11 @@ const QuizForm = () => {
           width={"maxWidth"}
         >
           <SetTimeLimit
-            timeLimit={timeLimit}
-            func={(e) => setTimeLimit(e.target.value)}
+            timeLimit={availability}
+            unit={unit}
+            onChangeTime={(value) => setAvailability(value)}
+            onChangeUnit={(selectedUnit) => setUnit(selectedUnit)}
           />
-
           <ChooseNumberOfQuestions
             numQuestions={numQuestions}
             func={(e) => setNumQuestions(Number(e.target.value))}

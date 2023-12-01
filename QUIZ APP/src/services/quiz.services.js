@@ -9,26 +9,32 @@ import { db } from '../config/firebase-config';
 
 
 export const createQuiz = (title, handle, numQuestions, totalPoints, selectedOption, timeLimit, category, timeCreation) => {
+  const startTime = Date.now();
+  const endTime = startTime + timeLimit*100;
+  const participants = [];
 
-const startTime = Date.now();
-const endTime = startTime + timeLimit;
-const participants = [];
-    const quizData = {
-      title: title,
-      author: handle,
-      numQuestions,
-      totalPoints,
-      selectedOption,
-      timeLimit: endTime,
-      category,
-      participants: participants,
-      createdOn: Date.now(),
-    };
-  
-    const newQuizRef = push(ref(db, 'quizzes'), quizData);
-  
-    return getQuizById(newQuizRef.key);
+  const quizData = {
+    title,
+    author: handle,
+    numQuestions,
+    totalPoints,
+    selectedOption,
+    timeLimit: endTime,
+    category,
+    participants,
+    state: 'ongoing',
+    createdOn: Date.now(),
   };
+
+  const newQuizRef = push(ref(db, 'quizzes'), quizData);
+
+  setTimeout(() => {
+    const quizRef = ref(db, `quizzes/${newQuizRef.key}`);
+    update(quizRef, { state: 'too late' });
+  }, timeLimit*3600000);
+
+  return getQuizById(newQuizRef.key);
+};
   
   export const getQuizById = (id) => {
     const quizRef = ref(db, `quizzes/${id}`);
@@ -37,7 +43,7 @@ const participants = [];
       if (!result.exists()) {
         throw new Error(`Quiz with id ${id} does not exist!`);
       }
-  
+      
       const quiz = result.val();
       quiz.id = id;
       quiz.createdOn = new Date();
