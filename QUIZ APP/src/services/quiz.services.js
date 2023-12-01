@@ -136,6 +136,27 @@ export const getAllQuizzes = () => {
     return fromPostsDocument(snapshot);
   });
 };
+export const getEducatorsQuizzes = (handle) => {
+
+      return get(query(ref(db, 'quizzes'), orderByChild('author'), equalTo(handle)))
+      
+    
+        .then((userDataSnapshot) => {
+          if (!userDataSnapshot.exists()) {
+            return [];
+          }
+    
+          const usersDocument = userDataSnapshot.val();
+          const quizResults = Object.keys(usersDocument).map((key) => {
+            const group = usersDocument[key];
+      
+            return group; 
+          });
+    
+        
+          return quizResults;
+        })
+    };
 
 export const addParticipant = (quizId, handle) => {
   return getQuizById(quizId).then((quiz) => {

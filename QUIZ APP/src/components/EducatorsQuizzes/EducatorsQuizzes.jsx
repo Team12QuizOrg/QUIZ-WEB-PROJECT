@@ -1,9 +1,11 @@
 import { useState, useEffect } from 'react';
-import { Spinner, Text, Tooltip, Box, Button } from '@chakra-ui/react';
-import { CheckCircleIcon, QuestionIcon, TimeIcon } from '@chakra-ui/icons'
-import { getUsersQuizzes } from '../../services/users.services';
 
-const UsersQuizzes = ({ user }) => {
+import { VStack, Spinner, HStack, Text, Heading, Spacer, Tooltip, Stack, StackDivider, Box, useDisclosure, Button } from '@chakra-ui/react';
+import { CheckCircleIcon, UnlockIcon, LockIcon } from '@chakra-ui/icons'
+import { getUsersQuizzes } from '../../services/users.services';
+import { getEducatorsQuizzes } from '../../services/quiz.services';
+
+const EducatorsQuizzes = ({ user }) => {
 
     const [quizState, setQuizState] = useState([])
     const [currentQuizzes, setCurrentQuizzes] = useState([])
@@ -11,15 +13,16 @@ const UsersQuizzes = ({ user }) => {
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
-        getUsersQuizzes(user.handle)
+        getEducatorsQuizzes(user.handle)
             .then((res) => {
                 setQuizState(res || []);
-                const finished = res.filter((quiz) => quiz.status === 'finished');
+                console.log(res)
+                const finished = res.filter((quiz) => quiz.state === 'too late');
                 setFinishedQuizzes(finished);
                 return res;
             })
             .then((res) => {
-                const current = res.filter((quiz) => !quiz.status || quiz.status !== 'finished');
+                const current = res.filter((quiz) => !quiz.state || quiz.state !== 'too late');
                 setCurrentQuizzes(current);
             })
             .catch((err) => console.error('Failed to get quizState', err))
@@ -38,20 +41,21 @@ const UsersQuizzes = ({ user }) => {
         return (
             <>
                 <Box justify='space-between'
+                    align={'center'}
                     flexWrap='wrap'
                     sx={{
                         '& > button': {
                             minW: '136px',
                         },
                     }}>
-                    <Tooltip label={`${user.handle}'s currently participating quizzes`} fontSize="md">
-                        <Button flex='1' variant='ghost' leftIcon={<QuestionIcon />}>
+                    <Tooltip label={`${user.handle}'s On going quizzes`} fontSize="md">
+                        <Button flex='1' variant='ghost' leftIcon={<UnlockIcon />}>
                             {currentQuizzes.length}
 
                         </Button>
                     </Tooltip>
-                    <Tooltip label={`${user.handle}'s finished quizzes`} fontSize="md">
-                        <Button flex='1' variant='ghost' leftIcon={<TimeIcon />}>
+                    <Tooltip label={`${user.handle}'s Finished quizzes`} fontSize="md">
+                        <Button flex='1' variant='ghost' leftIcon={<LockIcon />}>
                             {finishedQuizzes.length}
                         </Button>
                     </Tooltip>
@@ -68,4 +72,4 @@ const UsersQuizzes = ({ user }) => {
     }
 };
 
-export default UsersQuizzes;
+export default EducatorsQuizzes;

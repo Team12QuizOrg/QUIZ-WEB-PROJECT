@@ -15,6 +15,7 @@ import UserScoreBoard from "../../components/UserScoreBoard/UserScoreBoard";
 import UsersQuizzes from "../../components/UsersQuizzes/UsersQuizzes";
 import UserInfo from '../../components/UserInfo/UserInfo';
 import AdminButtons from './AdminButtons/AdminButtons';
+import EducatorsQuizzes from '../../components/EducatorsQuizzes/EducatorsQuizzes';
 
 
 const Profile = () => {
@@ -66,10 +67,15 @@ const Profile = () => {
                             <Heading size='md'>{currentUser.handle}</Heading>
                             <Flex spacing='4'>
                                 <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                                    <Avatar src={currentUser.photoURL} width={70} height={70} />
+                                    <Avatar src={currentUser.photoURL} width={90} height={90} />
 
+                                    {currentUser.userType === "student" && (
+                                        <UsersQuizzes user={currentUser} />
+                                    )}
+                                    {currentUser.userType === "teacher" && (
+                                        <EducatorsQuizzes user={currentUser} />
+                                    )}
 
-                                    <UsersQuizzes user={currentUser} />
                                 </Flex>
                                 {currentUser.handle === userData.handle &&
                                     <EditProfile user={currentUser.handle} originalFirstName={currentUser.firstName} originalLastName={currentUser.lastName} onEditProfile={handleEditProfile} />
