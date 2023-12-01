@@ -1,10 +1,26 @@
-import { get, update, set, ref, query, equalTo, orderByChild, push, child } from 'firebase/database';
+import { get,onValue, update, set, ref, query, equalTo, orderByChild, push, child } from 'firebase/database';
 import { db } from "../config/firebase-config";
 import { DEFAULT_AVATAR_URL } from '../common/constants';
 
 export const getUserByHandle = (handle) => {
 
   return get(ref(db, `users/${handle}`));
+};
+export const getUserByHandleLive = (handle, listener) => {
+
+  return onValue( ref(db, `users/${handle}`),
+  snapshot => {
+    const data = snapshot.exists() ? snapshot.val() : {};
+       
+        const res = data;
+       console.log(res)
+       console.log(res.photoURL)
+        listener(res.photoURL);
+  }
+  
+  
+  
+  );
 };
 export const createUserHandle = (handle, uid, email, firstName, lastName, phone, userType) => {
 

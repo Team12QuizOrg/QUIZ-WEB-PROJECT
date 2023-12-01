@@ -2,6 +2,7 @@ import { logoutUser } from "../../services/auth.services";
 import { useContext, } from "react";
 import AppContext from "../../context/AuthContext";
 import { useNavigate, } from "react-router-dom";
+import GetAvatar from "../GetAvatar/GetAvatar";
 import { Avatar, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, } from "@chakra-ui/react";
 
 export default function NavUser() {
@@ -51,7 +52,7 @@ export default function NavUser() {
                                 minW={0}
                             >
                                 {userData ? (
-                                    <Avatar size={["sm", "md", "md"]} src={userData.photoURL} />
+                                    <GetAvatar handle={userData.handle} />
                                 ) : (
                                     "My profile"
                                 )}
