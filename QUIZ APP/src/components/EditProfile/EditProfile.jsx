@@ -4,7 +4,7 @@ import { editUser } from '../../services/users.services';
 //import Button from '../Button/Button';
 import AppContext from '../../context/AuthContext';
 import { SettingsIcon } from '@chakra-ui/icons'
-import { Modal, Text, ModalOverlay, ModalContent, ModalHeader, IconButton, ModalBody, ModalCloseButton, useDisclosure, FormLabel, Input, Textarea, FormControl, Button, } from "@chakra-ui/react"
+import { Modal, Text, Box, ModalOverlay, ModalContent, ModalHeader, IconButton, ModalBody, ModalCloseButton, useDisclosure, FormLabel, Input, Textarea, FormControl, Button, } from "@chakra-ui/react"
 import UploadPhoto from '../Uploadphoto/UploadPhoto';
 //import PropTypes from "prop-types";
 
@@ -62,23 +62,23 @@ export default function EditProfile({ user, originalFirstName, originalLastName,
                         <Input
                             color={'brand.400'}
                             type="text"
-                            placeholder={originalFirstName}
+                            placeholder={originalFirstName ? originalFirstName : "Add first name"}
                             value={editedFirstName}
                             onChange={(e) => setEditedFirstName(e.target.value)}
                         />
                         <Input
                             color={'brand.400'}
-                            placeholder={originalLastName}
+                            placeholder={originalLastName ? originalLastName : "Add last name"}
                             value={editedLastName}
                             onChange={(e) => setEditedLastName(e.target.value)}
                         />
                         <Input
                             color={'brand.400'}
-                            placeholder={originalCaption}
+                            placeholder={originalCaption ? originalCaption : "Add caption"}
                             value={editedCaption}
                             onChange={(e) => setEditedCaption(e.target.value)}
                         />
-                        <Text color={'brand.200'}> Upload photo:</Text>
+                        <Text color={'brand.200'} mt={7}> Upload photo:</Text>
                         <UploadPhoto></UploadPhoto>
                         {/* {userData.isAdmin && (
                                 <Input
@@ -87,9 +87,10 @@ export default function EditProfile({ user, originalFirstName, originalLastName,
                                     onChange={(e) => setEditedPhoneNumber(e.target.value)}
                                 />
                             )} */}
-
-                        <Button onClick={handleCancel} >Cancel</Button>
-                        <Button onClick={handleSubmitEdit} >Submit</Button>
+                        <Box m={5} align={'center'}>
+                            <Button onClick={handleCancel} color={'brand.200'}>Cancel</Button>
+                            <Button onClick={handleSubmitEdit} bg={'brand.200'}>Submit</Button>
+                        </Box>
                     </ModalBody>
                 </ModalContent>
             </Modal>

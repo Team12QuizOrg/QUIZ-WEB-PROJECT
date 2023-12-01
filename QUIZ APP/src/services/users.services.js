@@ -13,8 +13,6 @@ export const getUserByHandleLive = (handle, listener) => {
     const data = snapshot.exists() ? snapshot.val() : {};
        
         const res = data;
-       console.log(res)
-       console.log(res.photoURL)
         listener(res.photoURL);
   }
   

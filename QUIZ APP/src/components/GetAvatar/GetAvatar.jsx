@@ -14,7 +14,11 @@ const GetAvatar = ({ handle }) => {
     }, [userData.photoURL]);
 
     return (
-        <Center>< Avatar src={avatar} mb={2} /></Center>
+        <>
+            {userData &&
+                (<Center>< Avatar src={avatar} mb={2} /></Center>)
+            }
+        </>
 
     )
 }
