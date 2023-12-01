@@ -8,9 +8,9 @@ import { db } from '../config/firebase-config';
 
 
 
-export const createQuiz = (title, handle, numQuestions, totalPoints, selectedOption, timeLimit, timer, category, timeCreation) => {
+export const createQuiz = (title, handle, numQuestions, totalPoints, selectedOption, timeLimit, timer, category) => {
   const startTime = Date.now();
-  const endTime = startTime + timeLimit * 100;
+  const endTime = startTime + timeLimit * 3600000;
   const participants = [];
 
   const quizData = {
@@ -24,18 +24,24 @@ export const createQuiz = (title, handle, numQuestions, totalPoints, selectedOpt
     participants,
     state: 'ongoing',
     timer,
-    createdOn: Date.now(),
+    createdOn: startTime,
+    endTime
   };
 
   const newQuizRef = push(ref(db, 'quizzes'), quizData);
+
+  const quizId = newQuizRef.key;
+  quizData.id = quizId;
+  update(newQuizRef, { id: quizId })
 
   setTimeout(() => {
     const quizRef = ref(db, `quizzes/${newQuizRef.key}`);
     update(quizRef, { state: 'too late' });
   }, timeLimit * 3600000);
 
-  return getQuizById(newQuizRef.key);
+  return getQuizById(`${newQuizRef.key}`);
 };
+
 export const getQuizById = (id) => {
   const quizRef = ref(db, `quizzes/${id}`);
 
@@ -43,15 +49,11 @@ export const getQuizById = (id) => {
     if (!result.exists()) {
       throw new Error(`Quiz with id ${id} does not exist!`);
     }
-
     const quiz = result.val();
-    quiz.id = id;
-    quiz.createdOn = new Date();
-    if (!quiz.questions) quiz.questions = [];
-
     return quiz;
   });
 };
+
 export const createQuestion = (questionData, quizId, category) => {
   const questionsRef = ref(db, `questions/${category}/`);
 
@@ -69,7 +71,6 @@ export const createQuestion = (questionData, quizId, category) => {
   });
 };
 
-
 export const getAllQuestionsByCategory = (category) => {
   const questionsRef = ref(db, `questions/${category}/`);
 
@@ -83,12 +84,6 @@ export const getAllQuestionsByCategory = (category) => {
     return question;
   });
 }
-
-// export const createQuestion = (questionData, quizId) => {
-//   const newQuestionRef = push(ref(db, `quizzes/${quizId}/questions`), questionData);
-
-//   return getQuestionsByQuizId(quizId);
-// };
 
 export const getQuestionsByQuizId = (quizId) => {
   const questionsRef = ref(db, `quizzes/${quizId}/questions`);
@@ -192,9 +187,6 @@ export const getQuestionById = (quizId, questionId) => {
   });
 };
 
-
-
-
 export const setScoreBoards = (handle, quizId, quizTitle, score) => {
   const userRef = ref(db, `/users/${handle}/scoreBoards/`);
   const quizRef = ref(db, `/quizzes/${quizId}/scoreBoards/`);
@@ -239,4 +231,11 @@ const formatTimestamp = () => {
   };
   return now.toLocaleString(undefined, options);
 };
-export default formatTimestamp;
+export const removePost = (quizId) => {
+
+  const removePost = remove(ref(db, `quizzes/${quizId}`))
+
+  Promise.all([removePost])
+    .then((res) => { })
+    .catch((err) => console.error('Error deleting post:', err))
+};
