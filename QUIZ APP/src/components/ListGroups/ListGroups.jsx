@@ -13,16 +13,17 @@ const ListGroup = ({ user }) => {
 
 
     useEffect(() => {
-        const u2 = getLiveUsersGroups((data) => {
+        const groups = getLiveUsersGroups((data) => {
             setUsersGroups(data)
         }, user.handle);
 
         return () => {
-            u2();
+            groups();
         };
     }, [user.handle]);
     const handleOpen = (groupId, groupName) => {
-
+        console.log(groupName)
+        console.log(groupId)
         setSelectedGroup({ groupId, groupName });
         onOpen();
     };

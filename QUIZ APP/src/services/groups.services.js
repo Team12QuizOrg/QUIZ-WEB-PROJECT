@@ -38,7 +38,7 @@ export const addGroup = (handle, groupName) => {
   export const addGroupMember = (groupId, member, groupName) => {
     return update(ref(db), {
       [`groups/${groupId}/members/${member}`]: member,
-      [`users/${member}/usersGroups/${groupName}`]: groupId,
+      [`users/${member}/usersGroups/${groupId}`]: groupName,
     });
   };
 
