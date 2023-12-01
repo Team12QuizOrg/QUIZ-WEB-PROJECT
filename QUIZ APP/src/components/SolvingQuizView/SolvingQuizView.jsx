@@ -10,8 +10,6 @@ import { Stack } from '@chakra-ui/react';
 import { Card, CardBody, CardHeader, Heading, StackDivider } from '@chakra-ui/react';
 import { Grid, GridItem } from "@chakra-ui/react";
 
-
-
 const SolvingQuizView = () => {
   const { userData } = useContext(AppContext)
   const { id } = useParams();
@@ -68,6 +66,35 @@ const SolvingQuizView = () => {
     }
   }, []);
 
+  useEffect(() => {
+    if (showResult) {
+      setScoreBoards(userData.handle, quiz.id, quiz.title, quizState.score);
+    }
+  }, [showResult]);
+
+  useEffect(() => {
+    if (selectedAnswer !== '') {
+      createQuizState(userData.handle, quizState, id);
+    }
+  }, [activeQuestion]);
+
+  const onAnswerSelected = (answer, index) => {
+    setSelectedAnswerIndex(index);
+    setSelectedAnswer1(answer);
+
+    if (answer === correctAnswer) {
+      setSelectedAnswer(true);
+    } else {
+      setSelectedAnswer(false);
+    }
+  };
+  useEffect(() => {
+
+    if (quizState.status === 'finished') {
+      setQuizFinished(true);
+    }
+  }, [quizState.status]);
+
   const onClickNext = () => {
     setSelectedAnswerIndex(null);
 
@@ -92,7 +119,7 @@ const SolvingQuizView = () => {
         return {
           ...prev,
           currentQuestionIndex: activeQuestion,
-          score: updatedScore,
+          score: Math.floor(updatedScore),
           selectedAnswers: updatedSelectedAnswers,
           wrongAnswers: wrongScoreUpdated,
           correctAnswers: updatedCorrectAnswer + 1
@@ -103,7 +130,7 @@ const SolvingQuizView = () => {
         return {
           ...prev,
           currentQuestionIndex: activeQuestion,
-          score: updatedScore,
+          score: Math.floor(updatedScore),
           selectedAnswers: updatedSelectedAnswers,
           wrongAnswers: wrongScoreUpdated + 1,
         }
@@ -126,36 +153,6 @@ const SolvingQuizView = () => {
   };
 
 
-  useEffect(() => {
-    if (showResult) {
-      setScoreBoards(userData.handle, quiz.id, quiz.title, result.score);
-    }
-  }, [showResult]);
-
-  useEffect(() => {
-    // Save quiz state only if an answer is selected
-    if (selectedAnswer !== '') {
-      createQuizState(userData.handle, quizState, id);
-    }
-  }, [activeQuestion]);
-
-  const onAnswerSelected = (answer, index) => {
-    setSelectedAnswerIndex(index);
-    setSelectedAnswer1(answer);
-
-    if (answer === correctAnswer) {
-      setSelectedAnswer(true);
-    } else {
-      setSelectedAnswer(false);
-    }
-  };
-  useEffect(() => {
-
-    if (quizState.status === 'finished') {
-      setQuizFinished(true);
-    }
-  }, [quizState.status]);
-
   const handleBack = () => {
     navigate(-1);
   }
@@ -163,22 +160,11 @@ const SolvingQuizView = () => {
 
   const cardBackgroundColor = 'brand.100';
   return (
-    <Flex
-    align={'center'}
-    justify={'center'}
-    justifySelf={'center'}
-    >
+    <Flex align={'center'} justify={'center'} justifySelf={'center'}>
       {!quizFinished ? (
-        <Box  align={'center'}
-        justify={'center'}
-        justifySelf={'center'}
-        borderColor="brand.200"
-        borderWidth={"thick"}
-        borderRadius="1%"
-        maxW={'50%'}
-        bg="brand.500" 
-        mx="auto"
-        my="auto"p={5} >
+        <Box  align={'center'} justify={'center'} justifySelf={'center'}
+        borderColor="brand.200" borderWidth={"thick"} borderRadius="1%"
+        maxW={'50%'} bg="brand.500"  mx="auto" my="auto"p={5} >
           <VStack align="center" spacing={4}>
             <Flex align="center" justify="space-between" width="100%">
               <Box>
@@ -249,22 +235,3 @@ const SolvingQuizView = () => {
   );
 }
 export default SolvingQuizView;
-
-
-// <Center h="100vh" bg="gray.100">
-// <VStack spacing={4}>
-//   <Text fontSize="2xl">Result</Text>
-//   <Text>
-//     Total Question: <span>{questionIds.length}</span>
-//   </Text>
-//   <Text>
-//     Total Score: <span>{quizState?.score}</span>
-//   </Text>
-//   <Text>
-//     Correct Answers: <span>{quizState.correctAnswers}</span>
-//   </Text>
-//   <Text>
-//     Wrong Answers: <span>{quizState.wrongAnswers}</span>
-//   </Text>
-// </VStack>
-// </Center>
