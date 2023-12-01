@@ -75,13 +75,13 @@ function App() {
       <AppContext.Provider value={{ ...appState, setContext: setAppState, }}>
         <NavBar></NavBar>
         <Routes>
-          <Route path="/home" element={<Home />} />
+          <Route path="/Home" element={<Home />} />
           <Route path="/" element={<Home />} />
-          <Route path="/form" element={<AuthenticatedRoute><QuizForm /></AuthenticatedRoute>} />
+          <Route path="/QuizForm" element={<AuthenticatedRoute><QuizForm /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes" element={<AuthenticatedRoute><Quizzes /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes/:id/:id" element={<AuthenticatedRoute><SolvingQuizView /></AuthenticatedRoute>} />
-          <Route path="/about" element={<AuthenticatedRoute><About /></AuthenticatedRoute>} />
+          <Route path="/About" element={<AuthenticatedRoute><About /></AuthenticatedRoute>} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           {user === null && <Route path="/signin" element={<SignIn />} />}

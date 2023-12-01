@@ -22,8 +22,6 @@ const ListGroup = ({ user }) => {
         };
     }, [user.handle]);
     const handleOpen = (groupId, groupName) => {
-        console.log(groupName)
-        console.log(groupId)
         setSelectedGroup({ groupId, groupName });
         onOpen();
     };
