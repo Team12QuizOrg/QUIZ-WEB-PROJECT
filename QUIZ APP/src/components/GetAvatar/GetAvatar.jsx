@@ -10,8 +10,7 @@ const GetAvatar = ({ handle }) => {
 
     useEffect(() => {
         getUserByHandleLive(handle, setAvatar)
-
-    }, [userData.photoURL]);
+    }, [handle]);
 
     return (
         <>
