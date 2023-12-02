@@ -16,7 +16,7 @@ import {
 } from '@chakra-ui/react';
 
 
-const ListQuizzes = ({ user, quizzes }) => {
+const ListQuizzes = ({ user, quizzes, name }) => {
 
     const navigate = useNavigate();
 
@@ -25,7 +25,7 @@ const ListQuizzes = ({ user, quizzes }) => {
         <PopoverContent>
             <PopoverArrow />
             <PopoverCloseButton />
-            <PopoverHeader>{`${user.handle}'s On going quizzes`}</PopoverHeader>
+            <PopoverHeader>{`${user.handle}'s ${name} quizzes`}</PopoverHeader>
             <PopoverBody>
 
                 <UnorderedList>

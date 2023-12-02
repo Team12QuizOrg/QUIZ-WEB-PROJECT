@@ -4,7 +4,9 @@ import AppContext from "../../context/AuthContext";
 import { useNavigate, } from "react-router-dom";
 import GetAvatar from "../GetAvatar/GetAvatar";
 import { Avatar, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, } from "@chakra-ui/react";
-
+import { PiHardDrives } from "react-icons/pi";
+import { IoPersonCircle } from "react-icons/io5";
+import { LuLogOut } from "react-icons/lu";
 export default function NavUser() {
     const { user, userData, setContext, } = useContext(AppContext);
     const navigate = useNavigate();
@@ -60,6 +62,8 @@ export default function NavUser() {
 
                             <MenuList>
                                 <MenuItem
+
+
                                     onClick={() => navigate(`/${userData.handle}`)}
                                     color={"brand.200"}
                                     fontWeight={"bold"}
@@ -69,6 +73,8 @@ export default function NavUser() {
                                         bg: "brand.200",
                                     }}
                                 >
+                                    <IoPersonCircle />
+
                                     My Profile
                                 </MenuItem>
 
@@ -76,6 +82,7 @@ export default function NavUser() {
                                 {userData && userData.isAdmin && (
                                     <>
                                         <MenuItem
+
                                             onClick={() => navigate(`/adminPanel`)}
                                             color={"brand.200"}
                                             fontWeight={"bold"}
@@ -85,6 +92,7 @@ export default function NavUser() {
                                                 bg: "brand.200",
                                             }}
                                         >
+                                            <PiHardDrives />
                                             Admin panel
                                         </MenuItem>
                                         <MenuDivider />
@@ -99,14 +107,16 @@ export default function NavUser() {
                                         color: "brand.100",
                                         bg: "brand.200",
                                     }}
-                                >
+                                ><LuLogOut />
                                     Log Out
+
                                 </MenuItem>
                             </MenuList>
                         </Menu>
                     </>
                 </>
-            )}
+            )
+            }
         </>
     );
 }

@@ -1,10 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
-import { useDisclosure, Text, Popover, PopoverTrigger, PopoverHeader, PopoverContent, Button } from '@chakra-ui/react'
+import { HStack, Spacer, Popover, PopoverTrigger, PopoverHeader, PopoverContent, Button } from '@chakra-ui/react'
 import { useState, useEffect } from 'react';
 import { getAllUserData } from '../../services/users.services';
 import { addGroupMember, getLiveTeamMembers } from '../../services/groups.services';
-
+import { MdOutlineGroupAdd } from "react-icons/md";
 
 export default function AddGroupMember({ group, groupId, currentMembers }) {
     const [searchResults, setSearchResults] = useState(null);
@@ -46,18 +46,24 @@ export default function AddGroupMember({ group, groupId, currentMembers }) {
                 {searchResults && searchResults.length > 0 && (
                     <PopoverContent>
                         {searchResults.map((user) => (
-                            <PopoverHeader
-                                key={user.id}
-                                color={'brand.400'}
-                                fontWeight={'bold'}
-                                onClick={() => {
-                                    handleAddMember(groupId, user.handle, group);
-                                    setSearchResults(null);
-                                }}
+                            <HStack key={user.id} onClick={() => {
+                                handleAddMember(groupId, user.handle, group);
+                                setSearchResults(null);
+                            }}
                                 cursor="pointer"
                             >
-                                {user.handle}
-                            </PopoverHeader>
+                                <PopoverHeader
+
+                                    color={'brand.400'}
+                                    fontWeight={'bold'}
+
+                                >
+
+                                    {user.handle}
+                                </PopoverHeader>
+                                <Spacer></Spacer>
+                                <MdOutlineGroupAdd />
+                            </HStack>
                         ))}
                     </PopoverContent>
                 )}
