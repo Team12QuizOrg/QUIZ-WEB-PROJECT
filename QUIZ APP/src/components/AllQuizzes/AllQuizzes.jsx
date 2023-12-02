@@ -18,7 +18,7 @@ import { ChevronRightIcon, ArrowForwardIcon } from "@chakra-ui/icons";
 import { ITEMS_PER_PAGE } from "../../common/constants";
 import { addParticipant } from "../../services/quiz.services";
 import AppContext from "../../context/AuthContext";
-import { formatDate } from "../../services/users.services";
+import { feedbackFormatDate } from "../../services/feedback.services";
 
 
 const AllQuizzes = ({ quizzes, catName }) => {
@@ -68,11 +68,15 @@ const AllQuizzes = ({ quizzes, catName }) => {
             </ListItem>
             <ListItem fontSize={'sm'}>
               <ListIcon marginLeft={0} as={ChevronRightIcon} color="green.400" />
-              Created: {formatDate(quizData.createdOn)}
+              Created: {feedbackFormatDate(quizData.createdOn)}
             </ListItem>
             <ListItem fontSize={'sm'} marginLeft={0}>
               <ListIcon as={ChevronRightIcon} color="green.400" />
               Type: {quizData.selectedOption}
+            </ListItem>
+            <ListItem fontSize={'sm'} marginLeft={0}>
+              <ListIcon as={ChevronRightIcon} color="green.400" />
+              Availability: {quizData.state}
             </ListItem>
             <ListItem fontSize={'sm'} marginLeft={0}>
               <ListIcon as={ChevronRightIcon} color="green.400" />

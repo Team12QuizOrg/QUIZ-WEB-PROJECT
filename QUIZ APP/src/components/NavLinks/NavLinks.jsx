@@ -63,7 +63,7 @@ export default function NavLinks({ display }) {
 const NAV_ITEMS = [
     {
         label: "All Categories",
-        to: "/quizzes/categories",
+        to: "/quizzes/AllCategories",
     },
     {
         label: "All Quizzes",

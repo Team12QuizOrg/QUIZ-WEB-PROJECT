@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import { getAllQuizzes, getQuizById } from "../../services/quiz.services";
+import { getAllQuizzes, removePost } from "../../services/quiz.services";
+import { getQuizById } from "../../services/quiz.services";
 import { useStatStyles } from "@chakra-ui/react";
 import { useNavigate } from "react-router-dom";
 import { Box, Button, Heading, Stack } from "@chakra-ui/react";
@@ -17,6 +18,7 @@ import EditProfile from "../EditProfile/EditProfile";
 import GetAvatar from "../GetAvatar/GetAvatar";
 import { formatDate } from "../../services/users.services";
 import AllQuizzes from "../AllQuizzes/AllQuizzes";
+import { DeleteIcon } from "@chakra-ui/icons";
 
 
 // Add the timer on the singleQuizView so people now how much time they have left
@@ -59,15 +61,17 @@ const SingleQuizView = () => {
   }, [])
 
   useEffect(() => {
-    getUserByHandle(quiz?.author)
-      .then((res) => {
-        if (res.exists()) {
-          const userData = res.val();
-          setQuizAuthor(userData.photoURL);
-          setCurrentUser(userData);
-        }
-      })
-      .catch((err) => console.error('error fetching user: ', err));
+    if (quiz) {
+      getUserByHandle(quiz.author)
+        .then((res) => {
+          if (res.exists()) {
+            const userData = res.val();
+            setQuizAuthor(userData.photoURL);
+            setCurrentUser(userData);
+          }
+        })
+        .catch((err) => console.error('error fetching user: ', err));
+    }
   }, [quiz]);
 
   const handleQuizClick = (quizId) => {
@@ -79,6 +83,27 @@ const SingleQuizView = () => {
         console.error(error.message);
       });
   };
+  const scoreBoardsOnQuiz = Object.entries(scoreBoards).map((entry, index) => {
+    const [quizId, data] = entry;
+    return (
+      <Box key={index} mb={2}>
+        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap' spacing='4' >
+          <GetAvatar handle={data.user} />
+          <Box justify={'space-between'}>
+            <HStack>
+              <Heading fontSize={['0.8em', '1em', '1.2em']}>
+                {data.user}
+              </Heading>
+              <Spacer />
+              <Heading fontSize={['0.8em', '1em', '1.2em']}>
+                {data.score}
+              </Heading>
+            </HStack>
+          </Box>
+        </Flex>
+      </Box>
+    );
+  })
 
 
   const handleBlock = (handle) => {
@@ -90,8 +115,9 @@ const SingleQuizView = () => {
   const handleUnblock = (handle) => {
     unBlockUser(handle)
   }
-  const handleEducator = (handle) => {
-    makeEducator(handle);
+  const handleDelete = (quizId) => {
+    removePost(quizId);
+    navigate(-1);
   }
   const handleEditProfile = (updatedValues) => {
     setCurrentUser((prevUser) => ({
@@ -106,23 +132,19 @@ const SingleQuizView = () => {
       <GridItem as="main" colSpan={{ base: 6, lg: 4, xl: 4 }}
         bg="brand.100" p="40px">
         <Center >
-          <Card maxW='2xl' width={'50%'}>
+          <Card maxW='2xl' width={'70%'}>
             <CardHeader>
-              <Heading size='md'>{quiz?.title}</Heading>
+              <Heading  margin={'10px'}size='md'>{quiz?.title}</Heading>
               <Flex spacing='4'>
                 <Flex flex='1' gap='4' alignItems='center' justify={'center'} flexWrap='wrap'>
                   <Avatar src={quizAuthor} width={70} height={70} />
-
                 </Flex>
-                {/* {currentUser?.handle === userData?.handle &&
-                  <EditProfile user={currentUser?.handle} originalFirstName={currentUser?.firstName} originalLastName={currentUser?.lastName} onEditProfile={handleEditProfile} />
-                } */}
               </Flex>
             </CardHeader>
             <CardBody align={'left'}>
               <HStack>
                 <Heading textAlign="start" fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}>
-                  {currentUser && currentUser.firstName + " " + currentUser.lastName}
+                  Educator: {currentUser && currentUser.firstName + " " + currentUser.lastName}
                 </Heading>
                 <br></br>
                 <Spacer />
@@ -139,55 +161,26 @@ const SingleQuizView = () => {
                   <br></br>
                   <Text>Number of Questions: {quiz.numQuestions}</Text>
                   <br></br>
-                  <Text>Available till: {formatDate(quiz.timeLimit)}</Text>
+                  <Text>Available till: {formatDate(quiz.endTime)}</Text>
                   <br></br>
-
-                  <Center>
+                  <Text>Time to solve the quiz: {quiz.timer} min/hours</Text>
+                  <br></br>
+                  <Flex justifyContent="center" alignItems="center" gap={4}>
                     {quiz?.state === "ongoing" ? (
-                      <Button onClick={() => handleQuizClick(quiz.id)}>Enroll</Button>
+                      <Button maxW={'20%'} margin={'5px'} onClick={() => handleQuizClick(quiz.id)}>
+                        Enroll
+                      </Button>
                     ) : (
-                      <Text> You missed the deadline </Text>
+                      <Text>You missed the deadline</Text>
                     )}
-                  </Center>
+                    {userData && quiz && (userData.isAdmin || (userData.handle === quiz.author)) && (
+                      <Button maxW={'20%'} margin={'5px'} onClick={() => handleDelete(quiz.id)} flex='1' variant='ghost' leftIcon={<DeleteIcon />}>
+                      </Button>
+                    )}
+                  </Flex>
                 </>
               )}
             </CardBody>
-            {/* {userData?.isAdmin && !currentUser?.isAdmin && (
-              <CardFooter
-                justify='space-between'
-                flexWrap='wrap'
-                sx={{
-                  '& > button': {
-                    minW: '136px',
-                  },
-                }}
-              >
-                <Button onClick={() => handleAdmin(currentUser.handle)} flex='1' variant='ghost' leftIcon={<StarIcon />}>
-                  Make Admin
-                </Button>
-                <Button onClick={() => currentUser.isBlocked
-                  ? handleUnblock(currentUser.handle)
-                  : handleBlock(currentUser.handle)} flex='1' variant='ghost' leftIcon={<NotAllowedIcon />}>
-                  {currentUser.isBlocked ? 'Unblock user' : 'Block user'}
-                </Button>
-
-              </CardFooter>
-            )} */}
-            {/* {userData?.userType === 'teacher' && currentUser?.userType === "student" && (
-              <CardFooter
-                justify='space-between'
-                flexWrap='wrap'
-                sx={{
-                  '& > button': {
-                    minW: '136px',
-                  },
-                }}
-              >
-                <Button onClick={() => handleEducator(currentUser.handle)} flex='1' variant='ghost' leftIcon={<PlusSquareIcon />}>
-                  Make Educator
-                </Button>
-              </CardFooter>
-            )} */}
           </Card>
         </Center>
       </GridItem>
@@ -201,27 +194,7 @@ const SingleQuizView = () => {
           {/* TODO: make it so only show 10 uesrs */}
           <CardBody>
             <Flex direction="column" align="center" justify="center">
-              {Object.entries(scoreBoards).map((entry, index) => {
-                const [quizId, data] = entry;
-                return (
-                  <Box key={index} mb={2}>
-                    <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap' spacing='4' >
-                      <GetAvatar handle={data.user} />
-                      <Box justify={'space-between'}>
-                        <HStack>
-                          <Heading fontSize={['0.8em', '1em', '1.2em']}>
-                            {data.user}
-                          </Heading>
-                          <Spacer />
-                          <Heading fontSize={['0.8em', '1em', '1.2em']}>
-                            {data.score}
-                          </Heading>
-                        </HStack>
-                      </Box>
-                    </Flex>
-                  </Box>
-                );
-              })}
+              {scoreBoardsOnQuiz.slice(0,10)}
             </Flex>
           </CardBody>
         </Card>

@@ -4,7 +4,7 @@ import { getAllQuizzes } from "../../services/quiz.services";
 import AllQuizzes from "../AllQuizzes/AllQuizzes";
 import { Text, Box } from "@chakra-ui/react";
 
-const Quizzes = ({ isLogged }) => {
+const Quizzes = ({ isLogged, categoriesView }) => {
   //users- all
   const [allQuizzes, setAllQuizzes] = useState();
   const [openQuizzes, setOpenQuizzes] = useState();
@@ -22,22 +22,22 @@ const Quizzes = ({ isLogged }) => {
       .then((res) => {
         setAllQuizzes(res);
         // Display Open Q
-        const filteredOpenQuizzes = res.filter((quiz) => quiz.selectedOption === "Open");
-        setOpenQuizzes(filteredOpenQuizzes || {});
+        const filteredOpenQuizzes = res.filter((quiz) => quiz.selectedOption &&  quiz.selectedOption === "Open" && quiz.state === "ongoing");
+        setOpenQuizzes(filteredOpenQuizzes || []);
         // Display Ongoing Q
-        const filteredOngoingQuizzes = res.filter((quiz) => quiz.state === "ongoing");
-        setActiveQuizzes(filteredOngoingQuizzes || {});
+        const filteredOngoingQuizzes = res.filter((quiz) =>quiz.state && quiz.state === "ongoing");
+        setActiveQuizzes(filteredOngoingQuizzes || []);
         // Display Popular Q
-        const filteredPopularQuizzes = res.filter((quiz) => Object.keys(quiz.scoreBoards).length > 0);
+        const filteredPopularQuizzes = res.filter((quiz) => quiz.scoreBoards && Object.keys(quiz.scoreBoards).length > 0);
         const sortedPopularQuizzes = filteredPopularQuizzes.sort(
-          (quizA, quizB) => Object.keys(quizB.scoreBoards).length - Object.keys(quizA.scoreBoards).length
+          (quizA, quizB) => quizA.scoreBoards && quizB.scoreBoards && Object.keys(quizB.scoreBoards).length - Object.keys(quizA.scoreBoards).length
         );
 
         const topPopularQuizzes = sortedPopularQuizzes.slice(0, 5);
-        setMostPopular(topPopularQuizzes || {});
+        setMostPopular(topPopularQuizzes || []);
 
-        const filterParticipatedQuizzes = res.filter((quiz) => Object.keys(quiz.participants).length > 0);
-        setParticipatedQuizzes(filterParticipatedQuizzes);
+        const filterParticipatedQuizzes = res.filter((quiz) => quiz.participants && Object.keys(quiz.participants).length > 0);
+        setParticipatedQuizzes(filterParticipatedQuizzes || []);
         // Add more filtered quizzes
       })
       .catch((error) => {
@@ -62,7 +62,7 @@ const Quizzes = ({ isLogged }) => {
       </Box>
       <Box mb="50px">
         {isLogged ? (
-          <AllQuizzes quizzes={participatedQuizzes} catName={'Participated Quizzes'} />
+          <AllQuizzes quizzes={participatedQuizzes} catName={'Active Quizzes'} />
         ) : 
         null}
       </Box>

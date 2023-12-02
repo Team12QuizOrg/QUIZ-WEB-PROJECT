@@ -13,17 +13,8 @@ const QuizzPage = () => {
     return (
         <div>
             <div><Quizzes isLogged={isLoggedIn} /></div>
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
         </div>
     );
 };
 
 export default QuizzPage;
- //TODO
-    //check if a user is logged in
-    // IF no user logged In : Display only Open Quizzes
-    // IF logged display all quizzes
-    //Quizzes accepts prop isLogged to do that
