@@ -21,9 +21,10 @@ import AppContext from "../../context/AuthContext";
 import { feedbackFormatDate } from "../../services/feedback.services";
 
 
-const AllQuizzes = ({ quizzes, catName }) => {
+const AllQuizzes = ({ quizzes, catName, category }) => {
   const [allQuizzes, setAllQuizzes] = useState({});
   const [currentPage, setCurrentPage] = useState(1);
+  const [cat, setCat] = useState({});
   const indexOfLastQuiz = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstQuiz = indexOfLastQuiz - ITEMS_PER_PAGE;
   const navigate = useNavigate();
@@ -32,9 +33,14 @@ const AllQuizzes = ({ quizzes, catName }) => {
     indexOfFirstQuiz,
     indexOfLastQuiz
   );
-
   useEffect(() => {
-    setAllQuizzes(quizzes || {});
+    if(category) {
+      const filteredQuiz = quizzes && quizzes.filter((quiz) => quiz && quiz.category === category);
+      setAllQuizzes(filteredQuiz || {});
+    } else {
+      setAllQuizzes(quizzes || {});
+    }
+  
   }, [quizzes]);
 
 
@@ -107,11 +113,10 @@ const AllQuizzes = ({ quizzes, catName }) => {
       <div>
         {mappedQuizzes.length > 0 ? (
           <div>
-            <Text fontSize="xl" fontWeight="bold" mb={4} align={'left'}>
-            </Text>
+            {/* Additional content or text related to the category, if needed */}
             <Flex wrap="wrap" justify="center" flexDirection="row">
               {currentPage > 1 && (
-                <Button variant="ghost" mx={1} marginTop={'185px'} onClick={() => handlePageChange(currentPage - 1)} >
+                <Button variant="ghost" mx={1} marginTop={'185px'} onClick={() => handlePageChange(currentPage - 1)}>
                   <ArrowForwardIcon transform="rotate(180deg)" />
                 </Button>
               )}
@@ -126,10 +131,11 @@ const AllQuizzes = ({ quizzes, catName }) => {
             </Flex>
           </div>
         ) : (
-          <Text>No Available Quizzes</Text>
+          <Text>No Available Quizzes for {catName}</Text>
         )}
       </div>
     </div>
   );
 }
+
 export default AllQuizzes

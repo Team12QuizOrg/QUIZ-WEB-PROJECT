@@ -11,31 +11,30 @@ export const CategoryQuizzes = () => {
     const [categories, setCategories] = useState();
 
     useEffect(() => {
-        getAllQuizzes()
-            .then((res) => {
-                setAllQuizzes(res);
-            })
-            .catch((error) => {
-                console.error("Error fetching quizzes:", error);
-            });
         getAllCategories()
         .then((res) => {
-            setCategories(res);
+            const categories = res.map((cat) => cat.category)
+            setCategories(categories);
         })
         .catch((error) => {
             console.error("Error fetching categories:", error);
         });
+        getAllQuizzes()
+        .then((res) => {
+            setAllQuizzes(res);
+        })
+        .catch((error) => {
+            console.error("Error fetching quizzes:", error);
+        });
     }, []);
-    console.log(categories);
 
     return (
         <Box>
-            <Box>
-                <Box mb="50px">
-                    <AllQuizzes quizzes={allQuizzes} catName={'Open Quizzes'} />
+            {categories && categories.map((category, index) => (
+                <Box key={index} mb="50px">
+                    <AllQuizzes quizzes={allQuizzes} catName={`Quizzes for ${category}`} category={category} />
                 </Box>
-            </Box>
+            ))}
         </Box>
     )
-
 }
