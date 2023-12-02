@@ -7,11 +7,11 @@ export default function NavMenuButton({ btnName, display }) {
     return (
         <MenuButton
             display={display}
-            fontSize={['xl', 'xl', '1xl']}
+            fontSize={['xl', 'lg', '2xl']}
 
             color={'brand.400'}
             onClick={() => navigate(`/${btnName}`)}
-            rounded={"full"}
+            rounded={"lg"}
             variant={"link"}
             cursor={"pointer"}
             fontWeight={"bold"}

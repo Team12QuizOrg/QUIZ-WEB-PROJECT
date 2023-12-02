@@ -15,9 +15,9 @@ export default function NavLinks({ display }) {
         </Menu><Menu>
                 <Menu></Menu>
                 <MenuButton display={display}
-                    fontSize={['xl', 'xl', '1xl']}
+                    fontSize={['xl', 'lg', '2xl']}
                     color={'brand.400'}
-                    rounded={"full"}
+                    rounded={"lg"}
                     variant={"link"}
                     cursor={"pointer"}
                     fontWeight={"bold"}
