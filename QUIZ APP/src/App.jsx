@@ -79,7 +79,9 @@ function App() {
           <Route path="/Home" element={<Home />} />
           <Route path="/" element={<Home />} />
           <Route path="/QuizForm" element={<AuthenticatedRoute><QuizForm /></AuthenticatedRoute>} />
-          <Route path="/quizzes/AllCategories" element={<AllCategoriesPage />} />
+          <Route path="/quizzes/AllCategories" element={<AuthenticatedRoute><AllCategoriesPage /></AuthenticatedRoute>} />
+          <Route path="/quizzes/AllCategories/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />
+          <Route path="/quizzes/AllCategories/:id/:id" element={<AuthenticatedRoute><SolvingQuizView /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes" element={<QuizzPage />} />
           <Route path="/quizzes/AllQuizzes/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes/:id/:id" element={<AuthenticatedRoute><SolvingQuizView /></AuthenticatedRoute>} />

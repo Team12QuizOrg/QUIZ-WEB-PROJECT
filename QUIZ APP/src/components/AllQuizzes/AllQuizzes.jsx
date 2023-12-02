@@ -93,7 +93,6 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
               Total Points: {quizData.totalPoints}
             </ListItem>
           </List>
-
           <Button mt={10} w={'full'} bg={'blue.400'} color={'white'}
             rounded={'xl'} boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
             _hover={{ bg: 'brand.200', }} _focus={{ bg: 'brand.200', }}
@@ -131,7 +130,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
             </Flex>
           </div>
         ) : (
-          <Text>No Available Quizzes for {catName}</Text>
+          <Text>No {catName}</Text>
         )}
       </div>
     </div>

@@ -206,7 +206,6 @@ const SingleQuizView = () => {
           <CardHeader>
             <Heading size='md'>SCORE BOARD</Heading>
           </CardHeader>
-          {/* TODO: make it so only show 10 uesrs */}
           <CardBody>
             <Flex direction="column" align="center" justify="center">
               {scoreBoardsOnQuiz.slice(0, 10)}
