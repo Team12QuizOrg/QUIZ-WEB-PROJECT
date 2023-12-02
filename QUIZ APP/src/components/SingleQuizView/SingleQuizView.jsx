@@ -134,7 +134,7 @@ const SingleQuizView = () => {
         <Center >
           <Card maxW='2xl' width={'70%'}>
             <CardHeader>
-              <Heading  margin={'10px'}size='md'>{quiz?.title}</Heading>
+              <Heading margin={'10px'} size='md'>{quiz?.title}</Heading>
               <Flex spacing='4'>
                 <Flex flex='1' gap='4' alignItems='center' justify={'center'} flexWrap='wrap'>
                   <Avatar src={quizAuthor} width={70} height={70} />
@@ -177,9 +177,24 @@ const SingleQuizView = () => {
                       <Button maxW={'20%'} margin={'5px'} onClick={() => handleDelete(quiz.id)} flex='1' variant='ghost' leftIcon={<DeleteIcon />}>
                       </Button>
                     )}
+
                   </Flex>
                 </>
               )}
+              {userData.handle === quiz?.author &&
+                <CardFooter
+                  justify='space-between'
+                  flexWrap='wrap'
+                  sx={{
+                    '& > button': {
+                      minW: '136px',
+                    },
+                  }}
+                ><Button onClick={() => navigate(`/quizzes/assessment/${quiz.id}`)} flex='1' variant='ghost' bg={'brand.200'}>
+                    Assess
+                  </Button>
+                </CardFooter>
+              }
             </CardBody>
           </Card>
         </Center>
@@ -194,7 +209,7 @@ const SingleQuizView = () => {
           {/* TODO: make it so only show 10 uesrs */}
           <CardBody>
             <Flex direction="column" align="center" justify="center">
-              {scoreBoardsOnQuiz.slice(0,10)}
+              {scoreBoardsOnQuiz.slice(0, 10)}
             </Flex>
           </CardBody>
         </Card>

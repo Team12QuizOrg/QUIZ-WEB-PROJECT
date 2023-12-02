@@ -25,7 +25,7 @@ import Quizzes from './components/Quizzes/Quizzes';
 import { getAllQuizzes } from './services/quiz.services';
 import QuizForm from './components/QuizForm/QuizForm';
 import { AllCategoriesPage } from './views/AllCategoriesPage/AllCategoriesPage';
-
+import AssessmentQuiz from './components/AssessmentQuiz/AssessmentQuiz';
 
 
 function App() {
@@ -79,10 +79,11 @@ function App() {
           <Route path="/Home" element={<Home />} />
           <Route path="/" element={<Home />} />
           <Route path="/QuizForm" element={<AuthenticatedRoute><QuizForm /></AuthenticatedRoute>} />
-          <Route path="/quizzes/AllCategories" element={<AllCategoriesPage />}/>
-          <Route path="/quizzes/AllQuizzes" element={<QuizzPage />}/>
+          <Route path="/quizzes/AllCategories" element={<AllCategoriesPage />} />
+          <Route path="/quizzes/AllQuizzes" element={<QuizzPage />} />
           <Route path="/quizzes/AllQuizzes/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes/:id/:id" element={<AuthenticatedRoute><SolvingQuizView /></AuthenticatedRoute>} />
+          <Route path="/quizzes/assessment/:id" element={<AuthenticatedRoute><AssessmentQuiz /></AuthenticatedRoute>} />
           <Route path="/About" element={<AuthenticatedRoute><About /></AuthenticatedRoute>} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
