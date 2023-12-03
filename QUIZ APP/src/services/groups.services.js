@@ -46,7 +46,7 @@ export const addGroup = (handle, groupName) => {
 
     return update(ref(db), {
       [`groups/${groupId}/members/${member}`]: null,
-      [`users/${member}/usersGroups/${groupName}`]: null,
+      [`users/${member}/usersGroups/${groupId}`]: null,
     });
   };
   
@@ -106,3 +106,14 @@ export const addGroup = (handle, groupName) => {
       });
   };
   
+  export const areMembersOfSameGroup = (userDataHandle, authorHandle)  =>{
+    return get(ref(db, `users/${userDataHandle}/usersGroups/`)).then(userDataSnapshot => {
+      return get(ref(db, `users/${authorHandle}/usersGroups/`)).then(authorSnapshot => {
+        const userDataGroups = Object.keys(userDataSnapshot.val() || {});
+        const authorGroups = Object.keys(authorSnapshot.val() || {});
+        const commonGroups = userDataGroups.filter(group => authorGroups.includes(group));
+
+        return commonGroups.length > 0;
+      });
+    });
+  }

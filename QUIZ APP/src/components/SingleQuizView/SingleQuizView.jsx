@@ -19,6 +19,7 @@ import GetAvatar from "../GetAvatar/GetAvatar";
 import { formatDate } from "../../services/users.services";
 import AllQuizzes from "../AllQuizzes/AllQuizzes";
 import { DeleteIcon } from "@chakra-ui/icons";
+import { areMembersOfSameGroup } from "../../services/groups.services";
 
 
 // Add the timer on the singleQuizView so people now how much time they have left
@@ -34,6 +35,7 @@ const SingleQuizView = () => {
   const [scoreBoards, setScoreBoards] = useState([]);
   const [getCat, setGetCat] = useState();
   const [state, setState] = useState("false");
+  const [areGroupMembers, setAreGroupMembers] = useState('false')
   const getCatName = `Similar Quizzes to "${quiz?.title}":`;
 
   useEffect(() => {
@@ -46,6 +48,16 @@ const SingleQuizView = () => {
       .catch((err) => console.error(err));
   }, [quiz]);
 
+  useEffect(() => {
+    if (quiz) {
+      areMembersOfSameGroup(userData.handle, quiz.author)
+        .then((res) => {
+          console.log(res)
+          setAreGroupMembers(res);
+        })
+        .catch((err) => console.error(err));
+    }
+  }, [userData?.handle, quiz?.author]);
   useEffect(() => {
     getAllQuizzes()
       .then((res) => {
@@ -166,14 +178,14 @@ const SingleQuizView = () => {
                   <Text>Time to solve the quiz: {quiz.timer} min/hours</Text>
                   <br></br>
                   <Flex justifyContent="center" alignItems="center" gap={4}>
-                    {quiz?.state === "ongoing" ? (
+                    {new Date() < quiz.endTime ? (
                       <Button maxW={'20%'} margin={'5px'} onClick={() => handleQuizClick(quiz.id)}>
                         Enroll
                       </Button>
                     ) : (
                       <Text>You missed the deadline</Text>
                     )}
-                    {userData && quiz && (userData.isAdmin || (userData.handle === quiz.author)) && (
+                    {userData && quiz && (userData.isAdmin || (userData.handle === quiz.author) || areGroupMembers) && (
                       <Button maxW={'20%'} margin={'5px'} onClick={() => handleDelete(quiz.id)} flex='1' variant='ghost' leftIcon={<DeleteIcon />}>
                       </Button>
                     )}
@@ -181,7 +193,7 @@ const SingleQuizView = () => {
                   </Flex>
                 </>
               )}
-              {userData.handle === quiz?.author &&
+              {userData && quiz && userData.handle === quiz.author &&
                 <CardFooter
                   justify='space-between'
                   flexWrap='wrap'
