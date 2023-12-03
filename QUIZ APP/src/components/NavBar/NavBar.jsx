@@ -18,15 +18,6 @@ export default function NavBar() {
     setSearchResults(results);
   };
 
-  const onLogout = () => {
-    logoutUser().then(() => {
-      setContext({
-        user: null,
-        userData: null,
-      });
-    });
-  };
-
   return (
     <Box>
       <Flex
