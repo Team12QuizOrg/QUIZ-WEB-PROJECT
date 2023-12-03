@@ -25,6 +25,7 @@ import Quizzes from "./components/Quizzes/Quizzes";
 import { getAllQuizzes } from "./services/quiz.services";
 import QuizForm from "./components/QuizForm/QuizForm";
 import PrivateRoute from "./hoc/PrivateRoute";
+import AssessmentQuiz from "./views/AssessmentQuiz/AssessmentQuiz";
 
 function App() {
   const [user] = useAuthState(auth);
@@ -126,6 +127,7 @@ function App() {
               </AuthenticatedRoute>
             }
           />
+          <Route path="/quizzes/assessment/:id" element={<AuthenticatedRoute><AssessmentQuiz /></AuthenticatedRoute>} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           {user === null && <Route path="/signin" element={<SignIn />} />}

@@ -239,3 +239,27 @@ export const removePost = (quizId) => {
     .then((res) => { })
     .catch((err) => console.error('Error deleting post:', err))
 };
+
+
+export const getQuizScoreBoard = (quizId) => {
+  const quizRef = ref(db, `/quizzes/${quizId}/scoreBoards/`);
+
+  return get(quizRef)
+    .then((quizSnapshot) => {
+      if (!quizSnapshot.exists()) {
+        return [];
+      }
+
+      const quizDocument = quizSnapshot.val();
+      const scoreBoards = Object.keys(quizDocument).map((key) => {
+        const scoreBoard = quizDocument[key];
+        return scoreBoard; 
+      });
+
+      return scoreBoards;
+    })
+    .catch((error) => {
+      console.error('Error getting quiz state:', error);
+      throw error;
+    });
+};

@@ -212,6 +212,7 @@ export const getUserScoreBoard = (handle) => {
     });
 };
 
+
 export const getUsersQuizzes = (handle) => {
   const userRef = ref(db, `users/${handle}/quizState`);
 

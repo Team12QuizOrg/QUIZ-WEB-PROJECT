@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import AppContext from '../../context/AuthContext';
 import { useContext } from 'react';
+import { useNavigate } from "react-router-dom";
 import { VStack, Grid, HStack, Box, IconButton, Tooltip, Modal, Heading, Text, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Button, } from '@chakra-ui/react';
 import { getLiveTeamMembers, getGroupOwner, deleteGroupMember, deleteGroup } from '../../services/groups.services';
 import GetAvatar from '../GetAvatar/GetAvatar';
@@ -13,6 +14,7 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
     const { groupId, groupName } = selectedGroup;
     const [groupMembers, setGroupMembers] = useState([])
     const [owner, setOwner] = useState()
+    const navigate = useNavigate();
     useEffect(() => {
         getGroupOwner(groupId).then((res) => setOwner((res)));
     }, []);
@@ -61,13 +63,20 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
                                 <VStack key={member} style={{
                                     border: '2px solid grey', borderRadius: "10px",
                                     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-                                }} p={5}  >
+                                }}
+                                    p={5}
+                                    _hover={{
+                                        textDecoration: "none",
+                                        bg: "brand.100",
+                                    }}
+
+                                >
                                     <Box h={10}
-                                        w={10} mt={2}>
+                                        w={10} mt={2} >
                                         <GetAvatar handle={member} />
                                     </Box>
                                     <HStack >
-                                        <Text color={'brand.200'} align={'center'}>{member}</Text>
+                                        <Text color={'brand.200'} align={'center'} >{member}</Text>
 
                                         {userData.handle === owner && member !== owner && (
                                             <Tooltip label="Delete Member">
