@@ -52,7 +52,7 @@ const UsersQuizzes = ({ user }) => {
                     <Popover>
                         <PopoverTrigger>
 
-                            <Button flex='1' variant='ghost' leftIcon={<QuestionIcon />} onClick={() => { }}>
+                            <Button flex='1' variant='ghost' fontSize={['xl', 'lg', '1xl']} leftIcon={<QuestionIcon />} onClick={() => { }}>
                                 {currentQuizzes.length}
 
                             </Button>
@@ -63,7 +63,7 @@ const UsersQuizzes = ({ user }) => {
 
                     <Popover>
                         <PopoverTrigger>
-                            <Button flex='1' variant='ghost' leftIcon={<TimeIcon />} onClick={() => { }}>
+                            <Button flex='1' variant='ghost' fontSize={['xl', 'lg', '1xl']} leftIcon={<TimeIcon />} onClick={() => { }}>
                                 {finishedQuizzes.length}
                             </Button>
                         </PopoverTrigger>

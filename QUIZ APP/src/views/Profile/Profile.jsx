@@ -74,12 +74,17 @@ const Profile = () => {
                     p="40px"
                 >
                         <Center>
+
                             <Card maxW='2xl' >
+                                <Button size='md' bg={'brand.200'} fontSize={['xl', 'lg', '2xl']} style={{
+                                    borderRadius: "10px",
+                                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                }}>{currentUser.handle}</Button>
                                 <CardHeader>
-                                    <Heading size='md'>{currentUser.handle}</Heading>
+
                                     <Flex spacing='4'>
                                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                                            <GetAvatar handle={currentUser.handle} width={90} height={90} />
+                                            <GetAvatar handle={currentUser.handle} />
 
                                             {currentUser.userType === "student" && (
                                                 <UsersQuizzes user={currentUser} />

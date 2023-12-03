@@ -28,7 +28,10 @@ const CreateGroup = () => {
 
     return (
         <>
-            <Button onClick={handleOpen} bg={'brand.200'} > Create Group</Button>
+            <Button onClick={handleOpen} bg={'brand.200'} style={{
+                borderRadius: "10px",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+            }}> Create Group</Button>
             <Modal isOpen={isOpen} onClose={onClose} >
                 <ModalOverlay />
                 <ModalContent>
