@@ -1,36 +1,38 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { Box, Heading, Text } from "@chakra-ui/react";
 
-const Timer = ({ initialTime, onTimerFinish }) => {
-  const [time, setTime] = useState(initialTime);
+const Timer = ({ endTimeUnix, onTimerFinish }) => {
+  const calculateTimeRemaining = useCallback(() => {
+    const currentTimeUnix = Math.floor(Date.now() / 1000);
+    return Math.floor(Math.max(0, endTimeUnix - currentTimeUnix));
+  }, [endTimeUnix]);
+
+  const [time, setTime] = useState(calculateTimeRemaining());
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
-      setTime((prevTime) => {
-        const newTime = prevTime - 1;
-
-        if (newTime <= 0) {
-          clearInterval(timerInterval);
-          Promise.resolve().then(() => onTimerFinish());
-        }
-        return newTime;
-      });
+      setTime(calculateTimeRemaining());
     }, 1000);
 
     return () => clearInterval(timerInterval);
-  }, [initialTime, onTimerFinish]);
+  }, [calculateTimeRemaining]);
 
   const formatTime = (seconds) => {
     const minutes = Math.floor(seconds / 60);
     const remainingSeconds = seconds % 60;
 
-    // Manually format minutes and seconds
     const formattedMinutes = minutes < 10 ? `0${minutes}` : `${minutes}`;
     const formattedSeconds =
       remainingSeconds < 10 ? `0${remainingSeconds}` : `${remainingSeconds}`;
 
     return `${formattedMinutes}:${formattedSeconds}`;
   };
+
+  // useEffect(() => {
+  //   if (time === 0) {
+  //     onTimerFinish();
+  //   }
+  // }, [time, onTimerFinish]);
 
   return (
     <Box

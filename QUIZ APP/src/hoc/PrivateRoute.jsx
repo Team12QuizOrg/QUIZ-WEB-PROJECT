@@ -16,9 +16,7 @@ export default function PrivateRoute({ children }) {
 
   if (userData && userData.isBlocked) {
     onLogOut();
-    return (
-      alert('You were blocked.')
-    );
+    return
   }
   return children;
 }

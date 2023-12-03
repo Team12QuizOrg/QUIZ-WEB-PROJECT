@@ -8,12 +8,8 @@ import { createQuizState, getQuizState } from "../../services/users.services";
 import {
   Box,
   Button,
-  Center,
-  ChakraProvider,
-  extendTheme,
   Text,
   Flex,
-  ThemeProvider,
   VStack,
 } from "@chakra-ui/react";
 import { Stack } from "@chakra-ui/react";
@@ -35,22 +31,20 @@ const SolvingQuizView = () => {
   const [activeQuestion, setActiveQuestion] = useState(0);
   const [selectedAnswer, setSelectedAnswer] = useState("");
   const [selectedAnswerIndex, setSelectedAnswerIndex] = useState(null);
-  const [questions, setQuestions] = useState([]);
+  // const [questions, setQuestions] = useState([]);
   const [questionIds, setQuestionIds] = useState([]);
   const [showResult, setShowResult] = useState(false);
   const [selectedAnswer1, setSelectedAnswer1] = useState([]);
   const activeQuestionData = questionIds[activeQuestion];
   const [correctAnswer, question, options] = activeQuestionData || [];
-
+  const [timerUnix, setTimerUnix] = useState();
   const [quizFinished, setQuizFinished] = useState(false);
 
-
   const handleTimerFinish = () => {
-
     setQuizFinished(true);
     setShowResult(true);
 
-    setActiveQuestion(0)
+    setActiveQuestion(0);
     setQuizState((prev) => {
       return {
         ...prev,
@@ -58,6 +52,7 @@ const SolvingQuizView = () => {
         wrongAnswers: questionIds.length - prev.correctAnswers,
       };
     });
+    console.log(quizState);
   };
 
   const [result, setResult] = useState({
@@ -73,16 +68,27 @@ const SolvingQuizView = () => {
     wrongAnswers: 0,
     correctAnswers: 0,
     status: "unfinished",
+    endTime: timerUnix
   });
 
   useEffect(() => {
-    getQuizState(userData.handle, id)
-      .then((res) => {
-        setQuizState(res || {});
-        setActiveQuestion(res.currentQuestionIndex + 1 || 0);
-      })
-      .catch((err) => console.error("Failed to get quizState", err));
-  }, []);
+    if (Object.values(quizState).length === 0) {
+      setTimerUnix(Date.now() / 1000 + Number(quiz?.timer * 60));
+    }
+  }, [quiz]);
+
+  useEffect(() => {
+    if (userData?.handle && id) {
+      getQuizState(userData.handle, id)
+        .then((res) => {
+          setQuizState(res || {});
+          setActiveQuestion(res.currentQuestionIndex + 1 || 0);
+        })
+        .then((res) => console.log(timerUnix))
+        .catch((err) => console.error("Failed to get quizState", err));
+    }
+  }, [id]);
+
 
   useEffect(() => {
     getQuizById(id)
@@ -140,7 +146,7 @@ const SolvingQuizView = () => {
             ),
             correctAnswers: prev.correctAnswers + 1,
           }
-        : { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
+        : { ...prev, wrongAnswers: +prev.wrongAnswers + 1 }
     );
 
     setQuizState((prev) => {
@@ -158,6 +164,7 @@ const SolvingQuizView = () => {
           selectedAnswers: updatedSelectedAnswers,
           wrongAnswers: wrongScoreUpdated,
           correctAnswers: updatedCorrectAnswer + 1,
+          endTime: timerUnix
         };
       } else {
         const updatedScore = prev.score || 0;
@@ -168,6 +175,7 @@ const SolvingQuizView = () => {
           score: Math.floor(updatedScore),
           selectedAnswers: updatedSelectedAnswers,
           wrongAnswers: wrongScoreUpdated + 1,
+          endTime: timerUnix
         };
       }
     });
@@ -196,10 +204,7 @@ const SolvingQuizView = () => {
     <Flex align={"center"} justify={"center"} justifySelf={"center"}>
       <div>
         {quiz && !quizFinished && (
-          <Timer
-            initialTime={quiz.timer * 60}
-            onTimerFinish={handleTimerFinish}
-          />
+          <Timer endTimeUnix={quizState.endTime?quizState.endTime:timerUnix} onTimerFinish={handleTimerFinish} />
         )}
       </div>
       {!quizFinished ? (
