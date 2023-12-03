@@ -1,9 +1,8 @@
 import { useState, useEffect } from 'react';
 import AppContext from '../../context/AuthContext';
 import { useContext } from 'react';
-import { addFeedback } from '../../services/feedback.services';
-import { VStack, Grid, HStack, Box, IconButton, Tooltip, Modal, Heading, Text, Input, Stack, List, ListItem, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, FormLabel, Textarea, FormControl, Button, } from '@chakra-ui/react';
-import { addGroup, getAllGroupMembers, getLiveTeamMembers, getGroupOwner, deleteGroupMember } from '../../services/groups.services';
+import { VStack, Grid, HStack, Box, IconButton, Tooltip, Modal, Heading, Text, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, Button, } from '@chakra-ui/react';
+import { getLiveTeamMembers, getGroupOwner, deleteGroupMember, deleteGroup } from '../../services/groups.services';
 import GetAvatar from '../GetAvatar/GetAvatar';
 import AddGroupMember from '../AddGroupMember/AddGroupMember';
 import { MdOutlineGroupRemove } from "react-icons/md";
@@ -32,6 +31,12 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
 
     }
 
+    const handleDeleteGroup = () => {
+        deleteGroup(groupMembers, userData.handle, groupId)
+            .then(() => onClose())
+            .catch((err) => console.error(err));
+    };
+
     return (
         <>
             <Modal isOpen={isOpen} onClose={onClose} >
@@ -51,7 +56,7 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
                             <Text color={'brand.200'} align={'center'}>{owner}</Text>
                         </VStack>
                         <Heading color={'black'} fontSize={['0.8em', '1em', '1.2em']}> Members </Heading>
-                        <Grid templateColumns={`repeat(3, 1fr)`} gap={4} mt={4} mb={6}>
+                        <Grid templateColumns={`repeat(2, 1fr)`} gap={4} mt={4} mb={6}>
                             {groupMembers && groupMembers.map((member) => (
                                 <VStack key={member} style={{
                                     border: '2px solid grey', borderRadius: "10px",
@@ -75,6 +80,15 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
                                                 />
                                             </Tooltip>
                                         )}
+                                        {groupMembers.includes(userData.handle) && userData.handle === member && <Tooltip label="Leave group">
+                                            <IconButton
+                                                size='xs'
+                                                icon={<MdOutlineGroupRemove />}
+                                                colorScheme="red"
+
+                                                onClick={() => handleDeleteMember(groupId, groupName, member)}
+                                            />
+                                        </Tooltip>}
                                     </HStack>
                                 </VStack>
 
@@ -84,6 +98,20 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
                             < Box mb={6}>
                                 <Heading color={'black'} fontSize={['0.8em', '1em', '1.2em']}> Add Member: </Heading>
                                 <AddGroupMember group={groupName} groupId={groupId} currentMembers={groupMembers} ></AddGroupMember>
+                                <Button
+                                    style={{
+                                        border: '2px solid grey', borderRadius: "10px",
+                                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                    }}
+                                    w="100%"
+                                    size="sm"
+                                    _hover={{ bg: '#427575' }}
+                                    mt="10px"
+                                    type="button"
+                                    onClick={handleDeleteGroup}>
+                                    Delete Group
+                                </Button>
+
                             </Box>
                         }
                     </ModalBody>

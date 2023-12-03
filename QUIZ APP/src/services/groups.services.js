@@ -117,3 +117,26 @@ export const addGroup = (handle, groupName) => {
       });
     });
   }
+
+
+export const deleteGroup = ( members, user, groupId) => {
+
+  if (members.length > 0) {
+   
+    for (let member of members) {
+      update(ref(db), {
+
+        [`users/${member}/usersGroups/${groupId}`]: null,
+
+      });
+    }
+
+    return update(ref(db), {
+
+      [`users/${user}/usersGroups/${groupId}`]: null,
+      [`groups/${groupId}`]: null,
+
+    });
+  }
+
+};
