@@ -52,7 +52,7 @@ const SolvingQuizView = () => {
         wrongAnswers: prev.wrongAnswers + (questionIds.length - prev.selectedAnswers.length),
       };
     });
-   
+
   };
 
   const [result, setResult] = useState({
@@ -68,7 +68,8 @@ const SolvingQuizView = () => {
     wrongAnswers: 0,
     correctAnswers: 0,
     status: "unfinished",
-    endTime: timerUnix
+    endTime: timerUnix,
+    id: id
   });
 
   useEffect(() => {
@@ -139,12 +140,12 @@ const SolvingQuizView = () => {
     setResult((prev) =>
       selectedAnswer
         ? {
-            ...prev,
-            score: Math.floor(
-              prev.score + quiz.totalPoints / quiz.numQuestions
-            ),
-            correctAnswers: prev.correctAnswers + 1,
-          }
+          ...prev,
+          score: Math.floor(
+            prev.score + quiz.totalPoints / quiz.numQuestions
+          ),
+          correctAnswers: prev.correctAnswers + 1,
+        }
         : { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
     );
 
@@ -188,6 +189,8 @@ const SolvingQuizView = () => {
         return {
           ...prev,
           status: "finished",
+          title: quiz.title,
+          id
         };
       });
     }

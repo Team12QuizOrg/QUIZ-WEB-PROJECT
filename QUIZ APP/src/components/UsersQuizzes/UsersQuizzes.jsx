@@ -30,8 +30,6 @@ const UsersQuizzes = ({ user }) => {
             });
     }, [user.handle]);
 
-
-
     if (loading) {
         return (
             <Box display="flex" alignItems="center" justifyContent="center" height="100vh">
@@ -57,7 +55,7 @@ const UsersQuizzes = ({ user }) => {
 
                             </Button>
                         </PopoverTrigger>
-                        <ListQuizzes user={user} quizzes={currentQuizzes} />
+                        <ListQuizzes user={user} quizzes={currentQuizzes} name={'On Going'} />
 
                     </Popover>
 
@@ -67,7 +65,7 @@ const UsersQuizzes = ({ user }) => {
                                 {finishedQuizzes.length}
                             </Button>
                         </PopoverTrigger>
-                        <ListQuizzes user={user} quizzes={finishedQuizzes} />
+                        <ListQuizzes user={user} quizzes={finishedQuizzes} name={'Finished'} />
                     </Popover>
                     <Tooltip label={`${user.handle}'s Rank`} fontSize="md">
                         <Button color={'brand.200'} flex='1' variant='ghost' leftIcon={<CheckCircleIcon />}>
