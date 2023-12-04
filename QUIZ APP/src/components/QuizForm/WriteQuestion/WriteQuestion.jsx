@@ -15,6 +15,7 @@ const WriteQuestion = ({
   func,
   questions,
 }) => {
+  const uniqueQuestions = new Set();
   return (
     <>
       <FormControl color="black" mb={2} gridColumn="span 2">
@@ -29,13 +30,22 @@ const WriteQuestion = ({
           <option value="" color="black">
             Choose a question
           </option>
-          {Object.entries(questions).map((cat, index) => (
-            <option key={cat[0]} color="black">
-              {cat[1].question}
-            </option>
-          ))}
-        </Select>
-      </FormControl>
+          {Object.entries(questions).map((cat, index) => {
+          const question = cat[1].question;
+
+          if (!uniqueQuestions.has(question)) {
+            uniqueQuestions.add(question);
+
+            return (
+              <option key={cat[0]} color="black">
+                {question}
+              </option>
+            );
+          }
+          return null;
+        })}
+      </Select>
+    </FormControl>
 
       <FormControl color="black" mb={2} gridColumn="span 2">
         <Box mb={2} gridColumn="span 2">

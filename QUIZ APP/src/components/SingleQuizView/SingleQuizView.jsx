@@ -21,11 +21,6 @@ import AllQuizzes from "../AllQuizzes/AllQuizzes";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { areMembersOfSameGroup } from "../../services/groups.services";
 
-
-
-// Add the timer on the singleQuizView so people now how much time they have left
-// CSS - singleQuizView view, SolvingQuizView
-
 const SingleQuizView = () => {
   const { userData } = useContext(AppContext)
   const { id } = useParams();
@@ -55,7 +50,6 @@ const SingleQuizView = () => {
     if (quiz) {
       areMembersOfSameGroup(userData.handle, quiz.author)
         .then((res) => {
-          console.log(res)
           setAreGroupMembers(res);
           if(new Date() > quiz.timeLimit ){
             changeState(id);

@@ -49,10 +49,10 @@ const SolvingQuizView = () => {
       return {
         ...prev,
         status: "finished",
-        wrongAnswers: questionIds.length - prev.correctAnswers,
+        wrongAnswers: prev.wrongAnswers + (questionIds.length - prev.selectedAnswers.length),
       };
     });
-    console.log(quizState);
+   
   };
 
   const [result, setResult] = useState({
@@ -84,7 +84,6 @@ const SolvingQuizView = () => {
           setQuizState(res || {});
           setActiveQuestion(res.currentQuestionIndex + 1 || 0);
         })
-        .then((res) => console.log(timerUnix))
         .catch((err) => console.error("Failed to get quizState", err));
     }
   }, [id]);
@@ -146,7 +145,7 @@ const SolvingQuizView = () => {
             ),
             correctAnswers: prev.correctAnswers + 1,
           }
-        : { ...prev, wrongAnswers: +prev.wrongAnswers + 1 }
+        : { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
     );
 
     setQuizState((prev) => {
@@ -164,7 +163,7 @@ const SolvingQuizView = () => {
           selectedAnswers: updatedSelectedAnswers,
           wrongAnswers: wrongScoreUpdated,
           correctAnswers: updatedCorrectAnswer + 1,
-          endTime: timerUnix
+          endTime: Math.floor(timerUnix) || prev.endTime,
         };
       } else {
         const updatedScore = prev.score || 0;
@@ -175,7 +174,7 @@ const SolvingQuizView = () => {
           score: Math.floor(updatedScore),
           selectedAnswers: updatedSelectedAnswers,
           wrongAnswers: wrongScoreUpdated + 1,
-          endTime: timerUnix
+          endTime: Math.floor(timerUnix) || prev.endTime,
         };
       }
     });
@@ -204,7 +203,7 @@ const SolvingQuizView = () => {
     <Flex align={"center"} justify={"center"} justifySelf={"center"}>
       <div>
         {quiz && !quizFinished && (
-          <Timer endTimeUnix={quizState.endTime?quizState.endTime:timerUnix} onTimerFinish={handleTimerFinish} />
+          <Timer endTimeUnix={quizState?.endTime ? quizState?.endTime : timerUnix} onTimerFinish={handleTimerFinish} />
         )}
       </div>
       {!quizFinished ? (

@@ -68,8 +68,15 @@ const Quizzes = ({ isLogged, categoriesView }) => {
       </Box>
       <Box mb="50px">
         {isLogged ? (
-          <AllQuizzes quizzes={mostPopular} catName={'Most Popular Quizzes'} />
+          <AllQuizzes quizzes={mostPopular} catName={'Popular Quizzes'} />
         ) : (
+          null
+        )}
+      </Box>
+      <Box mb="50px">
+        {isLogged ? (
+          <AllQuizzes quizzes={allQuizzes} catName={'All Quizzes'} />
+        ) :(
           <Text>You need to Log In to view all Quizzes</Text>
         )}
       </Box>

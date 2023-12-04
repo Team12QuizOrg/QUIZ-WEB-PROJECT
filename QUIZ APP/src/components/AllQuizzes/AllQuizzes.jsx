@@ -35,7 +35,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
   );
   useEffect(() => {
     if(category) {
-      const filteredQuiz = quizzes && quizzes.filter((quiz) => quiz && quiz.category === category);
+      const filteredQuiz = quizzes && quizzes.filter((quiz) => quiz && quiz.category === category && quiz.state ==="ongoing");
       setAllQuizzes(filteredQuiz || {});
     } else {
       setAllQuizzes(quizzes || {});
@@ -50,7 +50,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
 
   const mappedQuizzes = currentQuizzes.map(([quizId, quizData]) => (
     <Center padding={'10px'} py={6} key={quizId}>
-      <Box maxW={'330px'} w={'full'} bg={'white'} boxShadow={'2xl'}
+      <Box maxW={'250px'} w={'full'} bg={'white'} boxShadow={'2xl'}
         rounded={'md'} overflow={'hidden'}>
         <Stack textAlign={'center'} p={6} color={'black'} align={'center'}>
           <Text fontSize={'xs'} fontWeight={500} bg={'green.50'} p={2}
@@ -72,7 +72,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
               <ListIcon as={ChevronRightIcon} color="green.400" />
               Author: {quizData.author}
             </ListItem>
-            <ListItem fontSize={'sm'}>
+            <ListItem fontSize={'xs'}>
               <ListIcon marginLeft={0} as={ChevronRightIcon} color="green.400" />
               Created: {feedbackFormatDate(quizData.createdOn)}
             </ListItem>
@@ -106,13 +106,12 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
 
   return (
     <div>
-      <Text fontSize="xl" fontWeight="bold" mb={4} align={'left'}>
+      <Text margin={'20px'}fontSize="xl" fontWeight="bold" mb={4} align={'left'}>
         {catName}
       </Text>
-      <div>
+      <Box >
         {mappedQuizzes.length > 0 ? (
           <div>
-            {/* Additional content or text related to the category, if needed */}
             <Flex wrap="wrap" justify="center" flexDirection="row">
               {currentPage > 1 && (
                 <Button variant="ghost" mx={1} marginTop={'185px'} onClick={() => handlePageChange(currentPage - 1)}>
@@ -132,7 +131,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
         ) : (
           <Text>No {catName}</Text>
         )}
-      </div>
+      </Box>
     </div>
   );
 }

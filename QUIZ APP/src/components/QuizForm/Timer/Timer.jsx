@@ -28,11 +28,11 @@ const Timer = ({ endTimeUnix, onTimerFinish }) => {
     return `${formattedMinutes}:${formattedSeconds}`;
   };
 
-  // useEffect(() => {
-  //   if (time === 0) {
-  //     onTimerFinish();
-  //   }
-  // }, [time, onTimerFinish]);
+  useEffect(() => {
+    if (time === 0) {
+      onTimerFinish();
+    }
+  }, [time, onTimerFinish]);
 
   return (
     <Box

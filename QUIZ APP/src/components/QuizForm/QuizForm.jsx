@@ -32,8 +32,8 @@ const QuizForm = () => {
   const { user, userData } = useContext(AppContext);
   const [showForm, setShowForm] = useState(false);
   const [quizName, setQuizName] = useState("");
-  const [numQuestions, setNumQuestions] = useState(1);
-  const [totalPoints, setTotalPoints] = useState(1);
+  const [numQuestions, setNumQuestions] = useState(5);
+  const [totalPoints, setTotalPoints] = useState(5);
 
   const [currentQuestion, setCurrentQuestion] = useState({
     question: "",
@@ -47,14 +47,14 @@ const QuizForm = () => {
   const [availability, setAvailability] = useState(1);
   const [unit, setUnit] = useState("hours");
   const [unitTimer, setUnitTimer] = useState("minutes");
-  const [timerLimit, setTimerLimit] = useState(30);
+  const [timerLimit, setTimerLimit] = useState(5);
 
   const [category, setCategory] = useState("");
   const [categories, setCategories] = useState([]);
 
   const [selectedCategory, setSelectedCategory] = useState("");
   const [activeButton, setActiveButton] = useState("chose");
-
+  const [typeOfTime] =useState();
   const [showQuestions, setShowQuestions] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
   const [isOpenForChoosingCategory, setIsOpenForChoosingCategory] =
@@ -103,6 +103,104 @@ const QuizForm = () => {
   };
 
   const addQuestion = () => {
+    if(!quizName) {
+      alert("You cannot submit an empty quiz title.");
+      return
+    }
+    if(quizName.length < 6 || quizName.length > 50) {
+      alert(`Your title should be between 6 to 50 characters. Yours is ${quizName.length}.`);
+      return
+    }
+    if(!numQuestions) {
+      alert('You need to add questions in order to submit.');
+      return
+    }
+    if(numQuestions < 5 || numQuestions > 15) {
+      alert(`Your questions must be between 5 and 15. Yours are ${numQuestions}.`)
+      return
+    }
+    if(!totalPoints) {
+      alert(`You must add total points to the quiz.`)
+      return
+    }
+    if(totalPoints === 0 || totalPoints < numQuestions) {
+      alert(`Your points cannot be 0 and they should be equal or more to the number of questions.`)
+      return
+    }
+    if (unit === "days" && availability < 1) {
+      alert("Availability cannot be set under a day.");
+      return;
+    }
+    if (unit === "days" && availability > 7) {
+      alert("Availability cannot be set be more then a week.");
+      return;
+    }
+    if (unit === "hours" && availability < 1) {
+      alert("Availability cannot be set under an hour.");
+      return;
+    }
+    if (unit === "hours" && availability > 24) {
+      alert("Availability cannot be set be more then 24 hours.");
+      return;
+    }
+    if(unitTimer === "hours" && timerLimit < 1) {
+      alert("Timer cannot be under an hour. Change to minutes if you want a shorter times.")
+      return;
+    }
+    if(unitTimer === "hours" && timerLimit > 24) {
+      alert(`Timer cannot be set to more then 24 hours.`)
+      return;
+    }
+    if(unitTimer === "minutes" && timerLimit > 60) {
+      alert(`Timer cannot be set to more then 60 minutes. Change to hours if you want longer times.`)
+      return;
+    }
+    if(unitTimer === "minutes" && timerLimit < 5) {
+      alert(`Timer cannot be set to less then 5 minutes.`)
+      return;
+    }
+    if(!selectedCategory && (category.length < 4 || category.length > 20 )) {
+      alert(`You category name must be between 4 and 20 characters. Yours is ${category.length}`)
+      return
+    }
+    if(!currentQuestion.question) {
+      alert(`You must provide a question.`)
+      return
+    }
+    if(currentQuestion.question.length < 6 || currentQuestion.question.length > 45 ) {
+      alert(`Your question must be between 6 and 45 characters. Yours is ${currentQuestion.question.length}.`)
+      return
+    }
+    if(!currentQuestion.options) {
+      alert(`You must provide options to the question.`)
+      return
+    }
+    if(currentQuestion.options.length < 4) {
+      alert(`You must fill all the option fields.`)
+      return
+    }
+    if(!currentQuestion.options[0] || currentQuestion.options[0] === "") {
+      alert(`Option 1 cannot be empty.`)
+      return
+    }
+    if(!currentQuestion.options[1] || currentQuestion.options[1] === "") {
+      alert(`Option 2 cannot be empty.`)
+      return
+    }
+    if(!currentQuestion.options[2] || currentQuestion.options[2] === "") {
+      alert(`Option 3 cannot be empty.`)
+      return
+    }
+    if(!currentQuestion.options[3] || currentQuestion.options[3] === "") {
+      alert(`Option 4 cannot be empty.`)
+      return
+    }
+    if(!currentQuestion.correctAnswer || currentQuestion.correctAnswer === "") {
+      alert(`You must provide the question with a correct answer.`)
+      return
+    }
+    
+    
     setQuestions((prevQuestions) => [...prevQuestions, currentQuestion]);
     setCurrentQuestion({
       question: "",
@@ -118,6 +216,9 @@ const QuizForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    
+  const convertedAvailability = unit === "days" ? availability * 24 : availability;
+  const convertedTimerLimit = unitTimer === "hours" ? timerLimit * 60 : timerLimit;
 
     createQuiz(
       quizName,
@@ -125,9 +226,9 @@ const QuizForm = () => {
       numQuestions,
       totalPoints,
       selectedOption,
-      unit === "days" ? availability * 24 : availability,
-      unitTimer === "hours" ? timerLimit * 60 : timerLimit,
-      category ? category : selectedCategory
+      convertedAvailability,
+      convertedTimerLimit,
+      category ? category : selectedCategory,
     )
       .then((quiz) => {
         questions.map((question) => {
