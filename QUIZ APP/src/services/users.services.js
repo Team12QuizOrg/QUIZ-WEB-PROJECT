@@ -233,3 +233,15 @@ export const getUsersQuizzes = (handle) => {
       return quizResults;
 })
 };
+
+export const addEducatorsComments = (handle, quizId, formData) => {
+  const userRef = ref(db, `users/${handle}/quizState/${quizId}`);
+
+  return update(userRef, {
+  educatorsComments: formData
+  })
+  .then(() => {})
+  .catch((error) => {
+    console.error('Error adding educatorsComments', error);
+  });
+};
