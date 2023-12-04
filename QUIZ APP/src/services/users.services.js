@@ -2,6 +2,7 @@ import { get,onValue, update, set, ref, query, equalTo, orderByChild, push, chil
 import { db } from "../config/firebase-config";
 import { DEFAULT_AVATAR_URL } from '../common/constants';
 
+
 export const getUserByHandle = (handle) => {
 
   return get(ref(db, `users/${handle}`));
@@ -243,5 +244,34 @@ export const addEducatorsComments = (handle, quizId, formData) => {
   .then(() => {})
   .catch((error) => {
     console.error('Error adding educatorsComments', error);
+  });
+};
+
+export const sendInvitation = (result, inviter, quizId) => {
+  const userRef = ref(db, `users/${result}/invitation/${quizId}`);
+  
+  return set(userRef, {
+    inviteStatus: false,
+    inviter: inviter,
+  }).catch((error) => {
+    console.error('Error adding invitation status', error);
+  });
+};
+
+export const acceptingInvitation = (userId, quizId) => {
+  const userRef = ref(db, `users/${userId}/invitation/${quizId}`);
+  
+  return update(userRef, {
+    inviteStatus: true,
+  }).catch((error) => {
+    console.error('Error accepting invitation', error);
+  });
+};
+
+export const declineInvitation = (userId, quizId) => {
+  const userRef = ref(db, `users/${userId}/invitation/${quizId}`);
+  
+  return set(userRef, null).catch((error) => {
+    console.error('Error declining invitation', error);
   });
 };

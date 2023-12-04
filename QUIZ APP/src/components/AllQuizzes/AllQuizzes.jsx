@@ -19,12 +19,17 @@ import { ITEMS_PER_PAGE } from "../../common/constants";
 import { addParticipant } from "../../services/quiz.services";
 import AppContext from "../../context/AuthContext";
 import { feedbackFormatDate } from "../../services/feedback.services";
+import { acceptingInvitation } from "../../services/users.services";
+import { declineInvitation } from "../../services/users.services";
+
 
 
 const AllQuizzes = ({ quizzes, catName, category }) => {
   const [allQuizzes, setAllQuizzes] = useState({});
+  const { userData } = useContext(AppContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [cat, setCat] = useState({});
+  const [rerender, setRerender] = useState(false);
   const indexOfLastQuiz = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstQuiz = indexOfLastQuiz - ITEMS_PER_PAGE;
   const navigate = useNavigate();
@@ -34,27 +39,35 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
     indexOfLastQuiz
   );
   useEffect(() => {
-    if(category) {
-      const filteredQuiz = quizzes && quizzes.filter((quiz) => quiz && quiz.category === category && quiz.state ==="ongoing");
+    if (category) {
+      const filteredQuiz = quizzes && quizzes.filter((quiz) => quiz && quiz.category === category && quiz.state === "ongoing");
       setAllQuizzes(filteredQuiz || {});
     } else {
       setAllQuizzes(quizzes || {});
     }
-  
+
   }, [quizzes]);
 
 
   const handlePageChange = (newPage) => {
     setCurrentPage(newPage);
   };
+  const acceptInvitation = (handle, quizId) => {
+    acceptingInvitation(handle, quizId);
+    navigate(`${quizId}`)
+  }
+  const removeInvitation = (handle, quizId) => {
+    declineInvitation(handle, quizId);
+    navigate(0)
+  }
+
 
   const mappedQuizzes = currentQuizzes.map(([quizId, quizData]) => (
+
     <Center padding={'10px'} py={6} key={quizId}>
-      <Box maxW={'250px'} w={'full'} bg={'white'} boxShadow={'2xl'}
-        rounded={'md'} overflow={'hidden'}>
+      <Box maxW={'250px'} w={'full'} bg={'white'} boxShadow={'2xl'} rounded={'md'} overflow={'hidden'}>
         <Stack textAlign={'center'} p={6} color={'black'} align={'center'}>
-          <Text fontSize={'xs'} fontWeight={500} bg={'green.50'} p={2}
-            px={3} color={'green.500'} rounded={'full'}>
+          <Text fontSize={'xs'} fontWeight={500} bg={'green.50'} p={2} px={3} color={'green.500'} rounded={'full'}>
             {quizData.category}
           </Text>
           <Stack maxW={'250px'} direction={'row'} align={'center'} justify={'center'}>
@@ -65,8 +78,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
             </Tooltip>
           </Stack>
         </Stack>
-
-        <Box bg={'gray.50'} padding={'25px'} >
+        <Box bg={'gray.50'} padding={'25px'}>
           <List textAlign={'left'} spacing={2}>
             <ListItem fontSize={'sm'} marginLeft={0}>
               <ListIcon as={ChevronRightIcon} color="green.400" />
@@ -74,7 +86,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
             </ListItem>
             <ListItem fontSize={'xs'}>
               <ListIcon marginLeft={0} as={ChevronRightIcon} color="green.400" />
-              Created: {feedbackFormatDate(quizData.createdOn)}
+              Created: {feedbackFormatDate(quizData?.createdOn)}
             </ListItem>
             <ListItem fontSize={'sm'} marginLeft={0}>
               <ListIcon as={ChevronRightIcon} color="green.400" />
@@ -93,12 +105,50 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
               Total Points: {quizData.totalPoints}
             </ListItem>
           </List>
-          <Button mt={10} w={'full'} bg={'blue.400'} color={'white'}
-            rounded={'xl'} boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
-            _hover={{ bg: 'brand.200', }} _focus={{ bg: 'brand.200', }}
-            onClick={() => navigate(`${quizData.id}`)}>
-            View Quiz Details
-          </Button>
+          {( userData && quizData?.selectedOption === "Private" && userData.invitation && !userData.invitation[quizData.id].inviteStatus === false) ? (
+            <>
+              <Button
+                mt={10}
+                w={'full'}
+                bg={'blue.400'}
+                color={'white'}
+                rounded={'xl'}
+                boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
+                _hover={{ bg: 'brand.200' }}
+                _focus={{ bg: 'brand.200' }}
+                onClick={() => acceptInvitation(userData.handle, quizData.id)}
+              >
+                Accept
+              </Button>
+              <Button
+                mt={4}
+                w={'full'}
+                bg={'red.400'}
+                color={'white'}
+                rounded={'xl'}
+                boxShadow={'0 5px 20px 0px rgb(255 99 132 / 43%)'}
+                _hover={{ bg: 'red.300' }}
+                _focus={{ bg: 'red.300' }}
+                onClick={() => removeInvitation(userData.handle, quizData.id)}
+              >
+                Reject
+              </Button>
+            </>
+          ) : (
+            <Button
+              mt={10}
+              w={'full'}
+              bg={'blue.400'}
+              color={'white'}
+              rounded={'xl'}
+              boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
+              _hover={{ bg: 'brand.200' }}
+              _focus={{ bg: 'brand.200' }}
+              onClick={() => navigate(`${quizData.id}`)}
+            >
+              View Quiz Details
+            </Button>
+          )}
         </Box>
       </Box>
     </Center>
@@ -106,7 +156,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
 
   return (
     <div>
-      <Text margin={'20px'}fontSize="xl" fontWeight="bold" mb={4} align={'left'}>
+      <Text margin={'20px'} fontSize="xl" fontWeight="bold" mb={4} align={'left'}>
         {catName}
       </Text>
       <Box >

@@ -22,7 +22,7 @@ const Quizzes = ({ isLogged, categoriesView }) => {
       .then((res) => {
         setAllQuizzes(res);
         // Display Open Q
-        const filteredOpenQuizzes = res.filter((quiz) => quiz.selectedOption &&  quiz.selectedOption === "Open" && quiz.state === "ongoing");
+        const filteredOpenQuizzes = res.filter((quiz) => quiz.selectedOption &&  quiz.selectedOption === "Open" && quiz.state === "ongoing" );
         setOpenQuizzes(filteredOpenQuizzes || []);
         // Display Ongoing Q
         const filteredOngoingQuizzes = res.filter((quiz) =>quiz.state && quiz.state === "ongoing");

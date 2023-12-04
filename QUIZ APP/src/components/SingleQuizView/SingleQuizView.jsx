@@ -20,6 +20,7 @@ import { formatDate } from "../../services/users.services";
 import AllQuizzes from "../AllQuizzes/AllQuizzes";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { areMembersOfSameGroup } from "../../services/groups.services";
+import InviteStudents from "../InvitedStudents/InvitedStudents";
 
 const SingleQuizView = () => {
   const { userData } = useContext(AppContext)
@@ -42,16 +43,16 @@ const SingleQuizView = () => {
       })
       .then((res) => setState(!state))
       .catch((err) => console.error(err));
-  }, [quiz]);
+  }, []);
 
 
 
   useEffect(() => {
     if (quiz) {
-      areMembersOfSameGroup(userData.handle, quiz.author)
+      areMembersOfSameGroup(userData?.handle, quiz.author)
         .then((res) => {
           setAreGroupMembers(res);
-          if(new Date() > quiz.timeLimit ){
+          if (new Date() > quiz.timeLimit) {
             changeState(id);
           }
         })
@@ -97,7 +98,7 @@ const SingleQuizView = () => {
         })
         .catch((err) => console.error('error fetching user: ', err));
     }
-  }, [quiz]);
+  }, []);
 
   const handleQuizClick = (quizId) => {
     addParticipant(quizId, userData.handle)
@@ -190,14 +191,23 @@ const SingleQuizView = () => {
                   <br></br>
                   <Text>Time to solve the quiz: {quiz.timer} min/hours</Text>
                   <br></br>
+                  {userData && userData.userType !== "student" && (
+                    <Text width={'50%'} textAlign={'center'}>
+                      <InviteStudents quizId={quiz.id} />
+                    </Text>
+                  )}
                   <Flex justifyContent="center" alignItems="center" gap={4}>
-                    {new Date() < quiz.endTime ? (
-                      <Button maxW={'20%'} margin={'5px'} onClick={() => handleQuizClick(quiz.id)}>
-                        Enroll
-                      </Button>
-                    ) : (
-                      <Text>You missed the deadline</Text>
-                    )}
+                    {userData && new Date() < quiz.endTime && (
+                      (userData && quiz && userData?.invitation?.quiz?.id.inviteStatus === true || quiz?.selectedOption === "Open") ? (
+                        <Button maxW={'20%'} margin={'5px'} onClick={() => handleQuizClick(quiz.id)}>
+                          Enroll
+                        </Button>
+                      ) : (
+                        <Text>You need an invitation</Text>
+                      )
+                    ) || (
+                        <Text>You missed the deadline</Text>
+                      )}
                     {userData && quiz && (userData.isAdmin || (userData.handle === quiz.author) || areGroupMembers) && (
                       <Button maxW={'20%'} margin={'5px'} onClick={() => handleDelete(quiz.id)} flex='1' variant='ghost' leftIcon={<DeleteIcon />}>
                       </Button>
