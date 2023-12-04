@@ -17,8 +17,8 @@ import UserInfo from '../../components/UserInfo/UserInfo';
 import AdminButtons from './AdminButtons/AdminButtons';
 import EducatorsQuizzes from '../../components/EducatorsQuizzes/EducatorsQuizzes';
 import GetAvatar from '../../components/GetAvatar/GetAvatar';
-
-
+import { FaChalkboardTeacher } from "react-icons/fa";
+import { PiStudentFill } from "react-icons/pi";
 const Profile = () => {
     const { user, userData } = useContext(AppContext)
     const [currentUser, setCurrentUser] = useState("")
@@ -79,7 +79,7 @@ const Profile = () => {
                                 <Button size='md' bg={'brand.200'} fontSize={['xl', 'lg', '2xl']} style={{
                                     borderRadius: "10px",
                                     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
-                                }}>{currentUser.handle}</Button>
+                                }} color='white' leftIcon={currentUser.userType === 'teacher' ? (<FaChalkboardTeacher />) : (<PiStudentFill />)}>{currentUser.handle}</Button>
                                 <CardHeader>
 
                                     <Flex spacing='4'>

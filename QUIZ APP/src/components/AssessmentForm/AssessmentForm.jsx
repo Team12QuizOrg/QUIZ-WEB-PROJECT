@@ -11,7 +11,9 @@ import {
     Input,
 
 } from '@chakra-ui/react'
+import { useContext } from 'react';
 import { useState, useEffect } from 'react'
+import AppContext from '../../context/AuthContext';
 import { getQuestionsByQuizId } from '../../services/quiz.services';
 import { addEducatorsComments, getQuizState } from '../../services/users.services';
 
@@ -19,9 +21,11 @@ import { addEducatorsComments, getQuizState } from '../../services/users.service
 //questions = масив от въпросите - с индексите вземам въпроса, правилния отговор и възможните отговори
 
 export default function AssessmentForm({ isOpen, onClose, selected }) {
+    const { userData } = useContext(AppContext)
     const { quizId, student, teacher } = selected
     const [questions, setQuestions] = useState([])
     const [quizState, setQuizState] = useState([])
+    const [quizComments, setQuizComments] = useState([])
     const [form, setForm] = useState([]);
 
     useEffect(() => {
@@ -33,7 +37,9 @@ export default function AssessmentForm({ isOpen, onClose, selected }) {
             .then((res) => {
 
                 setQuizState(res.selectedAnswers)
-
+                if (res.educatorsComments) {
+                    setQuizComments(res.educatorsComments)
+                }
             })
 
             .catch((err) => console.error('Failed to get quizState', err))
@@ -46,8 +52,8 @@ export default function AssessmentForm({ isOpen, onClose, selected }) {
     };
 
     const handleSave = () => {
-        console.log(form)
         addEducatorsComments(student, quizId, form);
+        onClose();
     };
 
     return (
@@ -65,14 +71,14 @@ export default function AssessmentForm({ isOpen, onClose, selected }) {
                             borderRadius: "10px",
                             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
                         }}
-                            p={2}>
+                            p={2} m={2}>
                             <Text key={`question-${question[1]}`} style={{
                                 border: '2px solid grey',
                                 borderRadius: "10px",
                                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
                             }}
-                                p={2}> Question: {question[1]}</Text>
-                            <Text key={`correct-${question[1]}`}> Correct: {question[0]}</Text>
+                                p={2} fontWeight={"bold"}> Question: {question[1]}</Text>
+
                             {question[2].map((option, optionIndex) => (
                                 <Box key={option}>
                                     {option === question[0] &&
@@ -95,8 +101,7 @@ export default function AssessmentForm({ isOpen, onClose, selected }) {
                                             p={2}> {option}</Text>)}
 
                                 </Box>
-                            ))}
-                            <Input key={`input-${index}`}
+                            ))} {userData.userType === 'teacher' ? (<Input key={`input-${index}`}
                                 value={form[index] || ''}
                                 onChange={updateForm(index)}
                                 placeholder="add comment here"
@@ -106,10 +111,31 @@ export default function AssessmentForm({ isOpen, onClose, selected }) {
                                 _placeholder={{
                                     color: 'gray.500',
                                 }}
-                                mt={3} />
+                                mt={3} />)
+                                :
+                                (quizComments &&
+                                    <Box key={`comment-${index}`}>
+                                        {quizComments[index] === '' ? (<Text bg={'gray.100'}
+                                            border={0}
+                                            color={'brand.400'}
+
+                                            mt={3} fontWeight={"bold"} fontSize={['0.8em', '1em', '1.2em']}> Educator did not comment on this answer</Text>) : (<Text bg={'gray.100'}
+                                                border={0}
+                                                color={'brand.400'}
+
+                                                mt={3} fontWeight={"bold"} fontSize={['0.8em', '1em', '1.2em']}> {quizComments[index]}</Text>)
+
+                                        }
+
+                                    </Box>
+                                )
+
+                            }
+
                         </Box>
                     ))}
-                    <Button onClick={handleSave}>Save</Button>
+
+                    {userData.userType === 'teacher' && <Button onClick={handleSave}>Save</Button>}
                 </ModalBody>
             </ModalContent>
         </Modal>
