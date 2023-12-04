@@ -34,13 +34,15 @@ export const createQuiz = (title, handle, numQuestions, totalPoints, selectedOpt
   quizData.id = quizId;
   update(newQuizRef, { id: quizId })
 
-  setTimeout(() => {
-    const quizRef = ref(db, `quizzes/${newQuizRef.key}`);
-    update(quizRef, { state: 'too late' });
-  }, timeLimit * 3600000);
-
   return getQuizById(`${newQuizRef.key}`);
 };
+
+export const changeState = (quizId) => {
+  const quizRef = ref(db, `quizzes/${quizId}`);
+ update(quizRef, { state: 'too late' });
+ return quizRef;
+}
+
 
 export const getQuizById = (id) => {
   const quizRef = ref(db, `quizzes/${id}`);

@@ -7,7 +7,7 @@ import { useNavigate } from "react-router-dom";
 import { Box, Button, Heading, Stack } from "@chakra-ui/react";
 import SingleQuestion from "../SolvingQuizView/SolvingQuizView";
 import AppContext from "../../context/AuthContext";
-import { addParticipant } from "../../services/quiz.services";
+import { addParticipant, changeState } from "../../services/quiz.services";
 import { Card, CardHeader, Flex, Avatar, IconButton, CardBody, CardFooter, FormControl, StackDivider, FormLabel, Select } from "@chakra-ui/react";
 import { Text, Image } from "@chakra-ui/react";
 import { getUserByHandle } from "../../services/users.services";
@@ -20,6 +20,7 @@ import { formatDate } from "../../services/users.services";
 import AllQuizzes from "../AllQuizzes/AllQuizzes";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { areMembersOfSameGroup } from "../../services/groups.services";
+
 
 
 // Add the timer on the singleQuizView so people now how much time they have left
@@ -48,16 +49,34 @@ const SingleQuizView = () => {
       .catch((err) => console.error(err));
   }, [quiz]);
 
+
+
   useEffect(() => {
     if (quiz) {
       areMembersOfSameGroup(userData.handle, quiz.author)
         .then((res) => {
           console.log(res)
           setAreGroupMembers(res);
+          if(new Date() > quiz.timeLimit ){
+            changeState(id);
+          }
         })
         .catch((err) => console.error(err));
     }
   }, [userData?.handle, quiz?.author]);
+  useEffect(() => {
+    getAllQuizzes()
+      .then((res) => {
+        const filterSimQuizzes = res.filter((singleQ) => {
+          if (singleQ && quiz) {
+            const isNotCurrentQuiz = singleQ.id !== quiz.id;
+            const isSameCategory = singleQ.category === quiz.category;
+            return isNotCurrentQuiz && isSameCategory;
+          }
+        });
+        setGetCat(filterSimQuizzes || {});
+      })
+  }, [])
   useEffect(() => {
     getAllQuizzes()
       .then((res) => {
