@@ -5,13 +5,7 @@ import { getQuizById } from "../../services/quiz.services";
 import { getQuestionsByQuizId } from "../../services/quiz.services";
 import { setScoreBoards } from "../../services/quiz.services";
 import { createQuizState, getQuizState } from "../../services/users.services";
-import {
-  Box,
-  Button,
-  Text,
-  Flex,
-  VStack,
-} from "@chakra-ui/react";
+import { Box, Button, Text, Flex, VStack } from "@chakra-ui/react";
 import { Stack } from "@chakra-ui/react";
 import {
   Card,
@@ -22,7 +16,7 @@ import {
 } from "@chakra-ui/react";
 import { Grid, GridItem } from "@chakra-ui/react";
 import Timer from "../QuizForm/Timer/Timer";
-
+import { motion } from "framer-motion";
 const SolvingQuizView = () => {
   const { userData } = useContext(AppContext);
   const { id } = useParams();
@@ -49,10 +43,11 @@ const SolvingQuizView = () => {
       return {
         ...prev,
         status: "finished",
-        wrongAnswers: prev.wrongAnswers + (questionIds.length - prev.selectedAnswers.length),
+        wrongAnswers:
+          prev.wrongAnswers +
+          (questionIds.length - prev.selectedAnswers.length),
       };
     });
-
   };
 
   const [result, setResult] = useState({
@@ -69,7 +64,7 @@ const SolvingQuizView = () => {
     correctAnswers: 0,
     status: "unfinished",
     endTime: timerUnix,
-    id: id
+    id: id,
   });
 
   useEffect(() => {
@@ -88,7 +83,6 @@ const SolvingQuizView = () => {
         .catch((err) => console.error("Failed to get quizState", err));
     }
   }, [id]);
-
 
   useEffect(() => {
     getQuizById(id)
@@ -140,12 +134,12 @@ const SolvingQuizView = () => {
     setResult((prev) =>
       selectedAnswer
         ? {
-          ...prev,
-          score: Math.floor(
-            prev.score + quiz.totalPoints / quiz.numQuestions
-          ),
-          correctAnswers: prev.correctAnswers + 1,
-        }
+            ...prev,
+            score: Math.floor(
+              prev.score + quiz.totalPoints / quiz.numQuestions
+            ),
+            correctAnswers: prev.correctAnswers + 1,
+          }
         : { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
     );
 
@@ -190,7 +184,7 @@ const SolvingQuizView = () => {
           ...prev,
           status: "finished",
           title: quiz.title,
-          id
+          id,
         };
       });
     }
@@ -203,12 +197,14 @@ const SolvingQuizView = () => {
 
   const cardBackgroundColor = "brand.100";
   return (
-    <Flex align={"center"} justify={"center"} justifySelf={"center"}>
-      <div>
-        {quiz && !quizFinished && (
-          <Timer endTimeUnix={quizState?.endTime ? quizState?.endTime : timerUnix} onTimerFinish={handleTimerFinish} />
-        )}
-      </div>
+    <Grid
+      align={"center"}
+      justify={"center"}
+      justifySelf={"center"}
+      initial={{ opacity: 0, y: -50 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
       {!quizFinished ? (
         <Box
           align={"center"}
@@ -223,6 +219,7 @@ const SolvingQuizView = () => {
           my="auto"
           p={5}
         >
+          
           <VStack align="center" spacing={4}>
             <Flex align="center" justify="space-between" width="100%">
               <Box>
@@ -239,19 +236,48 @@ const SolvingQuizView = () => {
                 </Text>
               </Flex>
             </Flex>
+            <motion.div>
+            {quiz && !quizFinished && (
+              <motion.div
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ delay: 0.2 }}
+              >
+                <Timer
+                  endTimeUnix={quizState?.endTime ? quizState?.endTime : timerUnix}
+                  onTimerFinish={handleTimerFinish}
+                />
+              </motion.div>
+            )}
+          </motion.div>
             <Text fontSize="xl">{question}</Text>
-            <Grid templateColumns="repeat(2, 1fr)" gap={4}>
+            <Grid templateColumns={["repeat(1, 1fr)","repeat(2, 1fr)"]} gap={4}>
               {options?.map((answer, index) => (
                 <GridItem key={answer}>
                   <Button
                     width={"100%"}
                     onClick={() => onAnswerSelected(answer, index)}
-                    variant={
-                      selectedAnswerIndex === index ? "solid" : "outline"
+                    variant={selectedAnswerIndex === index ? "solid" : "outline"}
+                    colorScheme={selectedAnswerIndex === index ? "yellow" : "blue"}
+                    fontFamily="customFont" 
+                    fontSize="md" 
+                    color="white" 
+                    _hover={{
+                      boxShadow: "md",
+                      transform: "scale(1.05)",
+                    }}
+                    transition="all 0.3s"
+                    bgGradient={
+                      selectedAnswerIndex === index
+                        ? "linear(to-r, yellow.400, yellow.600)"
+                        : "linear(to-r, blue.400, blue.600)"
                     }
-                    colorScheme={
-                      selectedAnswerIndex === index ? "yellow" : "blue"
-                    }
+                    _active={{
+                      bgGradient:
+                        selectedAnswerIndex === index
+                          ? "linear(to-r, yellow.600, yellow.800)"
+                          : "linear(to-r, blue.600, blue.800)",
+                    }}
                   >
                     {answer}
                   </Button>
@@ -264,7 +290,7 @@ const SolvingQuizView = () => {
                 onClick={onClickNext}
                 disabled={selectedAnswerIndex === null}
               >
-                {activeQuestion === questionIds.length - 1 ? "Finish" : "Next"}
+                {activeQuestion === questionIds.length - 1 ? " Finish" : "Next"}
               </Button>
             </VStack>
           </VStack>
@@ -284,32 +310,41 @@ const SolvingQuizView = () => {
             <Stack divider={<StackDivider borderColor={"black"} />} spacing="4">
               <Box>
                 <Heading size="xs" textTransform="uppercase">
-                  Summary
+                   Summary
                 </Heading>
                 <Text pt="2" color={"black"} fontSize="sm">
-                  Total Question: {questionIds.length}
+                  Total Questions: {questionIds.length}
                 </Text>
               </Box>
               <Box>
                 <Text pt="2" fontSize="sm">
-                  Total Score: {quizState?.score}
+                Total Score: {quizState?.score}
+                  {quizState?.score === questionIds.length && (
+                    <span style={{ color: 'gold' }}> 🌟 Master of the Unknown!</span>
+                  )}
                 </Text>
               </Box>
               <Box>
                 <Text pt="2" fontSize="sm">
                   Correct Answers: {quizState.correctAnswers}
+                  {quizState.correctAnswers === questionIds.length && (
+                    <span style={{ color: 'green' }}> 🎉 Sage of Infinite Knowledge!</span>
+                  )}
                 </Text>
               </Box>
               <Box>
                 <Text pt="2" fontSize="sm">
-                  Wrong Answers: {quizState.wrongAnswers}
+                  Wrong Answers: {questionIds.length - (quizState.correctAnswers + quizState.wrongAnswers)}
+                  {quizState.correctAnswers + quizState.wrongAnswers === questionIds.length && (
+                    <span style={{ color: 'blue' }}> 💡 Omniscient Scholar!</span>
+                  )}
                 </Text>
               </Box>
             </Stack>
           </CardBody>
         </Card>
       )}
-    </Flex>
+    </Grid>
   );
 };
 export default SolvingQuizView;
