@@ -1,7 +1,9 @@
 
-import { Box, Stack, Heading, Text, Image, Flex, Spacer, } from '@chakra-ui/react'
-
+import { Box, Stack, Heading, Text, Image, Flex, Spacer, HStack, } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
+import { FaArrowRightLong } from "react-icons/fa6"
 export default function Slider3() {
+    const navigate = useNavigate()
     return (
 
         <Box
@@ -24,16 +26,20 @@ export default function Slider3() {
                     maxW={{ base: '80%', lg: '50%' }}
                 >
                     <Spacer />
-                    <Heading textAlign={"start"} fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }} color={'brand.400'} >
-                        Solve quizzes and master your brain
+                    <Heading textAlign={"start"} textStyle='h1' color={'brand.400'} >
+                        Solve quizzes and master your brain!
                     </Heading>
-                    <Text textAlign={"start"} fontSize={{ base: 'md', lg: 'xl' }} color={"brand.400"}>
-                        Learning has never been more interactive
-                    </Text>
+                    <HStack textStyle='h3WithLetterStyle' justify={'end'}>
+                        <Text color={'brand.200'}>
+                            Try your knowledge here
+                        </Text>
+                        <Text as='span'> {' '}</Text>
+                        <FaArrowRightLong color={'#4299e1'} />
+                    </HStack>
                 </Stack>
-
-                <Image src={'assets/logo2.png'} justifyContent={'center'} w={{ base: '320', md: '450', lg: '580' }} h={{ base: '250', md: '350', lg: '380' }} rounded={"md"} order={{ base: 0, lg: 1 }} alignItems={{ base: 'center', lg: 'start' }} boxShadow={"0 4px 6px rgba(0, 0, 0, 0.1)"} />
-
+                <Box onClick={() => navigate(`/signup`)}>
+                    <Image src={'assets/quiz.png'} justifyContent={'center'} w={{ base: '320', md: '450', lg: '580' }} h={{ base: '250', md: '350', lg: '380' }} rounded={"md"} order={{ base: 0, lg: 1 }} alignItems={{ base: 'center', lg: 'start' }} boxShadow={"0 4px 6px rgba(0, 0, 0, 0.1)"} />
+                </Box>
             </Flex>
         </Box>
     )
