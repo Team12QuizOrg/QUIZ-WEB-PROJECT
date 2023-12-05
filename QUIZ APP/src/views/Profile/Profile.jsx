@@ -1,15 +1,11 @@
-
 import { useContext, useState, useEffect } from 'react';
 import AppContext from '../../context/AuthContext';
 import { getUserByHandle, makeEducator } from '../../services/users.services';
 import { useParams, } from 'react-router-dom';
-
 import EditProfile from '../../components/EditProfile/EditProfile';
-
 import { PlusSquareIcon, } from '@chakra-ui/icons'
 import CreateGroup from "../../components/CreateGroup/CreateGroup";
-
-import { Center, Grid, Box, GridItem, Avatar, Spinner, Flex, Heading, Text, Image, Button, Spacer, HStack, Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react"
+import { Center, Grid, Box, GridItem, Spinner, Flex, Heading, Text, Button, Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react"
 import ListGroup from "../../components/ListGroups/ListGroups";
 import UserScoreBoard from "../../components/UserScoreBoard/UserScoreBoard";
 import UsersQuizzes from "../../components/UsersQuizzes/UsersQuizzes";
@@ -20,7 +16,7 @@ import GetAvatar from '../../components/GetAvatar/GetAvatar';
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { PiStudentFill } from "react-icons/pi";
 const Profile = () => {
-    const { user, userData } = useContext(AppContext)
+    const { userData } = useContext(AppContext)
     const [currentUser, setCurrentUser] = useState("")
     const { profile } = useParams();
     const [loading, setLoading] = useState(true);
@@ -102,11 +98,7 @@ const Profile = () => {
                                 <CardBody>
                                     <UserInfo currentUser={currentUser} />
                                 </CardBody>
-                                {/* <Image
-                            objectFit='cover'
-                            src='https://images.unsplash.com/photo-1531403009284-440f080d1e12?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1770&q=80'
-                            alt='Chakra UI'
-                        /> */}
+
 
                                 <CardFooter
                                     justify='space-between'
@@ -140,7 +132,7 @@ const Profile = () => {
                         {currentUser.userType === "student" && (
                             <Card>
                                 <CardHeader>
-                                    <Heading textStyle='h2'>SCORE BOARD</Heading>
+                                    <Heading textStyle='h4'>SCORE BOARD</Heading>
                                 </CardHeader>
 
                                 <CardBody>
@@ -153,12 +145,8 @@ const Profile = () => {
                                 {currentUser.handle === userData.handle &&
                                     <CreateGroup></CreateGroup>
                                 }
-                                {/* {currentUser.handle !== userData.handle &&
-                            <Button onClick={() => handleAddToGroup(currentUser.handle)} bg={'brand.200'} > Add to Group</Button>
-                        } */}
-
                                 <CardHeader>
-                                    <Heading textStyle='h2'>GROUPS</Heading>
+                                    <Heading textStyle='h4'>GROUPS</Heading>
                                 </CardHeader>
                                 <CardBody>
                                     <ListGroup user={currentUser} ></ListGroup>

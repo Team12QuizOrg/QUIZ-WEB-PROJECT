@@ -26,7 +26,7 @@ const UserInfo = ({ currentUser }) => {
                 </Flex>
             </HStack>
 
-            {currentUser.caption && <Text textAlign={"start"} >
+            {currentUser.caption && <Text textAlign={"start"} textStyle='caption' color={'blue.400'}>
                 {currentUser.caption}
             </Text>
             }

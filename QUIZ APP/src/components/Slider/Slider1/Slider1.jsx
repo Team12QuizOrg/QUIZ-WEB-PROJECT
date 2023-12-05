@@ -28,7 +28,7 @@ export default function Slider1() {
                     <Heading textAlign={"start"} textStyle='h1' color={'brand.200'} >
                         Create quizzes in just few steps
                     </Heading>
-                    <Text textAlign={"start"} textStyle='h4' color={"brand.400"} ml={10}>
+                    <Text textAlign={"start"} textStyle='h3' color={"brand.400"} ml={10}>
                         Unlock effortless quiz building: the simplest way to make learning interactive
                     </Text>
                 </Stack>
