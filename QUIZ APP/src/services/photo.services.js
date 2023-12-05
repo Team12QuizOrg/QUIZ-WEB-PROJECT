@@ -24,7 +24,6 @@ export const  upload =(file, currentUser, setLoading) => {
       .then((photoURL) => addUserPhotoToData(currentUser.handle, photoURL ))
       .then(() => {
         setLoading(false);
-        alert("Uploaded file!");
       })
       .catch((error) => {
         console.error('Error uploading file', error);
