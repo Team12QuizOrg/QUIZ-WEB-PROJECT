@@ -14,7 +14,7 @@ export default function NavLinks({ display }) {
             <NavMenuButton btnName={"Home"} display={display} />
         </Menu><Menu>
                 <Menu></Menu>
-                <MenuButton display={display}
+                <MenuButton display={display} p={1}
                     fontSize={['xl', 'lg', '2xl']}
                     color={'brand.400'}
                     rounded={"lg"}

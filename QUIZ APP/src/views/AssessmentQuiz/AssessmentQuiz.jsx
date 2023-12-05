@@ -1,6 +1,6 @@
-import { Box, Button, Container, Stack, Text, VStack, Grid, HStack, Heading, useDisclosure } from '@chakra-ui/react'
+import { Box, Text, VStack, Grid, Heading, useDisclosure } from '@chakra-ui/react'
 import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import AppContext from '../../context/AuthContext';
 import { getQuizScoreBoard } from '../../services/quiz.services';
 import GetAvatar from '../../components/GetAvatar/GetAvatar';
@@ -11,7 +11,6 @@ export default function AssessmentQuiz() {
     const { id } = useParams();
     const [quizState, setQuizState] = useState([])
     const [selected, setSelected] = useState({ quizId: '', student: '', teacher: '' });
-    const navigate = useNavigate()
     useEffect(() => {
         getQuizScoreBoard(id)
             .then((res) => {
@@ -28,7 +27,7 @@ export default function AssessmentQuiz() {
     return (
         <>
             <Box>
-                <Grid templateColumns={`repeat(2, 1fr)`} gap={4} mt={4} mb={6}>
+                <Grid templateColumns={[`repeat(2, 1fr)`, `repeat(3, 1fr)`, `repeat(4, 1fr)`]} gap={4} mt={4} mb={6} ml={5} mr={5}>
                     {quizState && quizState.map((quiz) => (
                         <VStack key={quiz.user}
                             style={{
@@ -43,7 +42,7 @@ export default function AssessmentQuiz() {
                             onClick={() => { handleOpen(id, quiz.user, userData.handle) }}
                             cursor={'pointer'}>
                             <Box h={10}
-                                w={10} mt={2}>
+                                w={10} mt={2} style={{ boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)" }}>
                                 <GetAvatar handle={quiz.user} />
                             </Box>
                             <VStack >

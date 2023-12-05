@@ -1,9 +1,10 @@
 import { useNavigate } from 'react-router-dom';
 import SearchBar from '../SearchBar/SearchBar';
-import { Text, Popover, PopoverTrigger, PopoverHeader, PopoverContent, Button } from '@chakra-ui/react'
+import { Text, Popover, PopoverTrigger, PopoverHeader, PopoverContent, Button, HStack } from '@chakra-ui/react'
 import { useState, useContext, useEffect } from 'react';
 import { IconButton } from '@chakra-ui/react'
 import { SearchIcon } from "@chakra-ui/icons";
+import { IoIosArrowDropright } from "react-icons/io";
 import { getAllQuizzes } from '../../services/quiz.services';
 export default function SearchQuizzes() {
     const [searchResults, setSearchResults] = useState(null);
@@ -36,17 +37,21 @@ export default function SearchQuizzes() {
                 {searchResults && searchResults.length > 0 && (
                     <PopoverContent>
                         {searchResults.map((quiz) => (
-                            <PopoverHeader
-                                key={quiz.id}
-                                onClick={() => {
-                                    navigate(`/quizzes/AllQuizzes/${quiz.id}`);
-                                    setSearchResults(null);
-                                }}
-                                color={'brand.400'}
-                                fontWeight={'bold'}
-                                cursor="pointer"
-                            >
-                                {quiz.title}
+
+                            <PopoverHeader key={quiz.id}>
+                                <HStack
+
+                                    onClick={() => {
+                                        navigate(`/quizzes/AllQuizzes/${quiz.id}`);
+                                        setSearchResults(null);
+                                    }}
+                                    color={'brand.200'}
+                                    fontWeight={'bold'}
+                                    cursor="pointer"
+                                ><IoIosArrowDropright />
+
+                                    <Text color={'black'}>{quiz.title}</Text>
+                                </HStack>
                             </PopoverHeader>
                         ))}
                     </PopoverContent>

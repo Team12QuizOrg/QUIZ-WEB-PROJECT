@@ -7,6 +7,7 @@ import { Avatar, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, } fr
 import { PiHardDrives } from "react-icons/pi";
 import { IoPersonCircle } from "react-icons/io5";
 import { LuLogOut } from "react-icons/lu";
+import AddButton from '../AddButton/AddButton'
 export default function NavUser() {
     const { user, userData, setContext, } = useContext(AppContext);
     const navigate = useNavigate();
@@ -23,22 +24,18 @@ export default function NavUser() {
         <>
             {user === null && (
                 <>
-                    <Button
-                        variant="solid"
-                        color="green"
-                        fontSize={['sm', 'sm', '1.5em']}
+                    <AddButton
+                        bg={'pink'}
                         onClick={() => navigate("/signin")}
                     >
                         Sign In
-                    </Button>
-                    <Button
-                        variant="solid"
-                        color="yellow.500"
-                        fontSize={['sm', 'sm', '1.5em']}
+                    </AddButton>
+                    <AddButton
+                        bg={'blue.400'}
                         onClick={() => navigate("/signup")}
                     >
                         Sign Up
-                    </Button>
+                    </AddButton>
                 </>
             )}
             {user !== null && (

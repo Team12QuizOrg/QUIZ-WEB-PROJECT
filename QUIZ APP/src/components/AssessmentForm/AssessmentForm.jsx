@@ -9,6 +9,7 @@ import {
     Heading,
     Button,
     Input,
+    HStack,
 
 } from '@chakra-ui/react'
 import { useContext } from 'react';
@@ -16,7 +17,7 @@ import { useState, useEffect } from 'react'
 import AppContext from '../../context/AuthContext';
 import { getQuestionsByQuizId } from '../../services/quiz.services';
 import { addEducatorsComments, getQuizState } from '../../services/users.services';
-
+import { PiStudentFill } from "react-icons/pi";
 //quizState- това са ми отговорите на ученика - те са масив
 //questions = масив от въпросите - с индексите вземам въпроса, правилния отговор и възможните отговори
 
@@ -60,8 +61,12 @@ export default function AssessmentForm({ isOpen, onClose, selected }) {
         <Modal isOpen={isOpen} onClose={onClose} size="4xl">
             <ModalOverlay />
             <ModalContent>
-                <ModalHeader color={'black'} fontSize={['0.8em', '1em', '1.2em']} align={'center'} justify={'center'} textTransform='uppercase'>
-                    {student}
+                <ModalHeader color={'black'} fontSize={['0.8em', '1em', '1.2em']} textTransform='uppercase'>
+                    <HStack justify={'center'} align={'center'} >
+                        <PiStudentFill />
+                        <Text>{student}</Text>
+                    </HStack>
+
                 </ModalHeader>
                 <ModalCloseButton />
                 <ModalBody color={'black'}>
@@ -135,7 +140,7 @@ export default function AssessmentForm({ isOpen, onClose, selected }) {
                         </Box>
                     ))}
 
-                    {userData.userType === 'teacher' && <Button onClick={handleSave}>Save</Button>}
+                    {userData.userType === 'teacher' && <Button onClick={handleSave} bg={'brand.100'} color="brand.200" m={3} _hover={{ bg: 'brand.200', color: 'brand.100' }}>Save</Button>}
                 </ModalBody>
             </ModalContent>
         </Modal>

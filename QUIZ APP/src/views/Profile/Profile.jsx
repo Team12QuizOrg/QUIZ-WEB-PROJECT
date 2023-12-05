@@ -140,7 +140,7 @@ const Profile = () => {
                         {currentUser.userType === "student" && (
                             <Card>
                                 <CardHeader>
-                                    <Heading size='md'>SCORE BOARD</Heading>
+                                    <Heading textStyle='h2'>SCORE BOARD</Heading>
                                 </CardHeader>
 
                                 <CardBody>
@@ -158,7 +158,7 @@ const Profile = () => {
                         } */}
 
                                 <CardHeader>
-                                    <Heading size='md'>GROUPS</Heading>
+                                    <Heading textStyle='h2'>GROUPS</Heading>
                                 </CardHeader>
                                 <CardBody>
                                     <ListGroup user={currentUser} ></ListGroup>

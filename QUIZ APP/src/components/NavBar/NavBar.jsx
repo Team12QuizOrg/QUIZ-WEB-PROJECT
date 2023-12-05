@@ -1,6 +1,3 @@
-import { logoutUser } from "../../services/auth.services";
-import { useState, useContext } from "react";
-import AppContext from "../../context/AuthContext";
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Box, Flex, HStack, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, useColorModeValue, Stack, Spacer, Image, Heading, } from "@chakra-ui/react";
 import { ChevronRightIcon, HamburgerIcon } from "@chakra-ui/icons";
@@ -10,13 +7,9 @@ import NavUser from "../NavUser/NavUser";
 
 export default function NavBar() {
 
-  const [searchResults, setSearchResults] = useState(null);
   const [isSmallerThan800] = useMediaQuery('(max-width: 800px)');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
-  const handleSearchResults = (results) => {
-    setSearchResults(results);
-  };
 
   return (
     <Box>

@@ -6,7 +6,7 @@ export default function NavMenuButton({ btnName, display }) {
 
     return (
         <MenuButton
-            display={display}
+            display={display} p={1}
             fontSize={['xl', 'lg', '2xl']}
 
             color={'brand.400'}
