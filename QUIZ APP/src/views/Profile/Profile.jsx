@@ -15,6 +15,7 @@ import EducatorsQuizzes from '../../components/EducatorsQuizzes/EducatorsQuizzes
 import GetAvatar from '../../components/GetAvatar/GetAvatar';
 import { FaChalkboardTeacher } from "react-icons/fa";
 import { PiStudentFill } from "react-icons/pi";
+import ListForLater from "../../components/ListForLater/ListForLater"
 const Profile = () => {
     const { userData } = useContext(AppContext)
     const [currentUser, setCurrentUser] = useState("")
@@ -80,7 +81,7 @@ const Profile = () => {
 
                                     <Flex spacing='4'>
                                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                                            <GetAvatar handle={currentUser.handle} />
+                                            <GetAvatar handle={currentUser.handle} size={'xl'} />
 
                                             {currentUser.userType === "student" && (
                                                 <UsersQuizzes user={currentUser} />
@@ -130,29 +131,39 @@ const Profile = () => {
                         p={{ base: '20px', lg: '30px' }}
                         mt={2}>
                         {currentUser.userType === "student" && (
-                            <Card>
+                            <Card mb={10}>
                                 <CardHeader>
-                                    <Heading textStyle='h4'>SCORE BOARD</Heading>
+                                    <Heading size='md' color={'brand.200'}>SCORE BOARD</Heading>
                                 </CardHeader>
 
                                 <CardBody>
                                     <UserScoreBoard user={currentUser}></UserScoreBoard>
                                 </CardBody>
                             </Card>
+
                         )}
                         {currentUser.userType === "teacher" && (
-                            <Card>
+                            <Card mb={10}>
                                 {currentUser.handle === userData.handle &&
                                     <CreateGroup></CreateGroup>
                                 }
                                 <CardHeader>
-                                    <Heading textStyle='h4'>GROUPS</Heading>
+                                    <Heading size='md' color={'brand.200'}>GROUPS</Heading>
                                 </CardHeader>
                                 <CardBody>
                                     <ListGroup user={currentUser} ></ListGroup>
                                 </CardBody>
                             </Card>
                         )}
+                        {currentUser.handle === userData.handle && <Card>
+                            <CardHeader>
+                                <Heading size='md' color={'brand.200'}>FOR LATER</Heading>
+                            </CardHeader>
+
+                            <CardBody>
+                                <ListForLater quizzes={currentUser.forLater}></ListForLater>
+                            </CardBody>
+                        </Card>}
                     </GridItem>
                 </Grid>
 

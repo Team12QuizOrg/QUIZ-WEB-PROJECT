@@ -4,7 +4,7 @@ import { Avatar, Center } from '@chakra-ui/react'
 import { useContext } from "react";
 import AppContext from "../../context/AuthContext";
 
-const GetAvatar = ({ handle }) => {
+const GetAvatar = ({ handle, size }) => {
     const [avatar, setAvatar] = useState()
     const { userData } = useContext(AppContext)
 
@@ -15,7 +15,7 @@ const GetAvatar = ({ handle }) => {
     return (
         <>
             {userData &&
-                (<Center>< Avatar src={avatar} mb={2} /></Center>)
+                (<Center>< Avatar src={avatar} size={size} /></Center>)
             }
         </>
 

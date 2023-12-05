@@ -4,10 +4,11 @@ import { VStack, HStack, Text, Heading, Spacer, Stack, StackDivider, Box, useDis
 
 import { StarIcon, } from '@chakra-ui/icons'
 import { getUserScoreBoard } from '../../services/users.services';
+import { useNavigate } from 'react-router-dom';
 const UserScoreBoard = ({ user }) => {
 
     const [quizState, setQuizState] = useState([])
-
+    const navigate = useNavigate()
     useEffect(() => {
         getUserScoreBoard(user.handle)
             .then((res) => {
@@ -34,7 +35,7 @@ const UserScoreBoard = ({ user }) => {
 
                 <HStack align="center" key={quizResult.quizTitle} mt={5}>
                     <StarIcon size={20} style={{ marginRight: '8px' }} />
-                    <Heading size='xs' textTransform='uppercase' >
+                    <Heading size='xs' textTransform='uppercase' cursor={'pointer'} onClick={() => navigate(`/quizzes/AllQuizzes/${quizResult.id}`)}>
                         {quizResult.quizTitle}
                     </Heading>
                     <Spacer></Spacer>

@@ -69,9 +69,9 @@ const UsersQuizzes = ({ user }) => {
                     </Popover>
                     <Tooltip label={`${user.handle}'s Rank`} fontSize="md">
                         <Button color={'brand.200'} flex='1' variant='ghost' leftIcon={<CheckCircleIcon />}>
-                            {quizState.length < 10 && 'Silver'}
-                            {quizState.length >= 10 && quizState.length <= 20 && 'Gold'}
-                            {quizState.length > 21 && 'Platinum'}
+                            {quizState.length < 10 && 'Beginner'}
+                            {quizState.length >= 10 && quizState.length <= 20 && 'Intermediate'}
+                            {quizState.length > 21 && 'Advanced'}
                         </Button>
                     </Tooltip>
                 </Box>

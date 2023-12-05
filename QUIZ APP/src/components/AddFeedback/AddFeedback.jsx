@@ -32,7 +32,7 @@ const AddFeedback = () => {
                 <p className="blocked-user-message">User is blocked and cannot comment.</p>
             ) : (
                 <>
-                    <Button colorscheme="yellow" mr={3} onClick={handleOpen}> Give us Feedback </Button>
+                    <Button bg={'brand.200'} mr={3} onClick={handleOpen}> Give us Feedback </Button>
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>

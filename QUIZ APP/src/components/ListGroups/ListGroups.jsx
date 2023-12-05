@@ -43,17 +43,19 @@ const ListGroup = ({ user }) => {
         <>
             {currentGroups && currentGroups.map((group) => (
 
-                <VStack spacing='4' key={group[0]} divider={<StackDivider />}  >
-                    <Box>
-                        <HStack align="center">
-                            <MdGroup size={20} style={{ marginRight: '8px' }} />
-                            <Heading size='xs' textTransform='uppercase' onClick={() => { handleOpen(group[0], group[1]) }}>
-                                {group[1]}
-                            </Heading>
-                        </HStack>
-                    </Box>
+
+
+                <HStack align="center" spacing='4' key={group[0]} divider={<StackDivider />}>
+                    <MdGroup size={20} style={{ marginRight: '8px' }} />
+                    <Heading size='xs' textTransform='uppercase' onClick={() => { handleOpen(group[0], group[1]) }}>
+                        {group[1]}
+                    </Heading>
                     <StackDivider />
-                </VStack>
+                </HStack>
+
+
+
+
 
             ))}
             {isOpen && (

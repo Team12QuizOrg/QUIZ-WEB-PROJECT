@@ -8,9 +8,9 @@ import { Box, Button, Heading, Stack } from "@chakra-ui/react";
 import SingleQuestion from "../SolvingQuizView/SolvingQuizView";
 import AppContext from "../../context/AuthContext";
 import { addParticipant, changeState } from "../../services/quiz.services";
-import { Card, CardHeader, Flex, Avatar, IconButton, CardBody, CardFooter, FormControl, StackDivider, FormLabel, Select } from "@chakra-ui/react";
+import { Card, CardHeader, Flex, Avatar, Checkbox, CardBody, CardFooter, FormControl, StackDivider, FormLabel, Select } from "@chakra-ui/react";
 import { Text, Image } from "@chakra-ui/react";
-import { getUserByHandle } from "../../services/users.services";
+import { addQuizForLater, getUserByHandle, removeQuizForLater } from "../../services/users.services";
 import { Grid, GridItem, Center, HStack, Spacer } from "@chakra-ui/react";
 import { PhoneIcon } from "@chakra-ui/icons";
 import CreateGroup from "../CreateGroup/CreateGroup";
@@ -33,6 +33,7 @@ const SingleQuizView = () => {
   const [scoreBoards, setScoreBoards] = useState([]);
   const [getCat, setGetCat] = useState();
   const [state, setState] = useState("false");
+  const [isChecked, setIsChecked] = useState(false);
   const [areGroupMembers, setAreGroupMembers] = useState('false')
   const getCatName = `Similar Quizzes to "${quiz?.title}":`;
 
@@ -133,15 +134,15 @@ const SingleQuizView = () => {
   })
 
 
-  const handleBlock = (handle) => {
-    blockUser(handle)
-  }
-  const handleAdmin = (handle) => {
-    makeAdmin(handle);
-  }
-  const handleUnblock = (handle) => {
-    unBlockUser(handle)
-  }
+  const handleCheckboxChange = () => {
+    setIsChecked(!isChecked);
+
+    if (!isChecked) {
+      addQuizForLater(userData.handle, id, quiz.title);
+    } else {
+      removeQuizForLater(userData.handle, quiz.title);
+    }
+  };
   const handleDelete = (quizId) => {
     removePost(quizId);
     navigate(-1);
@@ -168,6 +169,9 @@ const SingleQuizView = () => {
                 </Flex>
               </Flex>
             </CardHeader>
+            <Checkbox isChecked={isChecked} onChange={handleCheckboxChange}>
+              Add  quiz for later
+            </Checkbox>
             <CardBody align={'left'}>
               <HStack>
                 <Heading textAlign="start" fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}>

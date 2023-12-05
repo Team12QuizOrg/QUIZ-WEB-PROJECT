@@ -279,3 +279,27 @@ export const declineInvitation = (quizId, handle) => {
     console.error('Error declining invitation', error);
   });
 };
+
+export const addQuizForLater = (handle, quizId, quizName) => {
+  return update(ref(db), {
+    [`users/${handle}/forLater/${quizName}`]:  quizId
+    
+  })
+
+  .then(() => {})
+  .catch((error) => {
+    console.error('Error changing user fields', error);
+  });
+}
+export const removeQuizForLater = (handle, quizName) => {
+  return update(ref(db), {
+    [`users/${handle}/forLater/${quizName}`]:  null
+    
+  })
+
+  .then(() => {})
+  .catch((error) => {
+    console.error('Error changing user fields', error);
+  });
+}
+

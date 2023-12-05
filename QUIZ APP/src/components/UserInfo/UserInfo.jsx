@@ -1,37 +1,41 @@
 
 
-import { HStack, Text, Heading, Spacer, Flex, Box } from '@chakra-ui/react';
+import { Stack, HStack, Text, Heading, Spacer, useBreakpointValue, Box } from '@chakra-ui/react';
 import { MdEmail } from "react-icons/md";
 import { FaHouseUser } from "react-icons/fa";
 
 const UserInfo = ({ currentUser }) => {
+    const includeSpacer = useBreakpointValue({ base: false, md: true });
 
 
     return (
         <>
 
-            <HStack>
-                <Flex alignItems="center">
+            <Stack
+                direction={{ base: 'column', md: 'row' }}
+                spacing={4}
+                align={{ base: 'start', md: 'center' }}
+            >
+                <HStack align="center">
                     <Box as={FaHouseUser} fontSize="xl" mr={2} />
-                    <Heading textAlign={"start"} fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}>
+                    <Heading fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}>
                         {currentUser.firstName} {currentUser.lastName}
                     </Heading>
-                </Flex>
-                <Spacer />
-                <Flex alignItems="center">
+                </HStack>
+                {includeSpacer && <Spacer />}
+                <HStack align="center">
                     <Box as={MdEmail} fontSize="xl" mr={2} />
-                    <Heading textAlign={"start"} fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}>
+                    <Heading fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}>
                         {currentUser.email}
                     </Heading>
-                </Flex>
-            </HStack>
+                </HStack>
 
-            {currentUser.caption && <Text textAlign={"start"} textStyle='caption' color={'blue.400'}>
-                {currentUser.caption}
-            </Text>
-            }
-
-
+            </Stack>
+            {currentUser.caption && (
+                <Text textAlign={{ base: 'start', md: 'start' }} textStyle="caption" color="blue.400">
+                    {currentUser.caption}
+                </Text>
+            )}
         </>
     );
 };
