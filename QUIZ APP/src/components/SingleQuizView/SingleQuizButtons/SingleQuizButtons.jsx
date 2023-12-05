@@ -1,9 +1,9 @@
-import { Text, Button } from "@chakra-ui/react";
+import { Text, Button, Flex } from "@chakra-ui/react";
 import { DeleteIcon } from "@chakra-ui/icons";
-export const SingleQuizButtons = ({ isPrivate, handleQuizClick, handleDelete, quiz, hasInvite }) => {
+export const SingleQuizButtons = ({ isPrivate, handleQuizClick, handleDelete, quiz, hasInvite , user}) => {
 
     return (
-      <div>
+      <Flex justify={'center'}>
         {new Date() < quiz.endTime ? (
           isPrivate === "Private" &&  (quiz.invites && quiz.invites[hasInvite] && quiz.invites[hasInvite].inviteStatus === "false" || !quiz.invites) ? (
             <>
@@ -18,7 +18,7 @@ export const SingleQuizButtons = ({ isPrivate, handleQuizClick, handleDelete, qu
           <Text>You missed the deadline</Text>
         )}
   
-        {hasInvite && quiz && (hasInvite.isAdmin || hasInvite.handle === quiz.author) && (
+        {user && quiz && (user.isAdmin || user.handle === quiz.author) && (
           <Button
             maxW="20%"
             margin="5px"
@@ -30,6 +30,6 @@ export const SingleQuizButtons = ({ isPrivate, handleQuizClick, handleDelete, qu
             Delete
           </Button>
         )}
-      </div>
+      </Flex>
     );
   };

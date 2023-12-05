@@ -184,7 +184,7 @@ const SingleQuizView = () => {
                   <br></br>
                   <Text>Category: {quiz.category}</Text>
                   <br></br>
-                  <Text>Total Points: {quiz.totalPoints}</Text>
+                  <Text>Total Points: {quiz.totalPoints * quiz.numQuestions}</Text>
                   <br></br>
                   <Text>Number of Questions: {quiz.numQuestions}</Text>
                   <br></br>
@@ -193,11 +193,11 @@ const SingleQuizView = () => {
                   <Text>Time to solve the quiz: {quiz.timer} min/hours</Text>
                   <br></br>
                   {userData && userData.userType !== "student" && (
-                    <Text width={'50%'} textAlign={'center'}>
+                    <HStack width={'50%'} textAlign={'center'}>
                       <InviteStudents quizId={quiz.id} />
-                    </Text>
+                    </HStack>
                   )}
-                  <SingleQuizButtons isPrivate={quiz.selectedOption} handleQuizClick={handleQuizClick} handleDelete={handleDelete} quiz={quiz} hasInvite={userData && userData.handle}></SingleQuizButtons>
+                  <SingleQuizButtons isPrivate={quiz.selectedOption} handleQuizClick={handleQuizClick} handleDelete={handleDelete} quiz={quiz} hasInvite={userData && userData.handle} user={userData}></SingleQuizButtons>
                 </>
               )}
               {userData && quiz && userData.handle === quiz.author &&
@@ -239,15 +239,3 @@ const SingleQuizView = () => {
 }
 export default SingleQuizView;
 
-
-// <Text>
-// <label>Paricipants</label>
-// <select>
-//   <option value={""}></option>
-//   {quiz?.participants.map((participant, index) => (
-//     <option key={index} value={participant}>
-//       {participant} {/* Replace with the property containing the user's name */}
-//     </option>
-//   ))}
-// </select>
-// </Text>

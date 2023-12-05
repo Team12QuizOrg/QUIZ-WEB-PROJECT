@@ -13,3 +13,4 @@ export const REGEX_EMAIL_CHECK= /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@
 export const DEFAULT_AVATAR_URL ='https://upload.wikimedia.org/wikipedia/commons/7/7c/Profile_avatar_placeholder_large.png';
 
 export const ITEMS_PER_PAGE = 5;
+export const ITEMS_PER_PAGE_PANEL = 10;

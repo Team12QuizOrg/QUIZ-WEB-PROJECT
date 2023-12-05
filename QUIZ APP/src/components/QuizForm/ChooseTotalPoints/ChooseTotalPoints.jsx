@@ -6,7 +6,7 @@ const ChooseTotalPoints = ({ totalPoints, func }) => {
 
     <FormControl color="black" mb={2} flex="1" ml={4} maxW="30%">
     <FormLabel fontSize="medium" h={10}>
-      Total Points:
+      Points Per Question:
     </FormLabel>
     <Input
       type="number"

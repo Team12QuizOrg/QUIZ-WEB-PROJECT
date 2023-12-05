@@ -136,7 +136,7 @@ const SolvingQuizView = () => {
         ? {
             ...prev,
             score: Math.floor(
-              prev.score + quiz.totalPoints / quiz.numQuestions
+              prev.score + quiz.totalPoints
             ),
             correctAnswers: prev.correctAnswers + 1,
           }
@@ -147,7 +147,7 @@ const SolvingQuizView = () => {
       const updatedSelectedAnswers = [...(prev?.selectedAnswers || [])];
       updatedSelectedAnswers[activeQuestion] = selectedAnswer1;
       if (selectedAnswer) {
-        const pointPerCorrectAnswer = quiz.totalPoints / quiz.numQuestions;
+        const pointPerCorrectAnswer = quiz.totalPoints;
         const updatedScore = (prev.score || 0) + pointPerCorrectAnswer;
         const wrongScoreUpdated = prev.wrongAnswers || 0;
         const updatedCorrectAnswer = prev.correctAnswers || 0;
@@ -334,10 +334,7 @@ const SolvingQuizView = () => {
               </Box>
               <Box>
                 <Text pt="2" fontSize="sm">
-                  Wrong Answers: {questionIds.length - (quizState.correctAnswers + quizState.wrongAnswers)}
-                  {quizState.correctAnswers + quizState.wrongAnswers === questionIds.length && (
-                    <span style={{ color: 'blue' }}> 💡 Omniscient Scholar!</span>
-                  )}
+                  Wrong Answers: {questionIds.length - quizState.correctAnswers}
                 </Text>
               </Box>
             </Stack>

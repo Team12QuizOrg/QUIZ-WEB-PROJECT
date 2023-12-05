@@ -7,6 +7,7 @@ import {
   PopoverHeader,
   PopoverContent,
   Button,
+  Flex,
 } from "@chakra-ui/react";
 import { useState, useEffect, useContext } from "react";
 import { getAllUserData } from "../../services/users.services";
@@ -39,6 +40,7 @@ export default function InviteStudents({ quizId }) {
 
   return (
     <>
+    <Flex align="center">
       <SearchBar
         searchingFor={users}
         onSearchResults={handleSearchResults}
@@ -46,7 +48,7 @@ export default function InviteStudents({ quizId }) {
       />
       <Popover onClose={() => setSearchResults(null)}>
         <PopoverTrigger>
-          <Button>Invite</Button>
+          <Button margin={"8px"}>Invite</Button>
         </PopoverTrigger>
         {searchResults && searchResults.length > 0 && (
           <PopoverContent justifySelf={'right'} >
@@ -71,6 +73,7 @@ export default function InviteStudents({ quizId }) {
           </PopoverContent>
         )}
       </Popover>
+      </Flex>
     </>
   );
 };
