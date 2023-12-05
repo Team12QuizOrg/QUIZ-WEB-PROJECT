@@ -17,7 +17,6 @@ import {
 import { MdOutlineGroupAdd } from "react-icons/md";
 import AppContext from "../../context/AuthContext";
 import { sendInvitation } from "../../services/users.services";
-import { declineInvitation } from "../../services/users.services";
 export default function InviteStudents({ quizId }) {
   const [searchResults, setSearchResults] = useState(null);
   const {userData} = useContext(AppContext)
@@ -52,10 +51,12 @@ export default function InviteStudents({ quizId }) {
         {searchResults && searchResults.length > 0 && (
           <PopoverContent justifySelf={'right'} >
             {searchResults.map((user) => (
+
               <HStack
                 key={user.id}
+                
                 onClick={() => {
-                  sendInvitation(user.handle, userData.handle, quizId);
+                  sendInvitation(userData.handle, quizId, user.handle);
                   setSearchResults(null);
                 }}
                 cursor="pointer"

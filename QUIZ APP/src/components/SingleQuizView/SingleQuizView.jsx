@@ -21,6 +21,7 @@ import AllQuizzes from "../AllQuizzes/AllQuizzes";
 import { DeleteIcon } from "@chakra-ui/icons";
 import { areMembersOfSameGroup } from "../../services/groups.services";
 import InviteStudents from "../InvitedStudents/InvitedStudents";
+import { SingleQuizButtons } from "./SingleQuizButtons/SingleQuizButtons";
 
 const SingleQuizView = () => {
   const { userData } = useContext(AppContext)
@@ -196,24 +197,7 @@ const SingleQuizView = () => {
                       <InviteStudents quizId={quiz.id} />
                     </Text>
                   )}
-                  <Flex justifyContent="center" alignItems="center" gap={4}>
-                    {userData && new Date() < quiz.endTime && (
-                      (userData && quiz && userData?.invitation?.quiz?.id.inviteStatus === true || quiz?.selectedOption === "Open") ? (
-                        <Button maxW={'20%'} margin={'5px'} onClick={() => handleQuizClick(quiz.id)}>
-                          Enroll
-                        </Button>
-                      ) : (
-                        <Text>You need an invitation</Text>
-                      )
-                    ) || (
-                        <Text>You missed the deadline</Text>
-                      )}
-                    {userData && quiz && (userData.isAdmin || (userData.handle === quiz.author) || areGroupMembers) && (
-                      <Button maxW={'20%'} margin={'5px'} onClick={() => handleDelete(quiz.id)} flex='1' variant='ghost' leftIcon={<DeleteIcon />}>
-                      </Button>
-                    )}
-
-                  </Flex>
+                  <SingleQuizButtons isPrivate={quiz.selectedOption} handleQuizClick={handleQuizClick} handleDelete={handleDelete} quiz={quiz} hasInvite={userData && userData.handle}></SingleQuizButtons>
                 </>
               )}
               {userData && quiz && userData.handle === quiz.author &&

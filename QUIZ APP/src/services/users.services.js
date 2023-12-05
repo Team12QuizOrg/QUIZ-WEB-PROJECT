@@ -247,31 +247,35 @@ export const addEducatorsComments = (handle, quizId, formData) => {
   });
 };
 
-export const sendInvitation = (result, inviter, quizId) => {
-  const userRef = ref(db, `users/${result}/invitation/${quizId}`);
-  
-  return set(userRef, {
-    inviteStatus: false,
-    inviter: inviter,
+export const sendInvitation = (inviter, quizId, invited) => {
+  const quizRef = ref(db, `quizzes/${quizId}/invites`);
+
+  return update(quizRef, {
+
+      [invited]: {
+        inviteStatus: "false",
+        inviter: inviter,
+      },
   }).catch((error) => {
     console.error('Error adding invitation status', error);
   });
 };
 
 export const acceptingInvitation = (userId, quizId) => {
-  const userRef = ref(db, `users/${userId}/invitation/${quizId}`);
+  const userRef = ref(db, `quizzes/${quizId}/invites/${userId}`)
   
   return update(userRef, {
-    inviteStatus: true,
+       inviteStatus: "true",
+  
   }).catch((error) => {
     console.error('Error accepting invitation', error);
   });
 };
 
-export const declineInvitation = (userId, quizId) => {
-  const userRef = ref(db, `users/${userId}/invitation/${quizId}`);
+export const declineInvitation = (quizId, handle) => {
+  const userRef = ref(db, `quizzes/${quizId}/invites/${handle}`);
   
-  return set(userRef, null).catch((error) => {
+  return set(userRef, {}).catch((error) => {
     console.error('Error declining invitation', error);
   });
 };

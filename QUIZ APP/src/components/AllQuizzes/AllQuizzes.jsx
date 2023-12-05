@@ -29,6 +29,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
   const { userData } = useContext(AppContext);
   const [currentPage, setCurrentPage] = useState(1);
   const [cat, setCat] = useState({});
+  const [currentUser, setCurrentUser] = useState()
   const [rerender, setRerender] = useState(false);
   const indexOfLastQuiz = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstQuiz = indexOfLastQuiz - ITEMS_PER_PAGE;
@@ -38,6 +39,11 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
     indexOfFirstQuiz,
     indexOfLastQuiz
   );
+  useEffect(() => {
+    if(userData) {
+      setCurrentUser(userData.handle)
+    }
+  },[])
   useEffect(() => {
     if (category) {
       const filteredQuiz = quizzes && quizzes.filter((quiz) => quiz && quiz.category === category && quiz.state === "ongoing");
@@ -56,13 +62,13 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
     acceptingInvitation(handle, quizId);
     navigate(`${quizId}`)
   }
-  const removeInvitation = (handle, quizId) => {
-    declineInvitation(handle, quizId);
+  const removeInvitation = ( quizId, handle ) => {
+    declineInvitation(quizId, handle);
     navigate(0)
   }
 
 
-  const mappedQuizzes = currentQuizzes.map(([quizId, quizData]) => (
+  const mappedQuizzes = currentQuizzes &&  currentQuizzes.map(([quizId, quizData]) => (
 
     <Center padding={'10px'} py={6} key={quizId}>
       <Box maxW={'250px'} w={'full'} bg={'white'} boxShadow={'2xl'} rounded={'md'} overflow={'hidden'}>
@@ -105,7 +111,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
               Total Points: {quizData.totalPoints}
             </ListItem>
           </List>
-          {( userData && quizData?.selectedOption === "Private" && userData.invitation && !userData.invitation[quizData.id].inviteStatus === false) ? (
+          {userData && quizData &&  quizData.selectedOption === "Private" && (quizData.invites && quizData.invites[currentUser]&&quizData.invites[currentUser]?.inviteStatus === "false") ? (
             <>
               <Button
                 mt={10}
@@ -129,7 +135,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
                 boxShadow={'0 5px 20px 0px rgb(255 99 132 / 43%)'}
                 _hover={{ bg: 'red.300' }}
                 _focus={{ bg: 'red.300' }}
-                onClick={() => removeInvitation(userData.handle, quizData.id)}
+                onClick={() => removeInvitation(quizData.id, userData.handle)}
               >
                 Reject
               </Button>
@@ -160,7 +166,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
         {catName}
       </Text>
       <Box >
-        {mappedQuizzes.length > 0 ? (
+        {mappedQuizzes && mappedQuizzes.length > 0 ? (
           <div>
             <Flex wrap="wrap" justify="center" flexDirection="row">
               {currentPage > 1 && (
