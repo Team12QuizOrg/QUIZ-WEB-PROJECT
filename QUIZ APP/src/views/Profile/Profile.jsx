@@ -37,7 +37,7 @@ const Profile = () => {
             .finally(() => {
                 setLoading(false);
             });
-    }, []);
+    }, [profile]);
 
 
     const handleEditProfile = (updatedValues) => {

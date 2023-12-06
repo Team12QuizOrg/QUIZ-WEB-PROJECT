@@ -17,15 +17,15 @@ const UserInfo = ({ currentUser }) => {
                 align={{ base: 'start', md: 'center' }}
             >
                 <HStack align="center">
-                    <Box as={FaHouseUser} fontSize="xl" mr={2} />
+                    <Box as={FaHouseUser} fontSize="xl" ml={5} />
                     <Heading fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}>
                         {currentUser.firstName} {currentUser.lastName}
                     </Heading>
                 </HStack>
                 {includeSpacer && <Spacer />}
                 <HStack align="center">
-                    <Box as={MdEmail} fontSize="xl" mr={2} />
-                    <Heading fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}>
+                    <Box as={MdEmail} fontSize="xl" />
+                    <Heading fontSize={{ base: 'md', md: 'lg', lg: 'xl' }} mr={5}>
                         {currentUser.email}
                     </Heading>
                 </HStack>

@@ -38,6 +38,7 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
   const navigate = useNavigate();
   const toast = useToast();
 
+
   useEffect(() => {
     getGroupOwner(groupId).then((res) => setOwner(res));
   }, []);
@@ -104,6 +105,7 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
               p={2}
               mt={4}
               mb={6}
+              onClick={() => navigate(`/${(owner)}`)}
             >
               <Box h={10} w={10} mt={2}>
                 <GetAvatar handle={owner} />
@@ -131,6 +133,7 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
                       textDecoration: "none",
                       bg: "brand.100",
                     }}
+                    onClick={() => navigate(`/${(member)}`)}
                   >
                     <Box h={10} w={10} mt={2}>
                       <GetAvatar handle={member} />
