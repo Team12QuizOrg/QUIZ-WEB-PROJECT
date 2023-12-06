@@ -30,24 +30,28 @@ const theme = extendTheme({
       fontWeight: 'bold',
       lineHeight: '110%',
       letterSpacing: '-2%',
+      textShadow: '2px 2px 2px rgba(0, 10, 0, 0.3)'
     },
     h2: {
       fontSize: ['48px', '64px'], 
       fontWeight: 'semibold',
       lineHeight: '110%',
       letterSpacing: '-1%',
+      textShadow: '2px 2px 2px rgba(0, 10, 0, 0.3)'
     },
     h3: {
       fontSize: ['2xl', '3xl', '4xl'], 
       fontWeight: 'bold',
       lineHeight: '110%',
       letterSpacing: '-1%',
+      textShadow: '2px 2px 2px rgba(0, 10, 0, 0.3)'
     },
     h4: {
       fontSize: ['24px', '32px'], 
       fontWeight: 'medium',
       lineHeight: '110%',
       letterSpacing: '-0.5%',
+      textShadow: '2px 2px 2px rgba(0, 10, 0, 0.3)'
     },
     body: {
       fontSize: ['20px', '24px'], 
@@ -66,10 +70,10 @@ const theme = extendTheme({
       fontWeight: 'semibold',
       lineHeight: '110%',
       letterSpacing: '-1%',
-      textDecoration: 'overline',
-      textDecorationColor: 'blue.400', 
-      display: 'inline',
+    
+      textShadow: '2px 2px 2px rgba(0, 10, 0, 0.3)'     , 
     },
+    
   },
 });
 

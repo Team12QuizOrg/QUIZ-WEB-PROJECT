@@ -55,7 +55,7 @@ export default function Slider2() {
                         <Text as={'span'} color={'brand.200'} >{users ? users.length : '0'}</Text>
                         <Text as={'span'}  > members,</Text>
                         <Text as={'span'} color={'brand.200'} >
-                            {quizzes ? quizzes.length : '0'}{' '}
+                            {' '}{quizzes ? quizzes.length : '0'}{' '}
                         </Text>
                         <Text as={'span'}  >
                             quizzes from{' '}

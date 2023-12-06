@@ -1,7 +1,6 @@
 
 import { Box, Stack, Heading, Text, Image, Flex, Spacer, HStack, } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
-import { FaArrowRightLong } from "react-icons/fa6"
 import { useColorMode } from '@chakra-ui/color-mode';
 export default function Slider3() {
     const navigate = useNavigate()
@@ -36,7 +35,6 @@ export default function Slider3() {
                             Try your knowledge here
                         </Text>
                         <Text as='span'> {' '}</Text>
-                        <FaArrowRightLong color={'#4299e1'} />
                     </HStack>
                 </Stack>
                 <Box onClick={() => navigate(`/signup`)}>

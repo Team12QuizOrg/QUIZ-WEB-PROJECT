@@ -5,6 +5,7 @@ import SearchQuizzes from "../SearchQuizzes/SearchQuizzes";
 import NavLinks from "../NavLinks/NavLinks";
 import NavUser from "../NavUser/NavUser";
 import { useColorMode } from '@chakra-ui/color-mode';
+import NavLogo from "../NavLogo/NavLogo";
 export default function NavBar() {
 
   const [isSmallerThan800] = useMediaQuery('(max-width: 800px)');
@@ -13,7 +14,7 @@ export default function NavBar() {
   const { colorMode } = useColorMode();
   return (
     <Box>
-      <Flex align="center" justify="space-between" p={4} >
+      <Flex align="center" justify="space-evenly" mt={10}>
         {isSmallerThan800 ? (
           <><Button
             display={['block', 'block', 'none']}
@@ -21,22 +22,13 @@ export default function NavBar() {
             onClick={onOpen}
             variant={'link'}
             fontSize={['xl', 'xl', '4xl']}
-
+            ml={10}
           >
             <HamburgerIcon />
-          </Button><HStack spacing={0} alignItems={['center', 'center', 'center']}>
-              <Image
-                className="logo-image"
-                src="assets\logo2.png"
-                alt="logo"
-                maxW={50}
-                maxH={50}
-                onClick={() => navigate(`/home`)}
-                rounded={"full"} />
-              <Heading fontSize={['xl', '1xl', '2xl']} color={colorMode === 'dark' ? 'brand.200' : 'brand.400'}>
-                Solvr
-              </Heading>
-            </HStack><Drawer placement="left" onClose={onClose} isOpen={isOpen}>
+          </Button>
+            <Spacer></Spacer>
+            <NavLogo />
+            <Drawer placement="left" onClose={onClose} isOpen={isOpen}>
               <DrawerOverlay />
               <DrawerContent>
                 <DrawerHeader>
@@ -52,12 +44,13 @@ export default function NavBar() {
               </DrawerContent>
             </Drawer></>
         ) : (
-          <><NavLinks display={['none', 'none', 'block']}></NavLinks><HStack spacing="10px" display={['none', 'none', 'flex']}>
-            <Spacer />
-            <SearchQuizzes />
-            <Spacer />
-            <NavUser></NavUser>
-          </HStack></>
+          <><NavLogo />
+            <NavLinks display={['none', 'none', 'block']}></NavLinks><HStack spacing="10px" display={['none', 'none', 'flex']}>
+              <Spacer></Spacer>
+              <SearchQuizzes />
+              <Spacer></Spacer>
+              <NavUser></NavUser>
+            </HStack></>
         )}
       </Flex >
     </Box >
