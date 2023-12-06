@@ -193,7 +193,6 @@ const SolvingQuizView = () => {
   };
   const addLeadingZero = (number) => (number > 9 ? number : `0${number}`);
 
-  const cardBackgroundColor = "brand.100";
   return (
     <Grid
       templateColumns={{ base: "1fr", md: "auto" }}
@@ -261,7 +260,7 @@ const SolvingQuizView = () => {
               {options?.map((answer, index) => (
                 <GridItem key={answer}>
                   <Button
-                    width="100%" // Full width for all screen sizes
+                    width="100%" 
                     onClick={() => onAnswerSelected(answer, index)}
                     variant={
                       selectedAnswerIndex === index ? "solid" : "outline"
@@ -270,8 +269,7 @@ const SolvingQuizView = () => {
                       selectedAnswerIndex === index ? "yellow" : "blue"
                     }
                     fontFamily="customFont"
-                    fontSize={{ base: "sm", md: "md" }} // Responsive font size
-                    color="white"
+                    fontSize={{ base: "sm", md: "md" }} 
                     _hover={{
                       boxShadow: "md",
                       transform: "scale(1.05)",
@@ -307,14 +305,14 @@ const SolvingQuizView = () => {
         </Box>
       ) : (
         <Card
-          maxW={{ base: "100%", md: "60%" }} // Responsive width
+          maxW={{ base: "100%", md: "60%" }}
           align={"center"}
           borderColor={"brand.200"}
-          borderBottomWidth={{ base: 10, md: 20 }} // Responsive border width
+          borderBottomWidth={{ base: 10, md: 20 }} 
           justify={"center"}
           justifySelf={"center"}
           bg="brand.500"
-          p={{ base: 3, md: 6 }} // Responsive padding
+          p={{ base: 3, md: 6 }}
           borderRadius="lg"
           boxShadow="xl"
         >
@@ -345,7 +343,7 @@ const SolvingQuizView = () => {
               </Box>
               <Box>
                 <Text pt="2" fontSize="sm">
-                  Correct Answers: {quizState.correctAnswers}
+                  Correct Answers: {quizState.correctAnswers||0}
                   {quizState.correctAnswers === questionIds.length && (
                     <span style={{ color: "green" }}>
                       {" "}
@@ -356,7 +354,7 @@ const SolvingQuizView = () => {
               </Box>
               <Box>
                 <Text pt="2" fontSize="sm">
-                  Wrong Answers: {questionIds.length - quizState.correctAnswers}
+                  Wrong Answers: {quizState.correctAnswers?questionIds.length - quizState.correctAnswers:questionIds.length}
                 </Text>
               </Box>
             </Stack>
