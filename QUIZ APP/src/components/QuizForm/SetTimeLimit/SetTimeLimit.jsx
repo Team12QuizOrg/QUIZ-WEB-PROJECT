@@ -11,7 +11,7 @@ const SetTimeLimit = ({ timeLimit, unit, onChangeTime, onChangeUnit }) => {
   };
 
   return (
-    <FormControl color="black" mb={2} flex="1" maxW="100%">
+    <FormControl mb={2} flex="1" maxW="100%">
       <FormLabel fontSize="medium" h={10}>
         Availability:
       </FormLabel>

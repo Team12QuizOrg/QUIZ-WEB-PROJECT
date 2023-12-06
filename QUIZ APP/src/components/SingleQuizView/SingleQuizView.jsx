@@ -158,7 +158,7 @@ const SingleQuizView = () => {
     <><Grid minHeight={'100vh'} templateRows='repeat(1, 1fr)' templateColumns='repeat(6, 1fr)'
       gap={4}>
       <GridItem as="main" colSpan={{ base: 6, lg: 4, xl: 4 }}
-        bg="brand.100" p="40px">
+        p="40px">
         <Center >
           <Card maxW='2xl' width={'70%'}>
             <CardHeader>
@@ -223,7 +223,7 @@ const SingleQuizView = () => {
         </Center>
       </GridItem>
 
-      <GridItem as="aside" colSpan={{ base: 6, lg: 2, xl: 2 }} bg="brand.100"
+      <GridItem as="aside" colSpan={{ base: 6, lg: 2, xl: 2 }}
         minHeight={{ lg: '100%' }} p={{ base: '20px', lg: '30px' }} mt={2}  >
         <Card>
           <CardHeader>

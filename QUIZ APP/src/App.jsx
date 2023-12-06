@@ -15,24 +15,17 @@ import Footer from "./components/Footer/Footer";
 import AdminPanel from "./views/AdminPanel/AdminPanel";
 import Error from "./views/Error/Error";
 import { getUserData } from "./services/users.services";
-import { getAllUserData } from "./services/users.services";
 import QuizzPage from "./views/QuizzPage/QuizzPage";
-import "./App.css";
-import "./App.css";
 import SingleQuizView from "./components/SingleQuizView/SingleQuizView";
 import SolvingQuizView from "./components/SolvingQuizView/SolvingQuizView";
-import Quizzes from "./components/Quizzes/Quizzes";
-import { getAllQuizzes } from "./services/quiz.services";
 import QuizForm from "./components/QuizForm/QuizForm";
 import PrivateRoute from "./hoc/PrivateRoute";
 import AssessmentQuiz from "./views/AssessmentQuiz/AssessmentQuiz";
 import { AllCategoriesPage } from "./views/AllCategoriesPage/AllCategoriesPage";
+import ToggleColorMode from "./components/ToggleColorMode/ToggleColorMode";
 
 function App() {
   const [user] = useAuthState(auth);
-  // const [quizzes, setQuizzes] = useState([]);
-  // const [openQuizzes, setOpenQuizzes] = useState([]);
-  // const [users, setUsers] = useState([])
   const [appState, setAppState] = useState({
     user,
     userData: null,
@@ -41,20 +34,6 @@ function App() {
     setAppState({ user });
   }
 
-  // useEffect(() => {
-  //   getAllUserData()
-  //     .then((res) => setUsers(res))
-  //     .catch((err) => console.error(`Problem fetching all users`, err))
-  // })
-  // useEffect(() => {
-  //   getAllQuizzes()
-  //     .then(res => {
-  //       setQuizzes(res);
-  //       const openQ = res.filter((quiz) => quiz.selectedOption === "Open")
-  //       setOpenQuizzes(openQ);
-  //     })
-  //     .catch(err => console.error('error fetching posts: ', err))
-  // }, [quizzes])
   useEffect(() => {
     if (user === null) return;
 
@@ -76,29 +55,30 @@ function App() {
     <div>
       <AppContext.Provider value={{ ...appState, setContext: setAppState }}>
         <PrivateRoute>
+          <ToggleColorMode></ToggleColorMode>
           <NavBar></NavBar>
         </PrivateRoute>
         <Routes>
           <Route path="/Home" element={<PrivateRoute><Home /></PrivateRoute>} />
           <Route path="/" element={<PrivateRoute> <Home /></PrivateRoute>} />
-          <Route path="/QuizForm" element={<AuthenticatedRoute> <QuizForm /> </AuthenticatedRoute>}/>
+          <Route path="/QuizForm" element={<AuthenticatedRoute> <QuizForm /> </AuthenticatedRoute>} />
           <Route path="/quizzes/AllCategories" element={<AuthenticatedRoute><AllCategoriesPage /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllCategories/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllCategories/:id/:id" element={<AuthenticatedRoute><SolvingQuizView /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes" element={<QuizzPage />} />
-          <Route path="/quizzes/AllQuizzes/:id" element={ <AuthenticatedRoute> <SingleQuizView /> </AuthenticatedRoute>}/>
-          <Route path="/quizzes/AllQuizzes/:id/:id" element={ <AuthenticatedRoute><SolvingQuizView /></AuthenticatedRoute>}/>
-          <Route path="/About" element={<AuthenticatedRoute> <About /> </AuthenticatedRoute> }/>
+          <Route path="/quizzes/AllQuizzes/:id" element={<AuthenticatedRoute> <SingleQuizView /> </AuthenticatedRoute>} />
+          <Route path="/quizzes/AllQuizzes/:id/:id" element={<AuthenticatedRoute><SolvingQuizView /></AuthenticatedRoute>} />
+          <Route path="/About" element={<AuthenticatedRoute> <About /> </AuthenticatedRoute>} />
           <Route path="/quizzes/assessment/:id" element={<AuthenticatedRoute><AssessmentQuiz /></AuthenticatedRoute>} />
           <Route path="/signin" element={<SignIn />} />
           <Route path="/signup" element={<SignUp />} />
           {user === null && <Route path="/signin" element={<SignIn />} />}
           {user === null && <Route path="/signup" element={<SignUp />} />}
           {/* <Route path="/reset" element={<ResetPassword />} />*/}
-          <Route path="/:profile"  element={ <AuthenticatedRoute><Profile /></AuthenticatedRoute> }/>
+          <Route path="/:profile" element={<AuthenticatedRoute><Profile /></AuthenticatedRoute>} />
           {/* <Route path='/:profile/usersposts' element={<AuthenticatedRoute><UsersPost /></AuthenticatedRoute>} />
         <Route path='/:profile/userscomments' element={<AuthenticatedRoute><UsersComments /></AuthenticatedRoute>} />*/}
-          <Route path="/adminPanel" element={<AuthenticatedRoute><AdminPanel /></AuthenticatedRoute>}/>
+          <Route path="/adminPanel" element={<AuthenticatedRoute><AdminPanel /></AuthenticatedRoute>} />
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer></Footer>

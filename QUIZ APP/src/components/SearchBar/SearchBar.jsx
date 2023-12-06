@@ -39,7 +39,6 @@ const SearchBar = ({ searchingFor, onSearchResults, selectedOption }) => {
     return (
         <Input
             type="text"
-            color='brand.400'
             placeholder={`Search for ${selectedOption} here...`}
             _placeholder={{ color: 'inherit' }}
             value={search}

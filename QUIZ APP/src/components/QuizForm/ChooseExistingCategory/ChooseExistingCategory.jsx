@@ -1,22 +1,22 @@
 import { FormControl, FormLabel, Select } from "@chakra-ui/react";
 import PropTypes from "prop-types";
 
-const ChooseExistingCategory = ({ selectedCategory, func , categories}) => {
+const ChooseExistingCategory = ({ selectedCategory, func, categories }) => {
   return (
-    <FormControl color="black" mb={2} gridColumn="span 2">
+    <FormControl mb={2} gridColumn="span 2">
       <FormLabel fontSize="lg">Choose an existing one:</FormLabel>
       <Select
-        color="black"
+
         value={selectedCategory}
         onChange={func}
         variant="filled"
         focusBorderColor="black"
       >
-        <option value="" color="black">
+        <option value="" >
           Choose an existing one
         </option>
         {categories.map((cat) => (
-          <option key={cat[1].category} color="black">
+          <option key={cat[1].category}>
             {cat[1].category}
           </option>
         ))}
@@ -26,9 +26,9 @@ const ChooseExistingCategory = ({ selectedCategory, func , categories}) => {
 };
 
 ChooseExistingCategory.propTypes = {
-    selectedCategory: PropTypes.string,
-    func: PropTypes.func,
-    categories: PropTypes.array,
-  };
+  selectedCategory: PropTypes.string,
+  func: PropTypes.func,
+  categories: PropTypes.array,
+};
 
 export default ChooseExistingCategory;

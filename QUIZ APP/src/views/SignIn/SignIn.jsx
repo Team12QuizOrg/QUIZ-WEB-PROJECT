@@ -1,21 +1,9 @@
-import React from "react";
-import './SignIn.css';
 import AppContext from "../../context/AuthContext";
 import { useContext, useState } from "react";
 import { loginUser } from "../../services/auth.services";
 import { useNavigate } from "react-router-dom";
 import {
-    Flex,
-    Box,
-    FormControl,
-    FormLabel,
-    Input,
-    Checkbox,
-    Stack,
-    Button,
-    Heading,
-    Text,
-    useColorModeValue,
+    Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Button, Heading, Text, useColorModeValue,
 } from '@chakra-ui/react'
 
 export default function SignIn() {
@@ -81,11 +69,11 @@ export default function SignIn() {
                     <Stack spacing={4}>
                         <FormControl id="email">
                             <FormLabel color={'brand.200'}>Email address</FormLabel>
-                            <Input color={'brand.400'} type="email" value={form.email} onChange={updateForm('email')} />
+                            <Input type="email" value={form.email} onChange={updateForm('email')} />
                         </FormControl>
                         <FormControl id="password">
                             <FormLabel color={'brand.200'}>Password</FormLabel>
-                            <Input color={'brand.400'} type="password" value={form.password} onChange={updateForm('password')} />
+                            <Input type="password" value={form.password} onChange={updateForm('password')} />
                         </FormControl>
                         <Stack spacing={10}>
                             <Stack

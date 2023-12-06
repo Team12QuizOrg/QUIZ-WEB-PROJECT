@@ -50,7 +50,7 @@ export default function SearchQuizzes() {
                                     cursor="pointer"
                                 ><IoIosArrowDropright />
 
-                                    <Text color={'black'}>{quiz.title}</Text>
+                                    <Text >{quiz.title}</Text>
                                 </HStack>
                             </PopoverHeader>
                         ))}

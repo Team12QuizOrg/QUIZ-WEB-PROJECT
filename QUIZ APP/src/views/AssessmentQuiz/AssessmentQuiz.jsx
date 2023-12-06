@@ -36,8 +36,8 @@ export default function AssessmentQuiz() {
                             }}
                             p={5}
                             _hover={{
-                                textDecoration: "none",
-                                bg: "brand.200",
+
+                                bg: "#CBD5E0",
                             }}
                             onClick={() => { handleOpen(id, quiz.user, userData.handle) }}
                             cursor={'pointer'}>
@@ -46,8 +46,8 @@ export default function AssessmentQuiz() {
                                 <GetAvatar handle={quiz.user} />
                             </Box>
                             <VStack >
-                                <Heading color={'brand.400'} align={'center'} fontSize={['sm', 'sm', '1.5em']}>{quiz.user}</Heading>
-                                <Text color={'brand.400'} align={'center'}>{quiz.timestamp}</Text>
+                                <Heading color={'brand.200'} align={'center'} fontSize={['sm', 'sm', '1.5em']}>{quiz.user}</Heading>
+                                <Text align={'center'}>{quiz.timestamp}</Text>
 
 
                             </VStack>

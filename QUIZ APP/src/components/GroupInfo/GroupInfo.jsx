@@ -81,7 +81,7 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
         <ModalOverlay />
         <ModalContent>
           <ModalHeader
-            color={"black"}
+
             fontSize={["0.8em", "1em", "1.2em"]}
             align={"center"}
             justify={"center"}
@@ -90,8 +90,8 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
             {groupName}
           </ModalHeader>
           <ModalCloseButton />
-          <ModalBody color={"black"}>
-            <Heading color={"black"} fontSize={["0.8em", "1em", "1.2em"]}>
+          <ModalBody >
+            <Heading fontSize={["0.8em", "1em", "1.2em"]}>
               {" "}
               Owner{" "}
             </Heading>
@@ -112,7 +112,7 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
                 {owner}
               </Text>
             </VStack>
-            <Heading color={"black"} fontSize={["0.8em", "1em", "1.2em"]}>
+            <Heading fontSize={["0.8em", "1em", "1.2em"]}>
               {" "}
               Members{" "}
             </Heading>
@@ -171,7 +171,7 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
             </Grid>
             {userData.handle === owner && (
               <Box mb={6}>
-                <Heading color={"black"} fontSize={["0.8em", "1em", "1.2em"]}>
+                <Heading fontSize={["0.8em", "1em", "1.2em"]}>
                   {" "}
                   Add Member:{" "}
                 </Heading>

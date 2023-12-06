@@ -4,13 +4,13 @@ import { ChevronRightIcon, HamburgerIcon } from "@chakra-ui/icons";
 import SearchQuizzes from "../SearchQuizzes/SearchQuizzes";
 import NavLinks from "../NavLinks/NavLinks";
 import NavUser from "../NavUser/NavUser";
-
+import { useColorMode } from '@chakra-ui/color-mode';
 export default function NavBar() {
 
   const [isSmallerThan800] = useMediaQuery('(max-width: 800px)');
   const { isOpen, onOpen, onClose } = useDisclosure();
   const navigate = useNavigate();
-
+  const { colorMode } = useColorMode();
   return (
     <Box>
       <Flex align="center" justify="space-between" p={4} >
@@ -21,7 +21,7 @@ export default function NavBar() {
             onClick={onOpen}
             variant={'link'}
             fontSize={['xl', 'xl', '4xl']}
-            color={'brand.400'}
+
           >
             <HamburgerIcon />
           </Button><HStack spacing={0} alignItems={['center', 'center', 'center']}>
@@ -33,7 +33,7 @@ export default function NavBar() {
                 maxH={50}
                 onClick={() => navigate(`/home`)}
                 rounded={"full"} />
-              <Heading fontSize={['xl', '1xl', '2xl']} color={"brand.400"}>
+              <Heading fontSize={['xl', '1xl', '2xl']} color={colorMode === 'dark' ? 'brand.200' : 'brand.400'}>
                 Solvr
               </Heading>
             </HStack><Drawer placement="left" onClose={onClose} isOpen={isOpen}>

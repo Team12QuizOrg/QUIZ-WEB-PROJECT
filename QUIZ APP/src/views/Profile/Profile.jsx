@@ -67,7 +67,7 @@ const Profile = () => {
                     gap={4}
                 > <GridItem as="main"
                     colSpan={{ base: 6, lg: 4, xl: 4 }}
-                    bg="brand.100"
+
                     p="40px"
                 >
                         <Center>
@@ -126,7 +126,7 @@ const Profile = () => {
 
                     <GridItem as="aside"
                         colSpan={{ base: 6, lg: 2, xl: 2 }}
-                        bg="brand.100"
+
                         minHeight={{ lg: '100%' }}
                         p={{ base: '20px', lg: '30px' }}
                         mt={2}>

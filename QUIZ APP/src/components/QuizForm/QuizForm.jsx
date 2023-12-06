@@ -266,7 +266,7 @@ const QuizForm = () => {
       margin="auto"
       p={4}
       w={"100%"}
-      color="black"
+
     >
       <Box
         padding={"20px"}

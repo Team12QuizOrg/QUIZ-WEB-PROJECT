@@ -3,12 +3,12 @@ import PropTypes from "prop-types";
 
 const QuizName = ({ quizName, setQuizName }) => {
   return (
-    <FormControl color="black" mb={2} flex="2" paddingRight={4} maxW="100%">
+    <FormControl mb={2} flex="2" paddingRight={4} maxW="100%">
       <FormLabel fontSize="lg" maxW="100%">
         Quiz Name:
       </FormLabel>
       <Input
-        color="black"
+
         type="text"
         value={quizName}
         onChange={setQuizName}

@@ -34,10 +34,10 @@ export default function ListFeedback() {
     return (
 
 
-        <Box bg={'brand.100'}>
+        <Box >
             <Container maxW={'7xl'} py={16} as={Stack} spacing={12}>
                 <Stack spacing={0} align={'center'}>
-                    <Heading color={'brand.400'} fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>Our Clients Speak</Heading>
+                    <Heading fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}>Our Clients Speak</Heading>
                     <Text color={'brand.200'} fontSize={{ base: '2xl', md: '3xl', lg: '4xl' }}>We have been working with clients around the world</Text>
                 </Stack>
 

@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Box, Stack, Heading, Text, Image, Flex, Spacer, } from '@chakra-ui/react'
-
+import { useColorMode } from '@chakra-ui/color-mode';
 import { getAllUserData } from '../../../services/users.services';
 
 import { getAllQuizzes } from '../../../services/quiz.services';
@@ -11,6 +11,7 @@ export default function Slider2() {
     const [users, setUsers] = useState([]);
     const [quizzes, setQuizzes] = useState([]);
     const [categories, setCategories] = useState([]);
+    const { colorMode } = useColorMode();
     useEffect(() => {
         getAllUserData()
             .then((res) => {
@@ -34,7 +35,7 @@ export default function Slider2() {
             backgroundPosition={"center"}
             backgroundRepeat={"no-repeat"}
             backgroundSize={"cover"}
-            backgroundImage={`assets/back1.png`}>
+            backgroundImage={colorMode === 'dark' ? 'assets/dark.png' : 'assets/back1.png'}>
 
             <Flex size={"container.lg"} height={"600px"}
                 direction={{ base: 'column', lg: 'row' }}
@@ -47,22 +48,22 @@ export default function Slider2() {
                     maxW={{ base: '80%', lg: '50%' }}
                 >
                     <Spacer />
-                    <Heading textAlign={"start"} fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }} color={'brand.200'} >
+                    <Heading textAlign={"start"} fontSize={{ base: '3xl', md: '4xl', lg: '5xl' }}  >
 
                         Connect with our growing network! {' '}
                         <br />
                         <Text as={'span'} color={'brand.200'} >{users ? users.length : '0'}</Text>
-                        <Text as={'span'} color={'brand.400'} > members,</Text>
+                        <Text as={'span'}  > members,</Text>
                         <Text as={'span'} color={'brand.200'} >
                             {quizzes ? quizzes.length : '0'}{' '}
                         </Text>
-                        <Text as={'span'} color={'brand.400'} >
+                        <Text as={'span'}  >
                             quizzes from{' '}
                         </Text>
                         <Text as={'span'} color={'brand.200'} >
                             {categories ? categories.length : "0"}{' '}
                         </Text>
-                        <Text as={'span'} color={'brand.400'} >
+                        <Text as={'span'}  >
                             categories and counting!{' '}
                         </Text>
 

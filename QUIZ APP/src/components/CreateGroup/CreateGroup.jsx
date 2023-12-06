@@ -3,14 +3,7 @@ import AppContext from "../../context/AuthContext";
 import { useContext } from "react";
 import { addFeedback } from "../../services/feedback.services";
 import {
-  Modal,
-  Input,
-  ModalOverlay,
-  ModalContent,
-  ModalHeader,
-  ModalBody,
-  ModalCloseButton,
-  useDisclosure,
+  Modal, Input, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure,
   FormLabel,
   Textarea,
   FormControl,
@@ -18,6 +11,7 @@ import {
 } from "@chakra-ui/react";
 import { addGroup } from "../../services/groups.services";
 import { useToast } from "@chakra-ui/react";
+
 
 const CreateGroup = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -70,7 +64,7 @@ const CreateGroup = () => {
               <FormControl>
                 <FormLabel>Group name</FormLabel>
                 <Input
-                  color={"brand.400"}
+
                   type="text"
                   placeholder=" "
                   value={groupName}

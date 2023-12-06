@@ -22,7 +22,7 @@ import AppContext from "../../context/AuthContext";
 import { feedbackFormatDate } from "../../services/feedback.services";
 import { acceptingInvitation } from "../../services/users.services";
 import { declineInvitation } from "../../services/users.services";
-
+import { useColorMode } from '@chakra-ui/color-mode';
 
 
 const AllQuizzes = ({ quizzes, catName, category }) => {
@@ -35,6 +35,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
   const indexOfLastQuiz = currentPage * ITEMS_PER_PAGE;
   const indexOfFirstQuiz = indexOfLastQuiz - ITEMS_PER_PAGE;
   const navigate = useNavigate();
+  const { colorMode } = useColorMode();
 
   const currentQuizzes = Object.entries(allQuizzes).slice(
     indexOfFirstQuiz,
@@ -143,111 +144,118 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
   // ));
 
   return (
-    <div>
-      <Text margin={'20px'} fontSize="xl" fontWeight="bold" mb={4} align={'left'}>
-        {catName}
-      </Text>
-      {currentQuizzes && (
-        <Flex wrap="wrap" justify="center" flexDirection="row">
-          {currentQuizzes.map(([quizId, quizData]) => (
-            <Center padding={'10px'} py={6} key={quizId}>
-              <Box
-                maxW={'250px'} // Keep the max width constant for all screen sizes
-                w={'full'}
-                bg={'white'}
-                boxShadow={'2xl'}
-                rounded={'md'}
-                overflow={'hidden'}
-              >
-                <Stack textAlign={'center'} p={6} color={'black'} align={'center'}>
-                  <Text fontSize={'xs'} fontWeight={500} bg={'green.50'} p={2} px={3} color={'green.500'} rounded={'full'}>
-                    {quizData.category}
-                  </Text>
-                  <Stack maxW={'250px'} align={'center'} justify={'center'}>
-                    <Tooltip label={quizData.title} placement="top">
-                      <Text fontSize={'sm'} fontWeight={800} isTruncated>
-                        {quizData.title}
-                      </Text>
-                    </Tooltip>
+    <Box
+    // bg={colorMode === 'dark' ? 'gray.800' : 'brand.100'}
+    // color={colorMode === 'dark' ? 'white' : 'gray.400'}
+    >
+      <div>
+        <Text margin={'20px'} fontSize="xl" fontWeight="bold" mb={4} align={'left'}>
+          {catName}
+        </Text>
+        {currentQuizzes && (
+          <Flex wrap="wrap" justify="center" flexDirection="row">
+            {currentQuizzes.map(([quizId, quizData]) => (
+              <Center padding={'10px'} py={6} key={quizId}>
+                <Box
+                  maxW={'250px'} // Keep the max width constant for all screen sizes
+                  w={'full'}
+
+                  bg={colorMode === 'dark' ? 'blue.700' : 'white.200'}
+                  boxShadow={'2xl'}
+                  rounded={'md'}
+                  overflow={'hidden'}
+                >
+                  <Stack textAlign={'center'} p={6} color={'black'} align={'center'}>
+                    <Text fontSize={'xs'} fontWeight={500} bg={'green.50'} p={2} px={3} color={'green.500'} rounded={'full'}>
+                      {quizData.category}
+                    </Text>
+                    <Stack maxW={'250px'} align={'center'} justify={'center'}>
+                      <Tooltip label={quizData.title} placement="top">
+                        <Text fontSize={'sm'} color={'brand.200'} fontWeight={800} isTruncated>
+                          {quizData.title}
+                        </Text>
+                      </Tooltip>
+                    </Stack>
                   </Stack>
-                </Stack>
-                <Box bg={'gray.50'} padding={'25px'}>
-                  <List textAlign={'left'} spacing={2}>
-                    <ListItem fontSize={'sm'} marginLeft={0}>
-                      <ListIcon as={ChevronRightIcon} color="green.400" />
-                      Author: {quizData.author}
-                    </ListItem>
-                    <ListItem fontSize={'xs'}>
-                      <ListIcon marginLeft={0} as={ChevronRightIcon} color="green.400" />
-                      Created: {feedbackFormatDate(quizData?.createdOn)}
-                    </ListItem>
-                    <ListItem fontSize={'sm'} marginLeft={0}>
-                      <ListIcon as={ChevronRightIcon} color="green.400" />
-                      Type: {quizData.selectedOption}
-                    </ListItem>
-                    <ListItem fontSize={'sm'} marginLeft={0}>
-                      <ListIcon as={ChevronRightIcon} color="green.400" />
-                      Availability: {quizData.state}
-                    </ListItem>
-                    <ListItem fontSize={'sm'} marginLeft={0}>
-                      <ListIcon as={ChevronRightIcon} color="green.400" />
-                      Questions: {quizData.numQuestions}
-                    </ListItem>
-                    <ListItem fontSize={'sm'} marginLeft={0}>
-                      <ListIcon as={ChevronRightIcon} color="green.400" />
-                      Total Points: {quizData.totalPoints * quizData.numQuestions}
-                    </ListItem>
-                  </List>
-                  {userData && quizData && quizData.selectedOption === "Private" && (quizData.invites && quizData.invites[currentUser] && quizData.invites[currentUser]?.inviteStatus === "false") ? (
-                    <>
-                      <Button mt={10} w={'full'} bg={'blue.400'}
-                        color={'white'} rounded={'xl'} boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
-                        _hover={{ bg: 'brand.200' }} _focus={{ bg: 'brand.200' }}
-                        onClick={() => acceptInvitation(userData.handle, quizData.id)}
+                  {/* tuk------------------ */}
+                  <Box bg={colorMode === 'dark' ? '#A0AEC0' : 'grey.50'} padding={'25px'}>
+                    <List textAlign={'left'} spacing={2}>
+                      <ListItem fontSize={'sm'} marginLeft={0}>
+                        <ListIcon as={ChevronRightIcon} color={colorMode === 'dark' ? '#F7B315' : 'green.500'} />
+                        Author: {quizData.author}
+                      </ListItem>
+                      <ListItem fontSize={'xs'}>
+                        <ListIcon marginLeft={0} as={ChevronRightIcon} color={colorMode === 'dark' ? '#F7B315' : 'green.500'} />
+                        Created: {feedbackFormatDate(quizData?.createdOn)}
+                      </ListItem>
+                      <ListItem fontSize={'sm'} marginLeft={0}>
+                        <ListIcon as={ChevronRightIcon} color={colorMode === 'dark' ? '#F7B315' : 'green.500'} />
+                        Type: {quizData.selectedOption}
+                      </ListItem>
+                      <ListItem fontSize={'sm'} marginLeft={0}>
+                        <ListIcon as={ChevronRightIcon} color={colorMode === 'dark' ? '#F7B315' : 'green.500'} />
+                        Availability: {quizData.state}
+                      </ListItem>
+                      <ListItem fontSize={'sm'} marginLeft={0}>
+                        <ListIcon as={ChevronRightIcon} color={colorMode === 'dark' ? '#F7B315' : 'green.500'} />
+                        Questions: {quizData.numQuestions}
+                      </ListItem>
+                      <ListItem fontSize={'sm'} marginLeft={0}>
+                        <ListIcon as={ChevronRightIcon} color={colorMode === 'dark' ? '#F7B315' : 'green.500'} />
+                        Total Points: {quizData.totalPoints * quizData.numQuestions}
+                      </ListItem>
+                    </List>
+                    {userData && quizData && quizData.selectedOption === "Private" && (quizData.invites && quizData.invites[currentUser] && quizData.invites[currentUser]?.inviteStatus === "false") ? (
+                      <>
+                        <Button mt={10} w={'full'} bg={'blue.400'}
+                          color={'white'} rounded={'xl'} boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
+                          _hover={{ bg: 'brand.200' }} _focus={{ bg: 'brand.200' }}
+                          onClick={() => acceptInvitation(userData.handle, quizData.id)}
+                        >
+                          Accept
+                        </Button>
+                        <Button mt={4} w={'full'} bg={'red.400'} color={'white'} rounded={'xl'} boxShadow={'0 5px 20px 0px rgb(255 99 132 / 43%)'}
+                          _hover={{ bg: 'red.300' }} _focus={{ bg: 'red.300' }}
+                          onClick={() => removeInvitation(quizData.id, userData.handle)}
+                        >
+                          Reject
+                        </Button>
+                      </>
+                    ) : (
+                      <Button mt={10} w={'full'} bg={'blue.400'} color={'white'} rounded={'xl'}
+                        boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
+                        _hover={{ bg: 'brand.200' }}
+                        _focus={{ bg: 'brand.200' }}
+                        onClick={() => navigate(`${quizData.id}`)}
                       >
-                        Accept
+                        View Quiz Details
                       </Button>
-                      <Button mt={4} w={'full'} bg={'red.400'} color={'white'} rounded={'xl'} boxShadow={'0 5px 20px 0px rgb(255 99 132 / 43%)'}
-                        _hover={{ bg: 'red.300' }} _focus={{ bg: 'red.300' }}
-                        onClick={() => removeInvitation(quizData.id, userData.handle)}
-                      >
-                        Reject
-                      </Button>
-                    </>
-                  ) : (
-                    <Button mt={10} w={'full'} bg={'blue.400'} color={'white'} rounded={'xl'}
-                      boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
-                      _hover={{ bg: 'brand.200' }}
-                      _focus={{ bg: 'brand.200' }}
-                      onClick={() => navigate(`${quizData.id}`)}
-                    >
-                      View Quiz Details
-                    </Button>
-                  )}
+                    )}
+                  </Box>
                 </Box>
-              </Box>
-            </Center>
-          ))}
-        </Flex>
-      )}
-      {currentQuizzes && currentQuizzes.length > 0 && (
-        <Flex wrap="wrap" justify="center" flexDirection="row">
-          {currentPage > 1 && (
-            <Button variant="ghost" mx={1} onClick={() => handlePageChange(currentPage - 1)}>
-              <ArrowForwardIcon transform="rotate(180deg)" />
-            </Button>
-          )}
-          <Box border="1px solid #ccc" borderRadius="md" display="flex">
-          </Box>
-          {currentPage * ITEMS_PER_PAGE < Object.keys(allQuizzes).length && (
-            <Button variant="ghost" mx={1} onClick={() => handlePageChange(currentPage + 1)}>
-              <ArrowForwardIcon />
-            </Button>
-          )}
-        </Flex>
-      )}
-      {(!currentQuizzes || currentQuizzes.length === 0) && <Text>No {catName}</Text>}
-    </div>
+              </Center>
+            ))}
+          </Flex>
+        )}
+        {currentQuizzes && currentQuizzes.length > 0 && (
+          <Flex wrap="wrap" justify="center" flexDirection="row">
+            {currentPage > 1 && (
+              <Button variant="ghost" mx={1} onClick={() => handlePageChange(currentPage - 1)}>
+                <ArrowForwardIcon transform="rotate(180deg)" />
+              </Button>
+            )}
+            <Box border="1px solid #ccc" borderRadius="md" display="flex">
+            </Box>
+            {currentPage * ITEMS_PER_PAGE < Object.keys(allQuizzes).length && (
+              <Button variant="ghost" mx={1} onClick={() => handlePageChange(currentPage + 1)}>
+                <ArrowForwardIcon />
+              </Button>
+            )}
+          </Flex>
+        )}
+        {(!currentQuizzes || currentQuizzes.length === 0) && <Text>No {catName}</Text>}
+      </div>
+    </Box>
   );
 }
 

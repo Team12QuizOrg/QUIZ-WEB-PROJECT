@@ -33,7 +33,7 @@ export default function AdminPanel() {
                         value="username"
                         isChecked={selectedOption === 'username'}
                         onChange={() => setSelectedOption("username")}
-                    > <Text color="black"> Username</Text> </Radio>
+                    > <Text > Username</Text> </Radio>
 
                     <Radio
 
@@ -41,7 +41,7 @@ export default function AdminPanel() {
                         value="email"
                         isChecked={selectedOption === 'email'}
                         onChange={() => setSelectedOption("email")}
-                    > <Text color="black"> Email</Text> </Radio>
+                    > <Text > Email</Text> </Radio>
 
                     <Radio
                         color={'brand.200'}
@@ -50,7 +50,7 @@ export default function AdminPanel() {
                         value="first-name"
                         isChecked={selectedOption === 'first-name'}
                         onChange={() => setSelectedOption("first-name")}
-                    > <Text color="black"> First name</Text> </Radio>
+                    > <Text > First name</Text> </Radio>
 
                 </Stack>
 

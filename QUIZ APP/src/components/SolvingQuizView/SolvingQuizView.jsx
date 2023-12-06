@@ -134,12 +134,12 @@ const SolvingQuizView = () => {
     setResult((prev) =>
       selectedAnswer
         ? {
-            ...prev,
-            score: Math.floor(
-              prev.score + quiz.totalPoints
-            ),
-            correctAnswers: prev.correctAnswers + 1,
-          }
+          ...prev,
+          score: Math.floor(
+            prev.score + quiz.totalPoints
+          ),
+          correctAnswers: prev.correctAnswers + 1,
+        }
         : { ...prev, wrongAnswers: prev.wrongAnswers + 1 }
     );
 
@@ -219,7 +219,7 @@ const SolvingQuizView = () => {
           my="auto"
           p={5}
         >
-          
+
           <VStack align="center" spacing={4}>
             <Flex align="center" justify="space-between" width="100%">
               <Box>
@@ -237,21 +237,21 @@ const SolvingQuizView = () => {
               </Flex>
             </Flex>
             <motion.div>
-            {quiz && !quizFinished && (
-              <motion.div
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ delay: 0.2 }}
-              >
-                <Timer
-                  endTimeUnix={quizState?.endTime ? quizState?.endTime : timerUnix}
-                  onTimerFinish={handleTimerFinish}
-                />
-              </motion.div>
-            )}
-          </motion.div>
+              {quiz && !quizFinished && (
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ delay: 0.2 }}
+                >
+                  <Timer
+                    endTimeUnix={quizState?.endTime ? quizState?.endTime : timerUnix}
+                    onTimerFinish={handleTimerFinish}
+                  />
+                </motion.div>
+              )}
+            </motion.div>
             <Text fontSize="xl">{question}</Text>
-            <Grid templateColumns={["repeat(1, 1fr)","repeat(2, 1fr)"]} gap={4}>
+            <Grid templateColumns={["repeat(1, 1fr)", "repeat(2, 1fr)"]} gap={4}>
               {options?.map((answer, index) => (
                 <GridItem key={answer}>
                   <Button
@@ -259,9 +259,9 @@ const SolvingQuizView = () => {
                     onClick={() => onAnswerSelected(answer, index)}
                     variant={selectedAnswerIndex === index ? "solid" : "outline"}
                     colorScheme={selectedAnswerIndex === index ? "yellow" : "blue"}
-                    fontFamily="customFont" 
-                    fontSize="md" 
-                    color="white" 
+                    fontFamily="customFont"
+                    fontSize="md"
+                    color="white"
                     _hover={{
                       boxShadow: "md",
                       transform: "scale(1.05)",
@@ -300,7 +300,7 @@ const SolvingQuizView = () => {
           maxW={"60%"}
           align={"center"}
           borderColor={"black"}
-          bg={cardBackgroundColor}
+
         >
           <CardHeader>
             <Heading size="md">Quiz Report</Heading>
@@ -310,15 +310,15 @@ const SolvingQuizView = () => {
             <Stack divider={<StackDivider borderColor={"black"} />} spacing="4">
               <Box>
                 <Heading size="xs" textTransform="uppercase">
-                   Summary
+                  Summary
                 </Heading>
-                <Text pt="2" color={"black"} fontSize="sm">
+                <Text pt="2" fontSize="sm">
                   Total Questions: {questionIds.length}
                 </Text>
               </Box>
               <Box>
                 <Text pt="2" fontSize="sm">
-                Total Score: {quizState?.score}
+                  Total Score: {quizState?.score}
                   {quizState?.score === questionIds.length && (
                     <span style={{ color: 'gold' }}> 🌟 Master of the Unknown!</span>
                   )}

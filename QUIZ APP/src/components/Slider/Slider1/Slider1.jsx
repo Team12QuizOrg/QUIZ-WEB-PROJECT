@@ -1,8 +1,10 @@
 
 import { Box, Stack, Heading, Text, Image, Flex, Spacer, } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
+import { useColorMode } from '@chakra-ui/color-mode';
 export default function Slider1() {
     const navigate = useNavigate()
+    const { colorMode } = useColorMode();
     return (
 
         <Box
@@ -12,7 +14,7 @@ export default function Slider1() {
             backgroundPosition={"center"}
             backgroundRepeat={"no-repeat"}
             backgroundSize={"cover"}
-            backgroundImage={'assets/back1.png'}>
+            backgroundImage={colorMode === 'dark' ? 'assets/dark.png' : 'assets/back1.png'}>
 
             <Flex size={"container.lg"} height={"600px"}
                 direction={{ base: 'column', lg: 'row' }}
@@ -28,7 +30,7 @@ export default function Slider1() {
                     <Heading textAlign={"start"} textStyle='h1' color={'brand.200'} >
                         Create quizzes in just few steps
                     </Heading>
-                    <Text textAlign={"start"} textStyle='h3' color={"brand.400"} ml={10}>
+                    <Text textAlign={"start"} textStyle='h3' ml={10}>
                         Unlock effortless quiz building: the simplest way to make learning interactive
                     </Text>
                 </Stack>

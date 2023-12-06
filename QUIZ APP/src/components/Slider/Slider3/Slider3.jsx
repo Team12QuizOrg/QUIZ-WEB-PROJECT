@@ -2,8 +2,10 @@
 import { Box, Stack, Heading, Text, Image, Flex, Spacer, HStack, } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { FaArrowRightLong } from "react-icons/fa6"
+import { useColorMode } from '@chakra-ui/color-mode';
 export default function Slider3() {
     const navigate = useNavigate()
+    const { colorMode } = useColorMode();
     return (
 
         <Box
@@ -13,7 +15,7 @@ export default function Slider3() {
             backgroundPosition={"center"}
             backgroundRepeat={"no-repeat"}
             backgroundSize={"cover"}
-            backgroundImage={'assets/back1.png'}>
+            backgroundImage={colorMode === 'dark' ? 'assets/dark.png' : 'assets/back1.png'}>
 
             <Flex size={"container.lg"} height={"600px"}
                 direction={{ base: 'column', lg: 'row' }}
@@ -26,7 +28,7 @@ export default function Slider3() {
                     maxW={{ base: '80%', lg: '50%' }}
                 >
                     <Spacer />
-                    <Heading textAlign={"start"} textStyle='h1' color={'brand.400'} >
+                    <Heading textAlign={"start"} textStyle='h1' >
                         Solve quizzes and master your brain!
                     </Heading>
                     <HStack textStyle='h3WithLetterStyle' justify={'end'}>
