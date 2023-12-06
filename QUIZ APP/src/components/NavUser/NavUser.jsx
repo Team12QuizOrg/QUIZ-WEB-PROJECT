@@ -8,6 +8,7 @@ import { PiHardDrives } from "react-icons/pi";
 import { IoPersonCircle } from "react-icons/io5";
 import { LuLogOut } from "react-icons/lu";
 import AddButton from '../AddButton/AddButton'
+import ToggleColorMode from "../ToggleColorMode/ToggleColorMode";
 export default function NavUser() {
     const { user, userData, setContext, } = useContext(AppContext);
     const navigate = useNavigate();
@@ -58,6 +59,7 @@ export default function NavUser() {
                             </MenuButton>
 
                             <MenuList>
+                                <ToggleColorMode ></ToggleColorMode>
                                 <MenuItem
 
 

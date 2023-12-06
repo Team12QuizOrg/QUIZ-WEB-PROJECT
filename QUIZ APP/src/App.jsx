@@ -22,7 +22,7 @@ import QuizForm from "./components/QuizForm/QuizForm";
 import PrivateRoute from "./hoc/PrivateRoute";
 import AssessmentQuiz from "./views/AssessmentQuiz/AssessmentQuiz";
 import { AllCategoriesPage } from "./views/AllCategoriesPage/AllCategoriesPage";
-import ToggleColorMode from "./components/ToggleColorMode/ToggleColorMode";
+// import ToggleColorMode from "./components/ToggleColorMode/ToggleColorMode";
 
 function App() {
   const [user] = useAuthState(auth);
@@ -55,7 +55,7 @@ function App() {
     <div>
       <AppContext.Provider value={{ ...appState, setContext: setAppState }}>
         <PrivateRoute>
-          <ToggleColorMode></ToggleColorMode>
+          {/* <ToggleColorMode></ToggleColorMode> */}
           <NavBar></NavBar>
         </PrivateRoute>
         <Routes>
