@@ -1,5 +1,5 @@
 import { useState, useEffect, useCallback } from "react";
-import { Box, Heading, Text } from "@chakra-ui/react";
+import { Box, Heading, Text, Spinner } from "@chakra-ui/react";
 
 const Timer = ({ endTimeUnix, onTimerFinish }) => {
   const calculateTimeRemaining = useCallback(() => {
@@ -7,11 +7,14 @@ const Timer = ({ endTimeUnix, onTimerFinish }) => {
     return Math.floor(Math.max(0, endTimeUnix - currentTimeUnix));
   }, [endTimeUnix]);
 
-  const [time, setTime] = useState(calculateTimeRemaining());
+  const [time, setTime] = useState('12:12');
+  const [loading, setLoading] = useState(true); 
 
   useEffect(() => {
     const timerInterval = setInterval(() => {
-      setTime(calculateTimeRemaining());
+      const remainingTime = calculateTimeRemaining();
+      setTime(remainingTime);
+      setLoading(false); 
     }, 1000);
 
     return () => clearInterval(timerInterval);
@@ -29,7 +32,7 @@ const Timer = ({ endTimeUnix, onTimerFinish }) => {
   };
 
   useEffect(() => {
-    if (time === 0) {
+    if (time === -1) {
       onTimerFinish();
     }
   }, [time, onTimerFinish]);
@@ -45,7 +48,11 @@ const Timer = ({ endTimeUnix, onTimerFinish }) => {
       <Heading as="h1" size="xl" mb={4}>
         Timer
       </Heading>
-      <Text fontSize="3xl">{formatTime(time)}</Text>
+      {loading ? (
+        <Spinner size="xl" /> 
+      ) : (
+        <Text fontSize="3xl">{formatTime(time)}</Text>
+      )}
     </Box>
   );
 };
