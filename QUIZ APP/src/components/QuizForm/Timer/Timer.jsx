@@ -1,5 +1,7 @@
 import { useState, useEffect, useCallback } from "react";
-import { Box, Heading, Text, Spinner } from "@chakra-ui/react";
+import { Box, Heading, Text, Spinner, VStack } from "@chakra-ui/react";
+import { GiTimeBomb } from "react-icons/gi";
+
 
 const Timer = ({ endTimeUnix, onTimerFinish }) => {
   const calculateTimeRemaining = useCallback(() => {
@@ -32,7 +34,7 @@ const Timer = ({ endTimeUnix, onTimerFinish }) => {
   };
 
   useEffect(() => {
-    if (time === -1) {
+    if (time === 0) {
       onTimerFinish();
     }
   }, [time, onTimerFinish]);
@@ -40,19 +42,21 @@ const Timer = ({ endTimeUnix, onTimerFinish }) => {
   return (
     <Box
       textAlign="center"
-      p={4}
+      p={2}
       borderWidth="1px"
       borderRadius="lg"
       boxShadow="lg"
     >
-      <Heading as="h1" size="xl" mb={4}>
-        Timer
+      <VStack>
+      <Heading as="h1" size="xl" mb={1} >
+      <GiTimeBomb />
       </Heading>
       {loading ? (
         <Spinner size="xl" /> 
       ) : (
         <Text fontSize="3xl">{formatTime(time)}</Text>
       )}
+      </VStack>
     </Box>
   );
 };

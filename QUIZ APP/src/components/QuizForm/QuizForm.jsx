@@ -264,6 +264,7 @@ const QuizForm = () => {
       templateColumns="1fr"
       alignItems="center"
       margin="auto"
+      marginTop={20}
       p={4}
       w={"100%"}
 
