@@ -237,23 +237,23 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
             ))}
           </Flex>
         )}
-        {currentQuizzes && currentQuizzes.length > 0 && (
-          <Flex wrap="wrap" justify="center" flexDirection="row">
-            {currentPage > 1 && (
-              <Button variant="ghost" mx={1} onClick={() => handlePageChange(currentPage - 1)}>
-                <ArrowForwardIcon transform="rotate(180deg)" />
-              </Button>
+         {currentQuizzes && currentQuizzes.length > 0 && (
+              <Flex wrap="wrap" justify="center" alignItems="center">
+                {currentPage > 1 && (
+                  <Button variant="ghost" mx={1} onClick={() => handlePageChange(currentPage - 1)}>
+                    <ArrowForwardIcon transform="rotate(180deg)" />
+                  </Button>
+                )}
+                <Box borderRadius="md" display="flex">
+                </Box>
+                {currentPage * ITEMS_PER_PAGE < Object.keys(allQuizzes).length && (
+                  <Button variant="ghost" mx={1} onClick={() => handlePageChange(currentPage + 1)}>
+                    <ArrowForwardIcon />
+                  </Button>
+                )}
+              </Flex>
             )}
-            <Box border="1px solid #ccc" borderRadius="md" display="flex">
-            </Box>
-            {currentPage * ITEMS_PER_PAGE < Object.keys(allQuizzes).length && (
-              <Button variant="ghost" mx={1} onClick={() => handlePageChange(currentPage + 1)}>
-                <ArrowForwardIcon />
-              </Button>
-            )}
-          </Flex>
-        )}
-        {(!currentQuizzes || currentQuizzes.length === 0) && <Text>No {catName}</Text>}
+            {(!currentQuizzes || currentQuizzes.length === 0) && <Text align={'center'}>No {catName}</Text>}
       </div>
     </Box>
   );

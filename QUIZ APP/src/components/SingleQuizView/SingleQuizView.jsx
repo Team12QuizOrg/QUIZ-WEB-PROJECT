@@ -22,7 +22,7 @@ import { DeleteIcon } from "@chakra-ui/icons";
 import { areMembersOfSameGroup } from "../../services/groups.services";
 import InviteStudents from "../InvitedStudents/InvitedStudents";
 import { SingleQuizButtons } from "./SingleQuizButtons/SingleQuizButtons";
-
+import { StarIcon } from "@chakra-ui/icons";
 const SingleQuizView = () => {
   const { userData } = useContext(AppContext)
   const { id } = useParams();
@@ -114,21 +114,18 @@ const SingleQuizView = () => {
   const scoreBoardsOnQuiz = Object.entries(scoreBoards).map((entry, index) => {
     const [quizId, data] = entry;
     return (
-      <Box key={index} mb={2}>
-        <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap' spacing='4' >
+      <Box key={index}>
+        <HStack  align="center" mt={5}>
+          <StarIcon size={20} style={{ marginRight: '8px' }} />
           <GetAvatar handle={data.user} />
-          <Box justify={'space-between'}>
-            <HStack>
-              <Heading fontSize={['0.8em', '1em', '1.2em']}>
-                {data.user}
-              </Heading>
-              <Spacer />
-              <Heading fontSize={['0.8em', '1em', '1.2em']}>
-                {data.score}
-              </Heading>
-            </HStack>
-          </Box>
-        </Flex>
+          <Heading size='xs' textTransform='uppercase' cursor={'pointer'}>
+            {data.user}
+          </Heading>
+          <Spacer></Spacer>
+          <Heading size='xs' textTransform='uppercase' >
+            {data.score}
+          </Heading>
+        </HStack>
       </Box>
     );
   })
@@ -169,7 +166,7 @@ const SingleQuizView = () => {
                 </Flex>
               </Flex>
             </CardHeader>
-            <Checkbox isChecked={isChecked} onChange={handleCheckboxChange}>
+            <Checkbox ml={'20px'} isChecked={isChecked} onChange={handleCheckboxChange}>
               Add  quiz for later
             </Checkbox>
             <CardBody align={'left'}>
@@ -225,14 +222,21 @@ const SingleQuizView = () => {
 
       <GridItem as="aside" colSpan={{ base: 6, lg: 2, xl: 2 }}
         minHeight={{ lg: '100%' }} p={{ base: '20px', lg: '30px' }} mt={2}  >
-        <Card>
+        <Card mb={10}>
           <CardHeader>
-            <Heading size='md'>SCORE BOARD</Heading>
+            <Heading display="flex" alignItems="center" justifyContent="center" size='md' color={'brand.200'}>SCORE BOARD</Heading>
           </CardHeader>
+          <HStack align="center" mt={5}>
+            <Heading ml={'6'}size='xs' textTransform='uppercase' color={'brand.200'}>
+              user
+            </Heading>
+            <Spacer></Spacer>
+            <Heading mr={'5'}size='xs' textTransform='uppercase' color={'brand.200'} >
+              points
+            </Heading>
+          </HStack>
           <CardBody>
-            <Flex direction="column" align="center" justify="center">
-              {scoreBoardsOnQuiz.slice(0, 10)}
-            </Flex>
+            {scoreBoardsOnQuiz.slice(0, 10)}
           </CardBody>
         </Card>
       </GridItem>

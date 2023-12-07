@@ -1,3 +1,4 @@
+import ImgUrl from '../../../../assets/logo2.png'
 import { useState, useEffect } from 'react'
 import { Box, Stack, Heading, Text, Image, Flex, Spacer, } from '@chakra-ui/react'
 import { useColorMode } from '@chakra-ui/color-mode';
@@ -70,7 +71,7 @@ export default function Slider2() {
                     </Heading>
                 </Stack>
 
-                <Image src={'assets/logo2.png'} justifyContent={'center'} w={60} h={60} rounded={'full'} order={{ base: 0, lg: 1 }} alignItems={{ base: 'center', lg: 'start' }} boxShadow={"0 4px 6px rgba(0, 0, 0, 0.1)"} />
+                <Image src={ImgUrl} justifyContent={'center'} w={60} h={60} rounded={'full'} order={{ base: 0, lg: 1 }} alignItems={{ base: 'center', lg: 'start' }} boxShadow={"0 4px 6px rgba(0, 0, 0, 0.1)"} />
 
             </Flex>
         </Box>

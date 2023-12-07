@@ -1,4 +1,4 @@
-
+import ImgUrl from '../../../../assets/quiz.png'
 import { Box, Stack, Heading, Text, Image, Flex, Spacer, HStack, } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
 import { useColorMode } from '@chakra-ui/color-mode';
@@ -38,7 +38,7 @@ export default function Slider3() {
                     </HStack>
                 </Stack>
                 <Box onClick={() => navigate(`/signup`)}>
-                    <Image src={'assets/quiz.png'} justifyContent={'center'} w={{ base: '320', md: '450', lg: '580' }} h={{ base: '250', md: '350', lg: '380' }} rounded={"md"} order={{ base: 0, lg: 1 }} alignItems={{ base: 'center', lg: 'start' }} boxShadow={"0 4px 6px rgba(0, 0, 0, 0.1)"} />
+                    <Image src={ImgUrl} justifyContent={'center'} w={{ base: '320', md: '450', lg: '580' }} h={{ base: '250', md: '350', lg: '380' }} rounded={"md"} order={{ base: 0, lg: 1 }} alignItems={{ base: 'center', lg: 'start' }} boxShadow={"0 4px 6px rgba(0, 0, 0, 0.1)"} />
                 </Box>
             </Flex>
         </Box>

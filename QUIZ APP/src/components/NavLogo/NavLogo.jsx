@@ -1,3 +1,4 @@
+import Logo2 from '../../../assets/logo2.png'
 import { useNavigate } from "react-router-dom";
 import { useMediaQuery, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Box, Flex, HStack, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, useColorModeValue, Stack, Spacer, Image, Heading, } from "@chakra-ui/react";
 import { ChevronRightIcon, HamburgerIcon } from "@chakra-ui/icons";
@@ -17,7 +18,7 @@ export default function NavLogo() {
             <Image
 
                 className="logo-image"
-                src="assets\logo2.png"
+                src={Logo2}
                 alt="logo"
                 maxW={50}
                 maxH={50}

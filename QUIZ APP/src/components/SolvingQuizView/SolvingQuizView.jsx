@@ -268,7 +268,7 @@ const SolvingQuizView = () => {
                     colorScheme={
                       selectedAnswerIndex === index ? "yellow" : "blue"
                     }
-                    fontFamily="customFont"
+                    fontFamily='sans-serif;'
                     fontSize={{ base: "sm", md: "md" }} 
                     _hover={{
                       boxShadow: "md",

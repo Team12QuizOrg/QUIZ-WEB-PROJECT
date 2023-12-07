@@ -24,7 +24,7 @@ const UserScoreBoard = ({ user }) => {
             <HStack align="center" mt={5}>
 
                 <Heading size='xs' textTransform='uppercase' color={'brand.200'}>
-                    score
+                    quiz
                 </Heading>
                 <Spacer></Spacer>
                 <Heading size='xs' textTransform='uppercase' color={'brand.200'} >
