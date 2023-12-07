@@ -22,7 +22,7 @@ import PrivateRoute from './hoc/PrivateRoute'
 import AssessmentQuiz from './views/AssessmentQuiz/AssessmentQuiz'
 import { AllCategoriesPage } from './views/AllCategoriesPage/AllCategoriesPage'
 import { CategoryView } from './components/CategoryView/CategoryView'
-
+import SolveGuestUser from './components/SolveGuestUser/SolveGuestUser'
 function App() {
   const [user] = useAuthState(auth)
   const [appState, setAppState] = useState({
@@ -64,6 +64,7 @@ function App() {
           <Route path="/quizzes/AllCategories/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllCategories/:id/:id" element={<AuthenticatedRoute><SolvingQuizView /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes" element={<QuizzPage />} />
+          <Route path="/solve/:id" element={<SolveGuestUser />} />
           <Route path="/quizzes/AllQuizzes/:id" element={<AuthenticatedRoute> <SingleQuizView /> </AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes/:id/:id" element={<AuthenticatedRoute><SolvingQuizView /></AuthenticatedRoute>} />
           <Route path="/About" element={<AuthenticatedRoute> <About /> </AuthenticatedRoute>} />
