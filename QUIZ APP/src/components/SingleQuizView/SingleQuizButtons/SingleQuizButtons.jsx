@@ -13,7 +13,7 @@ export const SingleQuizButtons = ({ isPrivate, handleQuizClick, handleDelete, qu
             </>
                   )
                 : (
-            <Button maxW="20%" margin="5px" onClick={() => handleQuizClick(quiz.id)}>
+            <Button color={'brand.200'} maxW="20%" margin="5px" onClick={() => handleQuizClick(quiz.id)}>
               Enroll
             </Button>
                   )

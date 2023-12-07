@@ -137,7 +137,7 @@ const SingleQuizView = () => {
         <Center >
           <Card maxW='2xl' width={'70%'}>
             <CardHeader>
-              <Heading margin={'10px'} size='md'>{quiz?.title}</Heading>
+            <Heading textAlign={'center'} margin={'10px'} size='md'>{quiz && quiz.title}</Heading>
               <Flex spacing='4'>
                 <Flex flex='1' gap='4' alignItems='center' justify={'center'} flexWrap='wrap'>
                   <Avatar src={quizAuthor} width={70} height={70} />

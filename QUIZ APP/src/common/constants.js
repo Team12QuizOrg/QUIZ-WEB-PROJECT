@@ -13,3 +13,5 @@ export const DEFAULT_AVATAR_URL = 'https://upload.wikimedia.org/wikipedia/common
 
 export const ITEMS_PER_PAGE = 5
 export const ITEMS_PER_PAGE_PANEL = 10
+
+export const MIN_LENGTH_CAT = 16;

@@ -78,7 +78,7 @@ const Quizzes = ({ isLogged }) => {
           <AllQuizzes quizzes={allQuizzes} catName={'All Quizzes'} />
             )
           : (
-          <Text>You need to Log In to view all Quizzes</Text>
+            <Text align={'center'}>You need to Log In to view all Quizzes</Text>
             )}
       </Box>
     </Box>

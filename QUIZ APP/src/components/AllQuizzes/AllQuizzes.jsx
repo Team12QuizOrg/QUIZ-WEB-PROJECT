@@ -19,6 +19,7 @@ import { feedbackFormatDate } from '../../services/feedback.services'
 import { acceptingInvitation, declineInvitation } from '../../services/users.services'
 import { useColorMode } from '@chakra-ui/color-mode'
 import PropTypes from 'prop-types'
+import { CategoryView } from "../CategoryView/CategoryView";
 
 const AllQuizzes = ({ quizzes, catName, category }) => {
   const [allQuizzes, setAllQuizzes] = useState({})
@@ -65,7 +66,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
     <Box
     >
       <div>
-        <Text margin={'20px'} fontSize="xl" fontWeight="bold" mb={4} align={'left'}>
+      <Text margin={'20px'} fontSize="xl" fontWeight="bold" mb={4} align={'left'} onClick={() => navigate(`/quizzes/AllQuizzes/Category/${catName}`)}>
           {catName}
         </Text>
         {currentQuizzes && (
