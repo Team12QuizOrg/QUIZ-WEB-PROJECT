@@ -53,8 +53,7 @@ export default function SignIn () {
   return (
         <Flex
             minH={'100vh'}
-            align={'center'}
-            justify={'center'}
+           
             bg={useColorModeValue('brand.100', 'gray.800')}>
             <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
                 <Stack align={'center'}>

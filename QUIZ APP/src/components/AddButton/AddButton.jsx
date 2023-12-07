@@ -24,8 +24,7 @@ const CustomButton = ({ children, ...props }) => {
             transition-delay: 0s !important;
             text-transform: uppercase !important;
             letter-spacing: 1.5px;
-            font-family: freight-sans-pro, sans-serif;
-    
+            
             &:hover {
               box-shadow: 0 0 #ffe00b, 0 0 #151515;
               color: white;

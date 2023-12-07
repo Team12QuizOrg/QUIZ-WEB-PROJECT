@@ -249,7 +249,7 @@ const SolvingQuizView = () => {
                 </motion.div>
               )}
             </motion.div>
-            <Text fontSize="xl">{question}</Text>
+            <Text fontSize={{ base: 'md', md: 'lg', lg: 'xl' }} fontWeight={'bold'}>{question}</Text>
             <Grid
               templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']}
               gap={4}
@@ -258,6 +258,7 @@ const SolvingQuizView = () => {
                 <GridItem key={answer}>
                   <Button
                     width="100%"
+                    color={'white'}
                     onClick={() => onAnswerSelected(answer, index)}
                     variant={
                       selectedAnswerIndex === index ? 'solid' : 'outline'
