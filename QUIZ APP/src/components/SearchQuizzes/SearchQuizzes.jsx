@@ -1,6 +1,6 @@
 import { useNavigate } from 'react-router-dom'
 import SearchBar from '../SearchBar/SearchBar'
-import { Text, Popover, PopoverTrigger, PopoverHeader, PopoverContent, HStack, IconButton } from '@chakra-ui/react'
+import { Text, Popover, PopoverTrigger, PopoverHeader, PopoverContent, HStack, IconButton, Box } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { SearchIcon } from '@chakra-ui/icons'
 import { IoIosArrowDropright } from 'react-icons/io'
@@ -25,36 +25,41 @@ export default function SearchQuizzes () {
     setSearchResults(results)
   }
   return (
-        <>
-            <SearchBar searchingFor={openQuizzes} onSearchResults={handleSearchResults} selectedOption='quizzes' width={['100', '200', '350']} />
-            <Popover onClose={() => setSearchResults(null)}>
-                <PopoverTrigger>
-                    <IconButton size={['md', 'md', 'md']} variant='outline' icon={<SearchIcon />} />
-                </PopoverTrigger>
-                {searchResults && searchResults.length > 0 && (
-                    <PopoverContent>
-                        {searchResults.map((quiz) => (
+    <>
+      <SearchBar searchingFor={openQuizzes} onSearchResults={handleSearchResults} selectedOption='quizzes' width={['100', '200', '350']} />
+      <Popover onClose={() => setSearchResults(null)}>
+        <PopoverTrigger>
+          <IconButton size={['md', 'md', 'md']} variant='outline' icon={<SearchIcon />} />
+        </PopoverTrigger>
+        {searchResults && searchResults.length > 0 && (
+          <PopoverContent>
+            {searchResults.map((quiz) => (
 
-                            <PopoverHeader key={quiz.id}>
-                                <HStack
+              <PopoverHeader key={quiz.id} style={{
+                border: '2px solid grey',
+                borderRadius: '10px',
+                boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
+              }}>
+                <HStack
 
-                                    onClick={() => {
-                                      navigate(`/quizzes/AllQuizzes/${quiz.id}`)
-                                      setSearchResults(null)
-                                    }}
-                                    color={'brand.200'}
-                                    fontWeight={'bold'}
-                                    cursor="pointer"
-                                ><IoIosArrowDropright />
+                  onClick={() => {
+                    navigate(`/quizzes/AllQuizzes/${quiz.id}`)
+                    setSearchResults(null)
+                  }}
 
-                                    <Text >{quiz.title}</Text>
-                                </HStack>
-                            </PopoverHeader>
-                        ))}
-                    </PopoverContent>
-                )}
-            </Popover>
-        </>
+                  fontWeight={'bold'}
+                  cursor="pointer"
+                >
+                  <Box color={'brand.200'}><IoIosArrowDropright /></Box>
+
+                  <Text >{quiz.title}</Text>
+                </HStack>
+              </PopoverHeader>
+            ))}
+          </PopoverContent>
+        )}
+      </Popover>
+    </>
 
   )
 }

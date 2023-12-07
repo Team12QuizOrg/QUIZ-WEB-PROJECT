@@ -1,36 +1,37 @@
-import { useState } from 'react';
-import AppContext from '../../context/AuthContext';
-import { useContext } from 'react';
-import { addFeedback } from '../../services/feedback.services';
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, FormLabel, Textarea, FormControl, Button, } from '@chakra-ui/react';
+import { useState, useContext } from 'react'
+import AppContext from '../../context/AuthContext'
+import { addFeedback } from '../../services/feedback.services'
+import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, FormLabel, Textarea, FormControl, Button } from '@chakra-ui/react'
 
 const AddFeedback = () => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [feedback, setFeedback] = useState('');
-    const { userData } = useContext(AppContext);
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [feedback, setFeedback] = useState('')
+  const { userData } = useContext(AppContext)
 
-    const handleOpen = () => {
-        if (!userData || !userData.isBlocked) {
-            onOpen();
-        }
-    };
+  const handleOpen = () => {
+    if (!userData || !userData.isBlocked) {
+      onOpen()
+    }
+  }
 
-    const handleInputChange = (e) => {
-        setFeedback(e.target.value);
-    };
+  const handleInputChange = (e) => {
+    setFeedback(e.target.value)
+  }
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        addFeedback(feedback, userData.handle);
-        setFeedback('');
-        onClose();
-    };
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    addFeedback(feedback, userData.handle)
+    setFeedback('')
+    onClose()
+  }
 
-    return (
+  return (
         <>
-            {userData && userData.isBlocked ? (
+            {userData && userData.isBlocked
+              ? (
                 <p className="blocked-user-message">User is blocked and cannot comment.</p>
-            ) : (
+                )
+              : (
                 <>
                     <Button bg={'brand.200'} mr={3} onClick={handleOpen}> Give us Feedback </Button>
                     <Modal isOpen={isOpen} onClose={onClose}>
@@ -59,10 +60,9 @@ const AddFeedback = () => {
                         </ModalContent>
                     </Modal>
                 </>
-            )}
+                )}
         </>
-    );
-};
+  )
+}
 
-
-export default AddFeedback;
+export default AddFeedback

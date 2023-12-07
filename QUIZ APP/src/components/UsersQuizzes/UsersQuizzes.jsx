@@ -1,9 +1,6 @@
 import { useState, useEffect } from 'react'
-import {
-  Spinner, Text, Tooltip, Box, Button, Popover,
-  PopoverTrigger
-} from '@chakra-ui/react'
-import { CheckCircleIcon, QuestionIcon, TimeIcon } from '@chakra-ui/icons'
+import { Spinner, Text, Tooltip, Box, Button } from '@chakra-ui/react'
+import { CheckCircleIcon } from '@chakra-ui/icons'
 import { getUsersQuizzes } from '../../services/users.services'
 import ListQuizzes from '../ListQuizzes/ListQuizzes'
 import PropTypes from 'prop-types'
@@ -34,50 +31,33 @@ const UsersQuizzes = ({ user }) => {
 
   if (loading) {
     return (
-            <Box display="flex" alignItems="center" justifyContent="center" height="100vh">
-                <Spinner size="xl" />
-                <Text>Loading...</Text>
-            </Box>
+      <Box display="flex" alignItems="center" justifyContent="center" height="100vh">
+        <Spinner size="xl" />
+        <Text>Loading...</Text>
+      </Box>
     )
   } else {
     return (
-            <>
-                <Box justify='space-between'
-                    flexWrap='wrap'
-                    sx={{
-                      '& > button': {
-                        minW: '136px'
-                      }
-                    }}>
-                    <Popover>
-                        <PopoverTrigger>
+      <>
+        <Box justify='space-between'
+          flexWrap='wrap'
+          sx={{
+            '& > button': {
+              minW: '136px'
+            }
+          }}>
+          <ListQuizzes user={user} quizzes={currentQuizzes} name={'Currently participating'} />
 
-                            <Button flex='1' variant='ghost' fontSize={['xl', 'lg', '1xl']} leftIcon={<QuestionIcon />} onClick={() => { }}>
-                                {currentQuizzes.length}
-
-                            </Button>
-                        </PopoverTrigger>
-                        <ListQuizzes user={user} quizzes={currentQuizzes} name={'On Going'} />
-
-                    </Popover>
-
-                    <Popover>
-                        <PopoverTrigger>
-                            <Button flex='1' variant='ghost' fontSize={['xl', 'lg', '1xl']} leftIcon={<TimeIcon />} onClick={() => { }}>
-                                {finishedQuizzes.length}
-                            </Button>
-                        </PopoverTrigger>
-                        <ListQuizzes user={user} quizzes={finishedQuizzes} name={'Finished'} />
-                    </Popover>
-                    <Tooltip label={`${user.handle}'s Rank`} fontSize="md">
-                        <Button color={'brand.200'} flex='1' variant='ghost' leftIcon={<CheckCircleIcon />}>
-                            {quizState.length < 10 && 'Beginner'}
-                            {quizState.length >= 10 && quizState.length <= 20 && 'Intermediate'}
-                            {quizState.length > 21 && 'Advanced'}
-                        </Button>
-                    </Tooltip>
-                </Box>
-            </>
+          <ListQuizzes user={user} quizzes={finishedQuizzes} name={'Participated'} />
+          <Tooltip label={`${user.handle}'s Rank`} fontSize="md">
+            <Button color={'brand.200'} flex='1' variant='ghost' leftIcon={<CheckCircleIcon />}>
+              {quizState.length < 10 && 'Beginner'}
+              {quizState.length >= 10 && quizState.length <= 20 && 'Intermediate'}
+              {quizState.length > 21 && 'Advanced'}
+            </Button>
+          </Tooltip>
+        </Box>
+      </>
     )
   }
 }

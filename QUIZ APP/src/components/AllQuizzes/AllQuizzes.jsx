@@ -19,7 +19,7 @@ import { feedbackFormatDate } from '../../services/feedback.services'
 import { acceptingInvitation, declineInvitation } from '../../services/users.services'
 import { useColorMode } from '@chakra-ui/color-mode'
 import PropTypes from 'prop-types'
-import { CategoryView } from "../CategoryView/CategoryView";
+import { CategoryView } from '../CategoryView/CategoryView'
 
 const AllQuizzes = ({ quizzes, catName, category }) => {
   const [allQuizzes, setAllQuizzes] = useState({})
