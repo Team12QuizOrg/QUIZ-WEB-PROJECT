@@ -1,12 +1,12 @@
-import { Box, Container, Stack, Text, Image, Heading } from '@chakra-ui/react';
-import { useColorMode } from '@chakra-ui/color-mode';
-import { useNavigate } from 'react-router-dom';
+import { Box, Container, Stack, Text, Image, Heading } from '@chakra-ui/react'
+import { useColorMode } from '@chakra-ui/color-mode'
+import { useNavigate } from 'react-router-dom'
 
-export default function Footer() {
-    const { colorMode } = useColorMode();
-    const navigate = useNavigate()
+export default function Footer () {
+  const { colorMode } = useColorMode()
+  const navigate = useNavigate()
 
-    return (
+  return (
         <Box
             bg={colorMode === 'dark' ? 'gray.800' : 'brand.100'}
             color={colorMode === 'dark' ? 'white' : 'gray.400'}
@@ -33,12 +33,11 @@ export default function Footer() {
                         h={10}
                         maxW={40}
                         maxH={40}
-                        onClick={() => navigate(`/home`)}
+                        onClick={() => navigate('/home')}
                         rounded={'full'}
                     />
                 </Stack>
             </Container>
         </Box>
-    );
+  )
 }
-

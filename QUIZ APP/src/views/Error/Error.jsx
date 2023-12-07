@@ -1,10 +1,9 @@
 import { useNavigate } from 'react-router-dom'
-
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import { CloseIcon } from '@chakra-ui/icons'
-export default function Error() {
-    const navigate = useNavigate();
-    return (
+export default function Error () {
+  const navigate = useNavigate()
+  return (
         <Box textAlign="center" py={10} px={6} mt={30}>
             <Box display="inline-block">
                 <Flex
@@ -24,12 +23,9 @@ export default function Error() {
             </Heading>
             <Text color={'gray.500'}>
                 Looks like something is wrong with this page
-                You can go back to our <Text to='/home' onClick={() => navigate(`/home)`)} color={'brand.400'} >Home page</Text>
+                You can go back to our <Text to='/home' onClick={() => navigate('/home)')} color={'brand.400'} >Home page</Text>
             </Text>
         </Box>
 
-
-
-
-    )
+  )
 }

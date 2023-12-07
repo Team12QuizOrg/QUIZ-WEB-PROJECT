@@ -1,26 +1,24 @@
-
-import { useState, useEffect } from 'react';
-import SearchBar from '../../components/SearchBar/SearchBar';
-import { useNavigate } from 'react-router-dom';
-import ListUsers from '../../components/ListUsers/ListUsers';
-import { getAllUserData } from '../../services/users.services';
+import { useState, useEffect } from 'react'
+import SearchBar from '../../components/SearchBar/SearchBar'
+import ListUsers from '../../components/ListUsers/ListUsers'
+import { getAllUserData } from '../../services/users.services'
 import { Radio, RadioGroup, Stack, VStack, Text } from '@chakra-ui/react'
-export default function AdminPanel() {
-    // const { users } = useContext(AppContext)
-    const [users, setUsers] = useState([])
-    const [searchResults, setSearchResults] = useState(null);
-    const [selectedOption, setSelectedOption] = useState('option1');
+export default function AdminPanel () {
+  // const { users } = useContext(AppContext)
+  const [users, setUsers] = useState([])
+  const [searchResults, setSearchResults] = useState(null)
+  const [selectedOption, setSelectedOption] = useState('option1')
 
-    const handleSearchResults = (results) => {
-        setSearchResults(results);
-    }
+  const handleSearchResults = (results) => {
+    setSearchResults(results)
+  }
 
-    useEffect(() => {
-        getAllUserData()
-            .then((res) => setUsers(res))
-            .catch((err) => console.error(`Problem fetching all users`, err))
-    }, [])
-    return (
+  useEffect(() => {
+    getAllUserData()
+      .then((res) => setUsers(res))
+      .catch((err) => console.error('Problem fetching all users', err))
+  }, [])
+  return (
         <><>
 
             <RadioGroup defaultValue='username' mt={30} />
@@ -32,7 +30,7 @@ export default function AdminPanel() {
                         name="searchOption"
                         value="username"
                         isChecked={selectedOption === 'username'}
-                        onChange={() => setSelectedOption("username")}
+                        onChange={() => setSelectedOption('username')}
                     > <Text > Username</Text> </Radio>
 
                     <Radio
@@ -40,7 +38,7 @@ export default function AdminPanel() {
                         name="searchOption"
                         value="email"
                         isChecked={selectedOption === 'email'}
-                        onChange={() => setSelectedOption("email")}
+                        onChange={() => setSelectedOption('email')}
                     > <Text > Email</Text> </Radio>
 
                     <Radio
@@ -49,7 +47,7 @@ export default function AdminPanel() {
                         name="searchOption"
                         value="first-name"
                         isChecked={selectedOption === 'first-name'}
-                        onChange={() => setSelectedOption("first-name")}
+                        onChange={() => setSelectedOption('first-name')}
                     > <Text > First name</Text> </Radio>
 
                 </Stack>
@@ -62,5 +60,5 @@ export default function AdminPanel() {
                 {searchResults && <ListUsers users={searchResults} selectedOption={selectedOption} />}
             </></>
 
-    )
+  )
 }

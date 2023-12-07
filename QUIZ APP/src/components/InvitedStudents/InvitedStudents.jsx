@@ -1,4 +1,4 @@
-import SearchBar from "../SearchBar/SearchBar";
+import SearchBar from '../SearchBar/SearchBar'
 import {
   HStack,
   Spacer,
@@ -7,36 +7,31 @@ import {
   PopoverHeader,
   PopoverContent,
   Button,
-  Flex,
-} from "@chakra-ui/react";
-import { useState, useEffect, useContext } from "react";
-import { getAllUserData } from "../../services/users.services";
-import {
-  addGroupMember,
-  getLiveTeamMembers,
-} from "../../services/groups.services";
-import { MdOutlineGroupAdd } from "react-icons/md";
-import AppContext from "../../context/AuthContext";
-import { sendInvitation } from "../../services/users.services";
-export default function InviteStudents({ quizId }) {
-  const [searchResults, setSearchResults] = useState(null);
-  const {userData} = useContext(AppContext)
-  const [users, setUsers] = useState([]);
-  
+  Flex
+} from '@chakra-ui/react'
+import { useState, useEffect, useContext } from 'react'
+import { getAllUserData, sendInvitation } from '../../services/users.services'
+import { MdOutlineGroupAdd } from 'react-icons/md'
+import AppContext from '../../context/AuthContext'
+import PropTypes from 'prop-types'
+
+export default function InviteStudents ({ quizId }) {
+  const [searchResults, setSearchResults] = useState(null)
+  const { userData } = useContext(AppContext)
+  const [users, setUsers] = useState([])
 
   useEffect(() => {
     getAllUserData()
       .then((res) => {
-        const students = res.filter((user) => user.userType === "student");
-        setUsers(students);
+        const students = res.filter((user) => user.userType === 'student')
+        setUsers(students)
       })
-      .catch((err) => console.error("error fetching posts: ", err));
-  }, []);
+      .catch((err) => console.error('error fetching posts: ', err))
+  }, [])
 
   const handleSearchResults = (results) => {
-    setSearchResults(results);
-  };
-
+    setSearchResults(results)
+  }
 
   return (
     <>
@@ -48,7 +43,7 @@ export default function InviteStudents({ quizId }) {
       />
       <Popover onClose={() => setSearchResults(null)}>
         <PopoverTrigger>
-          <Button margin={"8px"}>Invite</Button>
+          <Button margin={'8px'}>Invite</Button>
         </PopoverTrigger>
         {searchResults && searchResults.length > 0 && (
           <PopoverContent justifySelf={'right'} >
@@ -56,14 +51,14 @@ export default function InviteStudents({ quizId }) {
 
               <HStack
                 key={user.id}
-                
+
                 onClick={() => {
-                  sendInvitation(userData.handle, quizId, user.handle);
-                  setSearchResults(null);
+                  sendInvitation(userData.handle, quizId, user.handle)
+                  setSearchResults(null)
                 }}
                 cursor="pointer"
               >
-                <PopoverHeader color={"brand.400"} fontWeight={"bold"}>
+                <PopoverHeader color={'brand.400'} fontWeight={'bold'}>
                   {user.handle}
                 </PopoverHeader>
                 <Spacer></Spacer>
@@ -75,5 +70,8 @@ export default function InviteStudents({ quizId }) {
       </Popover>
       </Flex>
     </>
-  );
-};
+  )
+}
+InviteStudents.propTypes = {
+  quizId: PropTypes.string
+}

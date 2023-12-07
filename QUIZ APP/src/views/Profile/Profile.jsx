@@ -1,64 +1,63 @@
-import { useContext, useState, useEffect } from 'react';
-import AppContext from '../../context/AuthContext';
-import { getUserByHandle, makeEducator } from '../../services/users.services';
-import { useParams, } from 'react-router-dom';
-import EditProfile from '../../components/EditProfile/EditProfile';
-import { PlusSquareIcon, } from '@chakra-ui/icons'
-import CreateGroup from "../../components/CreateGroup/CreateGroup";
-import { Center, Grid, Box, GridItem, Spinner, Flex, Heading, Text, Button, Card, CardHeader, CardBody, CardFooter } from "@chakra-ui/react"
-import ListGroup from "../../components/ListGroups/ListGroups";
-import UserScoreBoard from "../../components/UserScoreBoard/UserScoreBoard";
-import UsersQuizzes from "../../components/UsersQuizzes/UsersQuizzes";
-import UserInfo from '../../components/UserInfo/UserInfo';
-import AdminButtons from './AdminButtons/AdminButtons';
-import EducatorsQuizzes from '../../components/EducatorsQuizzes/EducatorsQuizzes';
-import GetAvatar from '../../components/GetAvatar/GetAvatar';
-import { FaChalkboardTeacher } from "react-icons/fa";
-import { PiStudentFill } from "react-icons/pi";
-import ListForLater from "../../components/ListForLater/ListForLater"
+import { useContext, useState, useEffect } from 'react'
+import AppContext from '../../context/AuthContext'
+import { getUserByHandle, makeEducator } from '../../services/users.services'
+import { useParams } from 'react-router-dom'
+import EditProfile from '../../components/EditProfile/EditProfile'
+import { PlusSquareIcon } from '@chakra-ui/icons'
+import CreateGroup from '../../components/CreateGroup/CreateGroup'
+import { Center, Grid, Box, GridItem, Spinner, Flex, Heading, Text, Button, Card, CardHeader, CardBody, CardFooter } from '@chakra-ui/react'
+import ListGroup from '../../components/ListGroups/ListGroups'
+import UserScoreBoard from '../../components/UserScoreBoard/UserScoreBoard'
+import UsersQuizzes from '../../components/UsersQuizzes/UsersQuizzes'
+import UserInfo from '../../components/UserInfo/UserInfo'
+import AdminButtons from './AdminButtons/AdminButtons'
+import EducatorsQuizzes from '../../components/EducatorsQuizzes/EducatorsQuizzes'
+import GetAvatar from '../../components/GetAvatar/GetAvatar'
+import { FaChalkboardTeacher } from 'react-icons/fa'
+import { PiStudentFill } from 'react-icons/pi'
+import ListForLater from '../../components/ListForLater/ListForLater'
+
 const Profile = () => {
-    const { userData } = useContext(AppContext)
-    const [currentUser, setCurrentUser] = useState("")
-    const { profile } = useParams();
-    const [loading, setLoading] = useState(true);
+  const { userData } = useContext(AppContext)
+  const [currentUser, setCurrentUser] = useState('')
+  const { profile } = useParams()
+  const [loading, setLoading] = useState(true)
 
+  useEffect(() => {
+    if (profile === null) return
 
-    useEffect(() => {
-        if (profile === null) return;
+    getUserByHandle(profile)
+      .then(snapshot => {
+        if (!snapshot.exists()) {
+          throw new Error('Something went wrong!')
+        }
+        setCurrentUser(snapshot.val())
+      })
+      .catch(e => console.log(e.message))
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [profile])
 
-        getUserByHandle(profile)
-            .then(snapshot => {
-                if (!snapshot.exists()) {
-                    throw new Error('Something went wrong!');
-                }
-                setCurrentUser(snapshot.val())
-            })
-            .catch(e => console.log(e.message))
-            .finally(() => {
-                setLoading(false);
-            });
-    }, [profile]);
+  const handleEditProfile = (updatedValues) => {
+    setCurrentUser((prevUser) => ({
+      ...prevUser,
+      ...updatedValues
+    }))
+  }
+  const handleEducator = (handle) => {
+    makeEducator(handle)
+  }
 
-
-    const handleEditProfile = (updatedValues) => {
-        setCurrentUser((prevUser) => ({
-            ...prevUser,
-            ...updatedValues,
-        }));
-    };
-    const handleEducator = (handle) => {
-        makeEducator(handle);
-    }
-
-    if (loading) {
-        return (
+  if (loading) {
+    return (
             <Box display="flex" alignItems="center" justifyContent="center" height="100vh">
                 <Spinner size="xl" />
                 <Text>Loading...</Text>
             </Box>
-        );
-    } else {
-        return (
+    )
+  } else {
+    return (
             <>
                 <Grid
                     minHeight={'100vh'}
@@ -74,8 +73,8 @@ const Profile = () => {
 
                             <Card maxW='2xl' >
                                 <Button size='md' bg={'brand.200'} fontSize={['xl', 'lg', '2xl']} style={{
-                                    borderRadius: "10px",
-                                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)"
+                                  borderRadius: '10px',
+                                  boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
                                 }} color='white' leftIcon={currentUser.userType === 'teacher' ? (<FaChalkboardTeacher />) : (<PiStudentFill />)}>{currentUser.handle}</Button>
                                 <CardHeader>
 
@@ -83,16 +82,16 @@ const Profile = () => {
                                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
                                             <GetAvatar handle={currentUser.handle} size={'xl'} />
 
-                                            {currentUser.userType === "student" && (
+                                            {currentUser.userType === 'student' && (
                                                 <UsersQuizzes user={currentUser} />
                                             )}
-                                            {currentUser.userType === "teacher" && (
+                                            {currentUser.userType === 'teacher' && (
                                                 <EducatorsQuizzes user={currentUser} />
                                             )}
 
                                         </Flex>
                                         {currentUser.handle === userData.handle &&
-                                            <EditProfile user={currentUser.handle} originalFirstName={currentUser.firstName} originalLastName={currentUser.lastName} onEditProfile={handleEditProfile} />
+                                            <EditProfile user={currentUser.handle} originalFirstName={currentUser.firstName} originalLastName={currentUser.lastName} onEditProfile={handleEditProfile} originalCaption={currentUser.originalCaption ? currentUser.originalCaption : 'Add caption if you are cool'}/>
                                         }
                                     </Flex>
                                 </CardHeader>
@@ -100,21 +99,20 @@ const Profile = () => {
                                     <UserInfo currentUser={currentUser} />
                                 </CardBody>
 
-
                                 <CardFooter
                                     justify='space-between'
                                     flexWrap='wrap'
                                     sx={{
-                                        '& > button': {
-                                            minW: '136px',
-                                        },
+                                      '& > button': {
+                                        minW: '136px'
+                                      }
                                     }}
                                 >
                                     {userData.isAdmin && !currentUser.isAdmin && (
                                         <AdminButtons currentUser={currentUser} />
                                     )}
 
-                                    {userData.userType === 'teacher' && currentUser.userType === "student" && (
+                                    {userData.userType === 'teacher' && currentUser.userType === 'student' && (
                                         <Button onClick={() => handleEducator(currentUser.handle)} flex='1' variant='ghost' leftIcon={<PlusSquareIcon />}>
                                             Make Educator
                                         </Button>
@@ -130,7 +128,7 @@ const Profile = () => {
                         minHeight={{ lg: '100%' }}
                         p={{ base: '20px', lg: '30px' }}
                         mt={2}>
-                        {currentUser.userType === "student" && (
+                        {currentUser.userType === 'student' && (
                             <Card mb={10}>
                                 <CardHeader>
                                     <Heading size='md' color={'brand.200'}>SCORE BOARD</Heading>
@@ -142,7 +140,7 @@ const Profile = () => {
                             </Card>
 
                         )}
-                        {currentUser.userType === "teacher" && (
+                        {currentUser.userType === 'teacher' && (
                             <Card mb={10}>
                                 {currentUser.handle === userData.handle &&
                                     <CreateGroup></CreateGroup>
@@ -168,7 +166,7 @@ const Profile = () => {
                 </Grid>
 
             </>
-        )
-    }
+    )
+  }
 }
-export default Profile;
+export default Profile

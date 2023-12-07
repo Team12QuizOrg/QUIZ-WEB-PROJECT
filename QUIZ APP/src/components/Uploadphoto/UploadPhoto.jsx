@@ -1,31 +1,29 @@
-import { useEffect, useState } from "react";
-import { upload } from "../../services/photo.services";
-import { useContext } from "react";
-import AppContext from "../../context/AuthContext";
-import { Image, Input, Button } from "@chakra-ui/react";
-import { useToast } from '@chakra-ui/react'
+import { useState, useContext } from 'react'
+import { upload } from '../../services/photo.services'
+import AppContext from '../../context/AuthContext'
+import { Input, Button, useToast } from '@chakra-ui/react'
 
 const UploadPhoto = () => {
-  const { userData } = useContext(AppContext);
-  const toast = useToast();
-  const [photo, setPhoto] = useState(null);
-  const [loading, setLoading] = useState(false);
+  const { userData } = useContext(AppContext)
+  const toast = useToast()
+  const [photo, setPhoto] = useState(null)
+  const [loading, setLoading] = useState(false)
 
-  function handleChange(e) {
+  function handleChange (e) {
     if (e.target.files[0]) {
-      setPhoto(e.target.files[0]);
+      setPhoto(e.target.files[0])
     }
   }
 
-  function handleClick() {
+  function handleClick () {
     upload(photo, userData, setLoading).then((res) =>
       toast({
-        description: "Member added successfully.",
-        status: "success",
+        description: 'Member added successfully.',
+        status: 'success',
         duration: 3000,
-        isClosable: true,
+        isClosable: true
       })
-    );
+    )
   }
 
   return (
@@ -34,14 +32,14 @@ const UploadPhoto = () => {
         type="file"
         onChange={handleChange}
         placeholder="Min: 5"
-        color={"brand.400"}
-        border={"1px"}
-        borderColor={"brand.400"}
+        color={'brand.400'}
+        border={'1px'}
+        borderColor={'brand.400'}
       />
       <Button disabled={loading || !photo} onClick={handleClick} color="black">
         Upload
       </Button>
     </>
-  );
-};
-export default UploadPhoto;
+  )
+}
+export default UploadPhoto

@@ -1,49 +1,43 @@
-import { useState, useEffect } from 'react';
-import { ITEMS_PER_PAGE } from '../../common/constants';
-import { VStack, HStack, Text, Heading, Stack, StackDivider, Box, Button, useDisclosure, IconButton } from '@chakra-ui/react';
-import { ArrowBackIcon, ArrowForwardIcon, } from '@chakra-ui/icons'
-import { MdGroup } from 'react-icons/md'; // Assuming you are using react-icons
+import { useState, useEffect } from 'react'
+import { ITEMS_PER_PAGE } from '../../common/constants'
+import { HStack, Heading, StackDivider, Box, useDisclosure, IconButton } from '@chakra-ui/react'
+import { ArrowBackIcon, ArrowForwardIcon } from '@chakra-ui/icons'
+import { MdGroup } from 'react-icons/md' // Assuming you are using react-icons
+import PropTypes from 'prop-types'
+import GroupInfo from '../GroupInfo/GroupInfo'
+import { getLiveUsersGroups } from '../../services/groups.services'
 
-import GroupInfo from '../GroupInfo/GroupInfo';
-import { getLiveUsersGroups } from '../../services/groups.services';
 const ListGroup = ({ user }) => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
-    const [selectedGroup, setSelectedGroup] = useState({ groupId: '', groupName: '' });
-    const [usersGroups, setUsersGroups] = useState([])
-    const [currentPage, setCurrentPage] = useState(1);
-    const [currentGroups, setCurrentGroups] = useState();
-    const indexOfLastGroup = currentPage * ITEMS_PER_PAGE;
-    const indexOfFirstGroup = indexOfLastGroup - ITEMS_PER_PAGE;
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [selectedGroup, setSelectedGroup] = useState({ groupId: '', groupName: '' })
+  const [usersGroups, setUsersGroups] = useState([])
+  const [currentPage, setCurrentPage] = useState(1)
+  const [currentGroups, setCurrentGroups] = useState()
+  const indexOfLastGroup = currentPage * ITEMS_PER_PAGE
+  const indexOfFirstGroup = indexOfLastGroup - ITEMS_PER_PAGE
 
-    useEffect(() => {
-        const groups = getLiveUsersGroups((data) => {
-            setUsersGroups(data)
+  useEffect(() => {
+    const groups = getLiveUsersGroups((data) => {
+      setUsersGroups(data)
+    }, user.handle)
 
-        }, user.handle);
+    return () => {
+      groups()
+    }
+  }, [user.handle])
 
+  useEffect(() => {
+    setCurrentGroups(usersGroups.slice(indexOfFirstGroup, indexOfLastGroup))
+  }, [currentPage, usersGroups])
 
-        return () => {
-            groups();
-        };
-    }, [user.handle]);
+  const handleOpen = (groupId, groupName) => {
+    setSelectedGroup({ groupId, groupName })
+    onOpen()
+  }
 
-    useEffect(() => {
-
-        setCurrentGroups(usersGroups.slice(indexOfFirstGroup, indexOfLastGroup));
-    }, [currentPage, usersGroups]);
-
-
-    const handleOpen = (groupId, groupName) => {
-        setSelectedGroup({ groupId, groupName });
-        onOpen();
-    };
-
-
-    return (
+  return (
         <>
             {currentGroups && currentGroups.map((group) => (
-
-
 
                 <HStack align="center" spacing='4' key={group[0]} divider={<StackDivider />}>
                     <MdGroup size={20} style={{ marginRight: '8px' }} />
@@ -52,10 +46,6 @@ const ListGroup = ({ user }) => {
                     </Heading>
                     <StackDivider />
                 </HStack>
-
-
-
-
 
             ))}
             {isOpen && (
@@ -68,7 +58,9 @@ const ListGroup = ({ user }) => {
                 </Box>
             )}
         </>
-    );
-};
-
-export default ListGroup;
+  )
+}
+ListGroup.propTypes = {
+  user: PropTypes.object
+}
+export default ListGroup

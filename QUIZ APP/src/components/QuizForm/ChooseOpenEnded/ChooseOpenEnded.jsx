@@ -1,5 +1,5 @@
-import { Box, HStack, Checkbox, Text} from "@chakra-ui/react";
-import PropTypes from "prop-types";
+import { Box, HStack, Checkbox, Text } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
 
 const ChooseOpenEnded = ({ check, func }) => {
   return (
@@ -14,12 +14,12 @@ const ChooseOpenEnded = ({ check, func }) => {
         </Checkbox>
       </HStack>
     </Box>
-  );
-};
+  )
+}
 
 ChooseOpenEnded.propTypes = {
   check: PropTypes.bool,
-  func: PropTypes.func,
-};
+  func: PropTypes.func
+}
 
-export default ChooseOpenEnded;
+export default ChooseOpenEnded

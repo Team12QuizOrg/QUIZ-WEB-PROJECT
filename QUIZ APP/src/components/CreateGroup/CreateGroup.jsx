@@ -1,57 +1,53 @@
-import { useState } from "react";
-import AppContext from "../../context/AuthContext";
-import { useContext } from "react";
-import { addFeedback } from "../../services/feedback.services";
+import { useState, useContext } from 'react'
+import AppContext from '../../context/AuthContext'
 import {
   Modal, Input, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure,
   FormLabel,
-  Textarea,
   FormControl,
-  Button,
-} from "@chakra-ui/react";
-import { addGroup } from "../../services/groups.services";
-import { useToast } from "@chakra-ui/react";
-
+  Button
+  , useToast
+} from '@chakra-ui/react'
+import { addGroup } from '../../services/groups.services'
 
 const CreateGroup = () => {
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const [groupName, setGroupName] = useState("");
-  const { userData } = useContext(AppContext);
-  const toast = useToast();
+  const { isOpen, onOpen, onClose } = useDisclosure()
+  const [groupName, setGroupName] = useState('')
+  const { userData } = useContext(AppContext)
+  const toast = useToast()
 
   const handleOpen = () => {
-    onOpen();
-  };
+    onOpen()
+  }
 
   const handleInputChange = (e) => {
-    setGroupName(e.target.value);
-  };
+    setGroupName(e.target.value)
+  }
 
   const handleSubmit = (e) => {
-    e.preventDefault();
+    e.preventDefault()
     addGroup(userData.handle, groupName).then((res) =>
       toast({
-        description: "Group created successfully.",
-        status: "success",
+        description: 'Group created successfully.',
+        status: 'success',
         duration: 3000,
-        isClosable: true,
+        isClosable: true
       })
-    );
-    setGroupName("");
-    onClose();
-  };
+    )
+    setGroupName('')
+    onClose()
+  }
 
   return (
     <>
       <Button
         onClick={handleOpen}
-        bg={"brand.200"}
+        bg={'brand.200'}
         style={{
-          borderRadius: "10px",
-          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+          borderRadius: '10px',
+          boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
         }}
       >
-        {" "}
+        {' '}
         Create Group
       </Button>
       <Modal isOpen={isOpen} onClose={onClose}>
@@ -81,7 +77,7 @@ const CreateGroup = () => {
         </ModalContent>
       </Modal>
     </>
-  );
-};
+  )
+}
 
-export default CreateGroup;
+export default CreateGroup

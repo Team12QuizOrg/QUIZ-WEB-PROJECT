@@ -1,5 +1,5 @@
-import { FormControl, FormLabel, Input } from "@chakra-ui/react";
-import PropTypes from "prop-types";
+import { FormControl, FormLabel, Input } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
 
 const CreateNewCategory = ({ category, func }) => {
   return (
@@ -15,12 +15,12 @@ const CreateNewCategory = ({ category, func }) => {
         bg="brand.300"
       />
     </FormControl>
-  );
-};
+  )
+}
 
 CreateNewCategory.propTypes = {
   category: PropTypes.string,
-  func: PropTypes.func,
-};
+  func: PropTypes.func
+}
 
-export default CreateNewCategory;
+export default CreateNewCategory

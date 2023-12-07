@@ -1,5 +1,5 @@
-import { Button } from "@chakra-ui/react";
-import PropTypes from "prop-types";
+import { Button } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
 
 const AddQuestionButton = ({ func }) => {
   return (
@@ -11,14 +11,14 @@ const AddQuestionButton = ({ func }) => {
       variant="solid"
       size="md"
       mt={2}
-      background={"blue.400"}
+      background={'blue.400'}
     >
       Add Question
     </Button>
-  );
-};
+  )
+}
 
 AddQuestionButton.propTypes = {
-  func: PropTypes.func,
-};
-export default AddQuestionButton;
+  func: PropTypes.func
+}
+export default AddQuestionButton

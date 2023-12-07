@@ -1,161 +1,157 @@
-import React, { useContext, useState } from 'react';
-import './SignUp.css';
-import AppContext from '../../context/AuthContext';
-import { createUserHandle, getUserByHandle } from '../../services/users.services';
-import { registerUser } from '../../services/auth.services';
-import { useNavigate } from 'react-router-dom';
-import codes from '../../codes/codes';
-import { MAX_NAME_LENGTH, MAX_USERNAME_LENGTH, MIN_NAME_LENGTH, MIN_PASSWORD_LENGTH, MIN_USERNAME_LENGTH, PHONE_NUMBER_LENGTH } from '../../common/constants';
+import { useContext, useState } from 'react'
+import './SignUp.css'
+import AppContext from '../../context/AuthContext'
+import { createUserHandle, getUserByHandle } from '../../services/users.services'
+import { registerUser } from '../../services/auth.services'
+import { useNavigate } from 'react-router-dom'
+import codes from '../../codes/codes'
+import { MAX_NAME_LENGTH, MAX_USERNAME_LENGTH, MIN_NAME_LENGTH, MIN_PASSWORD_LENGTH, MIN_USERNAME_LENGTH, PHONE_NUMBER_LENGTH } from '../../common/constants'
 import {
-    Box,
-    Flex,
-    Stack,
-    Heading,
-    Text,
-    Container,
-    Input,
-    Button,
-    SimpleGrid,
-    Avatar,
-    AvatarGroup,
-    useBreakpointValue,
-    Select,
-    Icon,
-    FormControl,
-    InputGroup,
-    InputRightElement,
+  Box,
+  Flex,
+  Stack,
+  Heading,
+  Text,
+  Container,
+  Input,
+  Button,
+  SimpleGrid,
+  Avatar,
+  AvatarGroup,
+  useBreakpointValue,
+  Select,
+  FormControl,
+  InputGroup,
+  InputRightElement
 
 } from '@chakra-ui/react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
-
-
 const avatars = [
-    {
-        name: 'Ryan Florence',
-        url: 'https://bit.ly/ryan-florence',
-    },
-    {
-        name: 'Segun Adebayo',
-        url: 'https://bit.ly/sage-adebayo',
-    },
-    {
-        name: 'Kent Dodds',
-        url: 'https://bit.ly/kent-c-dodds',
-    },
-    {
-        name: 'Prosper Otemuyiwa',
-        url: 'https://bit.ly/prosper-baba',
-    },
-    {
-        name: 'Christian Nwamba',
-        url: 'https://bit.ly/code-beast',
-    },
+  {
+    name: 'Ryan Florence',
+    url: 'https://bit.ly/ryan-florence'
+  },
+  {
+    name: 'Segun Adebayo',
+    url: 'https://bit.ly/sage-adebayo'
+  },
+  {
+    name: 'Kent Dodds',
+    url: 'https://bit.ly/kent-c-dodds'
+  },
+  {
+    name: 'Prosper Otemuyiwa',
+    url: 'https://bit.ly/prosper-baba'
+  },
+  {
+    name: 'Christian Nwamba',
+    url: 'https://bit.ly/code-beast'
+  }
 ]
-export default function JoinOurTeam() {
-    const [showPassword, setShowPassword] = useState(false)
-    const { setContext } = useContext(AppContext);
-    const [showCodeInput, setShowCodeInput] = useState(false);
-    const navigate = useNavigate();
-    const [form, setForm] = useState({
-        email: '',
-        handle: '',
-        password: '',
-        firstName: '',
-        lastName: '',
-        phone: '',
-        photoURL: '',
-        userType: 'student',
-        code: '',
-    });
-    const updateForm = (field) => (e) => {
-        setForm({
-            ...form,
-            [field]: e.target.value,
-        });
+export default function JoinOurTeam () {
+  const [showPassword, setShowPassword] = useState(false)
+  const { setContext } = useContext(AppContext)
+  const [showCodeInput, setShowCodeInput] = useState(false)
+  const navigate = useNavigate()
+  const [form, setForm] = useState({
+    email: '',
+    handle: '',
+    password: '',
+    firstName: '',
+    lastName: '',
+    phone: '',
+    photoURL: '',
+    userType: 'student',
+    code: ''
+  })
+  const updateForm = (field) => (e) => {
+    setForm({
+      ...form,
+      [field]: e.target.value
+    })
+  }
+  const onUserTypeChange = (e) => {
+    const newUserType = e.target.value
+    setForm({
+      ...form,
+      userType: newUserType
+    })
+    setShowCodeInput(newUserType === 'teacher')
+  }
+
+  function validateEmail (email) {
+    const re = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@(gmail\.com|yahoo\.com|abv\.bg)$/
+    return re.test(String(email).toLowerCase())
+  }
+
+  const onRegister = (event) => {
+    event.preventDefault()
+    if (!form.email) {
+      alert('Email is required')
+      return
     }
-    const onUserTypeChange = (e) => {
-        const newUserType = e.target.value;
-        setForm({
-            ...form,
-            userType: newUserType,
-        });
-        setShowCodeInput(newUserType === 'teacher');
+
+    if (!validateEmail(form.email)) {
+      alert('Email is not in proper format')
+      return
     }
 
-    function validateEmail(email) {
-        var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@(gmail\.com|yahoo\.com|abv\.bg)$/;
-        return re.test(String(email).toLowerCase());
+    if (!form.handle) {
+      alert('Handle is required')
+      return
     }
 
+    if (!form.handle || form.handle.length < MIN_USERNAME_LENGTH || form.handle.length > MAX_USERNAME_LENGTH) {
+      alert('Handle is required and must be between 3 and 30 characters')
+      return
+    }
 
-    const onRegister = (event) => {
-        event.preventDefault();
-        if (!form.email) {
-            alert('Email is required');
-            return;
+    if (!form.password || form.password.length < MIN_PASSWORD_LENGTH) {
+      alert('Password is required and must be at least 6 characters long')
+      return
+    }
+
+    if (!form.firstName || form.firstName.length < MIN_NAME_LENGTH || form.firstName.length > MAX_NAME_LENGTH) {
+      alert('First Name is required and must be between 1 and 30 characters')
+    }
+
+    if (!form.lastName || form.lastName.length < MIN_NAME_LENGTH || form.lastName.length > MAX_NAME_LENGTH) {
+      alert('Last Name is required and must be between 1 and 30 characters')
+    }
+
+    if (!form.phone || form.phone.length !== PHONE_NUMBER_LENGTH) {
+      alert('Phone number is required and must be 10 characters')
+    }
+
+    if (form.userType === 'teacher' && !codes.includes(form.code)) {
+      alert('Invalid code!')
+      return
+    }
+
+    getUserByHandle(form.handle)
+      .then(snapshot => {
+        if (snapshot.exists()) {
+          throw new Error(`Handle @${form.handle} has already been taken!`)
         }
 
-        if (!validateEmail(form.email)) {
-            alert('Email is not in proper format');
-            return;
-        }
-
-        if (!form.handle) {
-            alert('Handle is required');
-            return;
-        }
-
-        if (!form.handle || form.handle.length < MIN_USERNAME_LENGTH || form.handle.length > MAX_USERNAME_LENGTH) {
-            alert('Handle is required and must be between 3 and 30 characters');
-            return;
-        }
-
-        if (!form.password || form.password.length < MIN_PASSWORD_LENGTH) {
-            alert('Password is required and must be at least 6 characters long');
-            return;
-        }
-
-        if (!form.firstName || form.firstName.length < MIN_NAME_LENGTH || form.firstName.length > MAX_NAME_LENGTH) {
-            alert('First Name is required and must be between 1 and 30 characters')
-        }
-
-        if (!form.lastName || form.lastName.length < MIN_NAME_LENGTH || form.lastName.length > MAX_NAME_LENGTH) {
-            alert('Last Name is required and must be between 1 and 30 characters')
-        }
-
-        if (!form.phone || form.phone.length !== PHONE_NUMBER_LENGTH) {
-            alert('Phone number is required and must be 10 characters')
-        }
-
-        if (form.userType === 'teacher' && !codes.includes(form.code)) {
-            alert("Invalid code!")
-            return;
-        }
-
-        getUserByHandle(form.handle)
-            .then(snapshot => {
-                if (snapshot.exists()) {
-                    throw new Error(`Handle @${form.handle} has already been taken!`);
-                }
-
-                return registerUser(form.email, form.password);
+        return registerUser(form.email, form.password)
+      })
+      .then(credential => {
+        return createUserHandle(form.handle, credential.user.uid, credential.user.email, form.firstName, form.lastName, form.phone, form.userType)
+          .then(() => {
+            setContext({
+              user: credential.user
             })
-            .then(credential => {
-                return createUserHandle(form.handle, credential.user.uid, credential.user.email, form.firstName, form.lastName, form.phone, form.userType)
-                    .then(() => {
-                        setContext({
-                            user: credential.user,
-                        });
-                    });
-            })
-            .then(() => {
-                navigate('/');
-            })
-            .catch((err) => alert(err));
-    }
+          })
+      })
+      .then(() => {
+        navigate('/')
+      })
+      .catch((err) => alert(err))
+  }
 
-    return (
+  return (
         <Box position={'relative'} >
             <Container
                 height={'900px'} width={'full'}
@@ -187,16 +183,16 @@ export default function JoinOurTeam() {
                                     position={'relative'}
                                     zIndex={2}
                                     _before={{
-                                        content: '""',
-                                        width: 'full',
-                                        height: 'full',
-                                        rounded: 'full',
-                                        transform: 'scale(1.125)',
-                                        bgGradient: 'linear(to-bl, red.400,pink.400)',
-                                        position: 'absolute',
-                                        zIndex: -1,
-                                        top: 0,
-                                        left: 0,
+                                      content: '""',
+                                      width: 'full',
+                                      height: 'full',
+                                      rounded: 'full',
+                                      transform: 'scale(1.125)',
+                                      bgGradient: 'linear(to-bl, red.400,pink.400)',
+                                      position: 'absolute',
+                                      zIndex: -1,
+                                      top: 0,
+                                      left: 0
                                     }}
                                 />
                             ))}
@@ -216,16 +212,16 @@ export default function JoinOurTeam() {
                             minHeight={useBreakpointValue({ base: '44px', md: '60px' })}
                             position={'relative'}
                             _before={{
-                                content: '""',
-                                width: 'full',
-                                height: 'full',
-                                rounded: 'full',
-                                transform: 'scale(1.125)',
-                                bgGradient: 'linear(to-bl, orange.400,yellow.400)',
-                                position: 'absolute',
-                                zIndex: -1,
-                                top: 0,
-                                left: 0,
+                              content: '""',
+                              width: 'full',
+                              height: 'full',
+                              rounded: 'full',
+                              transform: 'scale(1.125)',
+                              bgGradient: 'linear(to-bl, orange.400,yellow.400)',
+                              position: 'absolute',
+                              zIndex: -1,
+                              top: 0,
+                              left: 0
                             }}>
                             YOU
                         </Flex>
@@ -261,7 +257,7 @@ export default function JoinOurTeam() {
                                 border={0}
                                 color={'gray.500'}
                                 _placeholder={{
-                                    color: 'gray.500',
+                                  color: 'gray.500'
                                 }}
                             />
                             <Input
@@ -272,7 +268,7 @@ export default function JoinOurTeam() {
                                 border={0}
                                 color={'gray.500'}
                                 _placeholder={{
-                                    color: 'gray.500',
+                                  color: 'gray.500'
                                 }}
                             />
                             <Input
@@ -282,7 +278,7 @@ export default function JoinOurTeam() {
                                 border={0}
                                 color={'gray.500'}
                                 _placeholder={{
-                                    color: 'gray.500',
+                                  color: 'gray.500'
                                 }}
                             />
                             <Input
@@ -292,7 +288,7 @@ export default function JoinOurTeam() {
                                 border={0}
                                 color={'gray.500'}
                                 _placeholder={{
-                                    color: 'gray.500',
+                                  color: 'gray.500'
                                 }}
                             />
                             <FormControl id="password" isRequired>
@@ -302,7 +298,7 @@ export default function JoinOurTeam() {
                                         border={0}
                                         color={'gray.500'}
                                         _placeholder={{
-                                            color: 'gray.500',
+                                          color: 'gray.500'
                                         }} />
                                     <InputRightElement h={'full'}>
                                         <Button
@@ -320,7 +316,7 @@ export default function JoinOurTeam() {
                                 border={0}
                                 color={'gray.500'}
                                 _placeholder={{
-                                    color: 'gray.500',
+                                  color: 'gray.500'
                                 }}
                             />
                             <Select placeholder='Select role' value={form.userType} onChange={onUserTypeChange} color={'brand.200'}>
@@ -337,7 +333,7 @@ export default function JoinOurTeam() {
                                         border={0}
                                         color={'gray.500'}
                                         _placeholder={{
-                                            color: 'gray.500',
+                                          color: 'gray.500'
                                         }}
                                     />
 
@@ -352,8 +348,8 @@ export default function JoinOurTeam() {
                             bgGradient="linear(to-r, red.400,pink.400)"
                             color={'white'}
                             _hover={{
-                                bgGradient: 'linear(to-r, red.400,pink.400)',
-                                boxShadow: 'xl',
+                              bgGradient: 'linear(to-r, red.400,pink.400)',
+                              boxShadow: 'xl'
                             }}>
                             Submit
                         </Button>
@@ -362,5 +358,5 @@ export default function JoinOurTeam() {
                 </Stack>
             </Container>
         </Box>
-    )
+  )
 }

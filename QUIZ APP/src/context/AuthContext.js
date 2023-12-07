@@ -1,22 +1,22 @@
-import { createContext } from "react";
+import { createContext } from 'react'
 
 const AppContext = createContext({
-    user: null,
-    userData: null,
-    setContext() {
-      // real implementation comes from App.jsx
-    },
-    users: null,
-    setUsers:() =>{
+  user: null,
+  userData: null,
+  setContext () {
+    // real implementation comes from App.jsx
+  },
+  users: null,
+  setUsers: () => {
 
-    },
-    quzzes: null,
-    setQuizzes: () => {
+  },
+  quzzes: null,
+  setQuizzes: () => {
 
-    },
-    openQuizzes: null,
-    setOpenQuizzes: () => {
+  },
+  openQuizzes: null,
+  setOpenQuizzes: () => {
 
-    },
-});
-export default AppContext;
+  }
+})
+export default AppContext

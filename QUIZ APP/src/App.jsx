@@ -1,61 +1,58 @@
-import { useState, useEffect } from "react";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { auth } from "./config/firebase-config";
-import AuthenticatedRoute from "./hoc/AuthenticatedRoute";
-import AppContext from "./context/AuthContext";
-import { Route } from "react-router-dom";
-import { Routes } from "react-router-dom";
-import Home from "./views/Home/Home";
-import SignIn from "./views/SignIn/SignIn";
-import SignUp from "./views/SignUp/SignUp";
-import NavBar from "./components/NavBar/NavBar";
-import Profile from "./views/Profile/Profile";
-import About from "./views/About/About";
-import Footer from "./components/Footer/Footer";
-import AdminPanel from "./views/AdminPanel/AdminPanel";
-import Error from "./views/Error/Error";
-import { getUserData } from "./services/users.services";
-import QuizzPage from "./views/QuizzPage/QuizzPage";
-import SingleQuizView from "./components/SingleQuizView/SingleQuizView";
-import SolvingQuizView from "./components/SolvingQuizView/SolvingQuizView";
-import QuizForm from "./components/QuizForm/QuizForm";
-import PrivateRoute from "./hoc/PrivateRoute";
-import AssessmentQuiz from "./views/AssessmentQuiz/AssessmentQuiz";
-import { AllCategoriesPage } from "./views/AllCategoriesPage/AllCategoriesPage";
-// import ToggleColorMode from "./components/ToggleColorMode/ToggleColorMode";
+import { useState, useEffect } from 'react'
+import { useAuthState } from 'react-firebase-hooks/auth'
+import { auth } from './config/firebase-config'
+import AuthenticatedRoute from './hoc/AuthenticatedRoute'
+import AppContext from './context/AuthContext'
+import { Route, Routes } from 'react-router-dom'
+import Home from './views/Home/Home'
+import SignIn from './views/SignIn/SignIn'
+import SignUp from './views/SignUp/SignUp'
+import NavBar from './components/NavBar/NavBar'
+import Profile from './views/Profile/Profile'
+import About from './views/About/About'
+import Footer from './components/Footer/Footer'
+import AdminPanel from './views/AdminPanel/AdminPanel'
+import Error from './views/Error/Error'
+import { getUserData } from './services/users.services'
+import QuizzPage from './views/QuizzPage/QuizzPage'
+import SingleQuizView from './components/SingleQuizView/SingleQuizView'
+import SolvingQuizView from './components/SolvingQuizView/SolvingQuizView'
+import QuizForm from './components/QuizForm/QuizForm'
+import PrivateRoute from './hoc/PrivateRoute'
+import AssessmentQuiz from './views/AssessmentQuiz/AssessmentQuiz'
+import { AllCategoriesPage } from './views/AllCategoriesPage/AllCategoriesPage'
 
-function App() {
-  const [user] = useAuthState(auth);
+function App () {
+  const [user] = useAuthState(auth)
   const [appState, setAppState] = useState({
     user,
-    userData: null,
-  });
+    userData: null
+  })
   if (appState.user !== user) {
-    setAppState({ user });
+    setAppState({ user })
   }
 
   useEffect(() => {
-    if (user === null) return;
+    if (user === null) return
 
     getUserData(user.uid)
       .then((snapshot) => {
         if (!snapshot.exists()) {
-          throw new Error("Something went wrong!");
+          throw new Error('Something went wrong!')
         }
 
         setAppState({
           ...appState,
-          userData: snapshot.val()[Object.keys(snapshot.val())[0]],
-        });
+          userData: snapshot.val()[Object.keys(snapshot.val())[0]]
+        })
       })
-      .catch((e) => alert(e.message));
-  }, [user]);
+      .catch((e) => alert(e.message))
+  }, [user])
 
   return (
     <div>
       <AppContext.Provider value={{ ...appState, setContext: setAppState }}>
         <PrivateRoute>
-          {/* <ToggleColorMode></ToggleColorMode> */}
           <NavBar></NavBar>
         </PrivateRoute>
         <Routes>
@@ -74,17 +71,14 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           {user === null && <Route path="/signin" element={<SignIn />} />}
           {user === null && <Route path="/signup" element={<SignUp />} />}
-          {/* <Route path="/reset" element={<ResetPassword />} />*/}
           <Route path="/:profile" element={<AuthenticatedRoute><Profile /></AuthenticatedRoute>} />
-          {/* <Route path='/:profile/usersposts' element={<AuthenticatedRoute><UsersPost /></AuthenticatedRoute>} />
-        <Route path='/:profile/userscomments' element={<AuthenticatedRoute><UsersComments /></AuthenticatedRoute>} />*/}
           <Route path="/adminPanel" element={<AuthenticatedRoute><AdminPanel /></AuthenticatedRoute>} />
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer></Footer>
       </AppContext.Provider>
     </div>
-  );
+  )
 }
 
-export default App;
+export default App

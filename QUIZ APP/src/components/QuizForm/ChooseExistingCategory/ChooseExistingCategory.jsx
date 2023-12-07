@@ -1,5 +1,5 @@
-import { FormControl, FormLabel, Select } from "@chakra-ui/react";
-import PropTypes from "prop-types";
+import { FormControl, FormLabel, Select } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
 
 const ChooseExistingCategory = ({ selectedCategory, func, categories }) => {
   return (
@@ -22,13 +22,13 @@ const ChooseExistingCategory = ({ selectedCategory, func, categories }) => {
         ))}
       </Select>
     </FormControl>
-  );
-};
+  )
+}
 
 ChooseExistingCategory.propTypes = {
   selectedCategory: PropTypes.string,
   func: PropTypes.func,
-  categories: PropTypes.array,
-};
+  categories: PropTypes.array
+}
 
-export default ChooseExistingCategory;
+export default ChooseExistingCategory

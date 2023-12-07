@@ -1,13 +1,10 @@
-import AddFeedback from "../../components/AddFeedback/AddFeedback";
+import AddFeedback from '../../components/AddFeedback/AddFeedback'
 
 const About = () => {
-    return (
+  return (
         <>
             <AddFeedback />
-
         </>
-
-
-    )
+  )
 }
-export default About;
+export default About

@@ -1,10 +1,10 @@
 'use client'
 
-import { Stack, Flex, Button, Text, VStack, useBreakpointValue, Heading } from '@chakra-ui/react'
-import { useNavigate } from 'react-router-dom';
-export default function HomeButtons() {
-    const navigate = useNavigate();
-    return (
+import { Stack, Flex, Button, Text, VStack, useBreakpointValue } from '@chakra-ui/react'
+import { useNavigate } from 'react-router-dom'
+export default function HomeButtons () {
+  const navigate = useNavigate()
+  return (
         <Flex
             w={'full'}
             h={'100vh'}
@@ -24,7 +24,7 @@ export default function HomeButtons() {
                         fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }}
                         color={'brand.100'}>
                         Join our community
-                        <Text as={'span'} bgGradient={"linear(to-r, red.400,pink.400)"} bgClip={"text"} fontSize={{ base: '4xl', md: '6xl', lg: '7xl' }} >
+                        <Text as={'span'} bgGradient={'linear(to-r, red.400,pink.400)'} bgClip={'text'} fontSize={{ base: '4xl', md: '6xl', lg: '7xl' }} >
                             &
                         </Text>{' '}
                         become quiz master!
@@ -50,5 +50,5 @@ export default function HomeButtons() {
                 </Stack>
             </VStack>
         </Flex>
-    )
+  )
 }

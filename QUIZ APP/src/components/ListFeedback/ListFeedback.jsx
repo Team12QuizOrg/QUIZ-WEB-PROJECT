@@ -1,38 +1,34 @@
-
 import {
-    Box,
-    Flex,
-    Heading,
-    Text,
-    Stack,
-    Container,
+  Box,
+  Flex,
+  Heading,
+  Text,
+  Stack,
+  Container
 
 } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { getAllFeedback } from '../../services/feedback.services'
 import GetAvatar from '../GetAvatar/GetAvatar'
-import { useNavigate } from "react-router-dom";
+import { useNavigate } from 'react-router-dom'
 
+export default function ListFeedback () {
+  const [feedbacks, setFeedbacks] = useState()
+  const navigate = useNavigate()
 
-export default function ListFeedback() {
-    const [feedbacks, setFeedbacks] = useState()
-    const navigate = useNavigate();
+  useEffect(() => {
+    getAllFeedback()
+      .then((res) => {
+        const shuffledFeedbacks = res.sort(() => Math.random() - 0.5)
 
-    useEffect(() => {
-        getAllFeedback()
-            .then((res) => {
-                const shuffledFeedbacks = res.sort(() => Math.random() - 0.5);
+        const displayedFeedbacks = shuffledFeedbacks.slice(0, Math.min(shuffledFeedbacks.length, 3))
 
-                const displayedFeedbacks = shuffledFeedbacks.slice(0, Math.min(shuffledFeedbacks.length, 3));
+        setFeedbacks(displayedFeedbacks)
+      })
+      .catch((err) => console.error('Problem fetching all users', err))
+  }, [])
 
-                setFeedbacks(displayedFeedbacks)
-            })
-            .catch((err) => console.error(`Problem fetching all users`, err))
-    }, [])
-
-
-    return (
-
+  return (
 
         <Box >
             <Container maxW={'7xl'} py={16} as={Stack} spacing={12}>
@@ -47,7 +43,6 @@ export default function ListFeedback() {
                     {feedbacks && feedbacks.map((feedback) => (
                         <Box key={feedback.timestamp}>
 
-
                             <Stack
                                 bg={'gray.200'}
                                 boxShadow={'lg'}
@@ -56,20 +51,20 @@ export default function ListFeedback() {
                                 align={'center'}
                                 pos={'relative'}
                                 _after={{
-                                    content: `""`,
-                                    w: 0,
-                                    h: 0,
-                                    borderLeft: 'solid transparent',
-                                    borderLeftWidth: 16,
-                                    borderRight: 'solid transparent',
-                                    borderRightWidth: 16,
-                                    borderTop: 'solid',
-                                    borderTopWidth: 16,
-                                    borderTopColor: 'gray.500',
-                                    pos: 'absolute',
-                                    bottom: '-16px',
-                                    left: '50%',
-                                    transform: 'translateX(-50%)',
+                                  content: '""',
+                                  w: 0,
+                                  h: 0,
+                                  borderLeft: 'solid transparent',
+                                  borderLeftWidth: 16,
+                                  borderRight: 'solid transparent',
+                                  borderRightWidth: 16,
+                                  borderTop: 'solid',
+                                  borderTopWidth: 16,
+                                  borderTopColor: 'gray.500',
+                                  pos: 'absolute',
+                                  bottom: '-16px',
+                                  left: '50%',
+                                  transform: 'translateX(-50%)'
                                 }}>
                                 <Text
                                     textAlign={'center'}
@@ -83,18 +78,13 @@ export default function ListFeedback() {
                                 <GetAvatar handle={feedback.user} />
                                 <Stack spacing={-1} align={'center'}>
                                     <Text fontWeight={600} color={'brand.200'} onClick={() => navigate(`/${(feedback.user)}`)}>{feedback.user}</Text>
-
                                 </Stack>
                             </Flex>
-
-
                         </Box>
                     ))}
                 </Stack>
-
-
             </Container>
         </Box>
 
-    )
+  )
 }

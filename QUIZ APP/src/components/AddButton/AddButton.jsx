@@ -1,8 +1,8 @@
-import React from 'react';
-import { Button, Text } from '@chakra-ui/react';
+import { Button } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
 
 const CustomButton = ({ children, ...props }) => {
-    return (
+  return (
         <Button
             css={`
             
@@ -53,7 +53,10 @@ const CustomButton = ({ children, ...props }) => {
         >
             {children}
         </Button>
-    );
-};
-
-export default CustomButton;
+  )
+}
+CustomButton.propTypes = {
+  children: PropTypes.string,
+  props: PropTypes.func
+}
+export default CustomButton

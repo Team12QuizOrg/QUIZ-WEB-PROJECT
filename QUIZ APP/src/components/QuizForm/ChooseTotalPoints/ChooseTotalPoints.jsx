@@ -1,5 +1,5 @@
-import { FormControl, FormLabel, Input } from "@chakra-ui/react";
-import PropTypes from "prop-types";
+import { FormControl, FormLabel, Input } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
 
 const ChooseTotalPoints = ({ totalPoints, func }) => {
   return (
@@ -14,16 +14,17 @@ const ChooseTotalPoints = ({ totalPoints, func }) => {
         onChange={func}
         variant="filled"
         focusBorderColor="black"
-        bg="brand.300"
+        borderColor={'brand.200'}
+        bg="#718096"
         placeholder="Min: 5"
       />
     </FormControl>
-  );
-};
+  )
+}
 
 ChooseTotalPoints.propTypes = {
   totalPoints: PropTypes.number,
-  func: PropTypes.func,
-};
+  func: PropTypes.func
+}
 
-export default ChooseTotalPoints;
+export default ChooseTotalPoints

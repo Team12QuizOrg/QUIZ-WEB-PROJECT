@@ -1,34 +1,33 @@
-import { useState } from "react";
-import { useEffect } from "react";
-import { Box } from "@chakra-ui/react";
-import AllQuizzes from "../AllQuizzes/AllQuizzes";
-import { getAllQuizzes } from "../../services/quiz.services";
-import { getAllCategories } from "../../services/category.services";
+import { useState, useEffect } from 'react'
+import { Box } from '@chakra-ui/react'
+import AllQuizzes from '../AllQuizzes/AllQuizzes'
+import { getAllQuizzes } from '../../services/quiz.services'
+import { getAllCategories } from '../../services/category.services'
 
 export const CategoryQuizzes = () => {
-    const [allQuizzes, setAllQuizzes] = useState();
+  const [allQuizzes, setAllQuizzes] = useState()
 
-    const [categories, setCategories] = useState();
+  const [categories, setCategories] = useState()
 
-    useEffect(() => {
-        getAllCategories()
-        .then((res) => {
-            const categories = res.map((cat) => cat.category)
-            setCategories(categories);
-        })
-        .catch((error) => {
-            console.error("Error fetching categories:", error);
-        });
-        getAllQuizzes()
-        .then((res) => {
-            setAllQuizzes(res);
-        })
-        .catch((error) => {
-            console.error("Error fetching quizzes:", error);
-        });
-    }, []);
+  useEffect(() => {
+    getAllCategories()
+      .then((res) => {
+        const categories = res.map((cat) => cat.category)
+        setCategories(categories)
+      })
+      .catch((error) => {
+        console.error('Error fetching categories:', error)
+      })
+    getAllQuizzes()
+      .then((res) => {
+        setAllQuizzes(res)
+      })
+      .catch((error) => {
+        console.error('Error fetching quizzes:', error)
+      })
+  }, [])
 
-    return (
+  return (
         <Box>
             {categories && categories.map((category, index) => (
                 <Box key={index} mb="50px">
@@ -36,5 +35,5 @@ export const CategoryQuizzes = () => {
                 </Box>
             ))}
         </Box>
-    )
+  )
 }

@@ -1,51 +1,53 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
 import {
-    Spinner, Text, Tooltip, Box, Button, Popover,
-    PopoverTrigger,
-} from '@chakra-ui/react';
+  Spinner, Text, Tooltip, Box, Button, Popover,
+  PopoverTrigger
+} from '@chakra-ui/react'
 import { CheckCircleIcon, QuestionIcon, TimeIcon } from '@chakra-ui/icons'
-import { getUsersQuizzes } from '../../services/users.services';
-import ListQuizzes from '../ListQuizzes/ListQuizzes';
+import { getUsersQuizzes } from '../../services/users.services'
+import ListQuizzes from '../ListQuizzes/ListQuizzes'
+import PropTypes from 'prop-types'
+
 const UsersQuizzes = ({ user }) => {
-    const [quizState, setQuizState] = useState([])
-    const [currentQuizzes, setCurrentQuizzes] = useState([])
-    const [finishedQuizzes, setFinishedQuizzes] = useState([])
-    const [loading, setLoading] = useState(true);
+  const [quizState, setQuizState] = useState([])
+  const [currentQuizzes, setCurrentQuizzes] = useState([])
+  const [finishedQuizzes, setFinishedQuizzes] = useState([])
+  const [loading, setLoading] = useState(true)
 
-    useEffect(() => {
-        getUsersQuizzes(user.handle)
-            .then((res) => {
-                setQuizState(res || []);
-                const finished = res.filter((quiz) => quiz.status === 'finished');
-                setFinishedQuizzes(finished);
-                return res;
-            })
-            .then((res) => {
-                const current = res.filter((quiz) => !quiz.status || quiz.status !== 'finished');
-                setCurrentQuizzes(current);
-            })
-            .catch((err) => console.error('Failed to get quizState', err))
-            .finally(() => {
-                setLoading(false);
-            });
-    }, [user.handle]);
+  useEffect(() => {
+    getUsersQuizzes(user.handle)
+      .then((res) => {
+        setQuizState(res || [])
+        const finished = res.filter((quiz) => quiz.status === 'finished')
+        setFinishedQuizzes(finished)
+        return res
+      })
+      .then((res) => {
+        const current = res.filter((quiz) => !quiz.status || quiz.status !== 'finished')
+        setCurrentQuizzes(current)
+      })
+      .catch((err) => console.error('Failed to get quizState', err))
+      .finally(() => {
+        setLoading(false)
+      })
+  }, [user.handle])
 
-    if (loading) {
-        return (
+  if (loading) {
+    return (
             <Box display="flex" alignItems="center" justifyContent="center" height="100vh">
                 <Spinner size="xl" />
                 <Text>Loading...</Text>
             </Box>
-        );
-    } else {
-        return (
+    )
+  } else {
+    return (
             <>
                 <Box justify='space-between'
                     flexWrap='wrap'
                     sx={{
-                        '& > button': {
-                            minW: '136px',
-                        },
+                      '& > button': {
+                        minW: '136px'
+                      }
                     }}>
                     <Popover>
                         <PopoverTrigger>
@@ -76,8 +78,11 @@ const UsersQuizzes = ({ user }) => {
                     </Tooltip>
                 </Box>
             </>
-        );
-    }
-};
+    )
+  }
+}
 
-export default UsersQuizzes;
+UsersQuizzes.propTypes = {
+  user: PropTypes.object
+}
+export default UsersQuizzes

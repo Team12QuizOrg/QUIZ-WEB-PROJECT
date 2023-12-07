@@ -1,24 +1,22 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react'
+import { HStack, Heading, Spacer } from '@chakra-ui/react'
+import { StarIcon } from '@chakra-ui/icons'
+import { getUserScoreBoard } from '../../services/users.services'
+import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
-import { VStack, HStack, Text, Heading, Spacer, Stack, StackDivider, Box, useDisclosure } from '@chakra-ui/react';
-
-import { StarIcon, } from '@chakra-ui/icons'
-import { getUserScoreBoard } from '../../services/users.services';
-import { useNavigate } from 'react-router-dom';
 const UserScoreBoard = ({ user }) => {
+  const [quizState, setQuizState] = useState([])
+  const navigate = useNavigate()
+  useEffect(() => {
+    getUserScoreBoard(user.handle)
+      .then((res) => {
+        setQuizState(res || {})
+      })
+      .catch((err) => console.error('Failed to get quizState', err))
+  }, [])
 
-    const [quizState, setQuizState] = useState([])
-    const navigate = useNavigate()
-    useEffect(() => {
-        getUserScoreBoard(user.handle)
-            .then((res) => {
-                setQuizState(res || {});
-            })
-            .catch((err) => console.error('Failed to get quizState', err))
-    }, [])
-
-
-    return (
+  return (
         <>
 
             <HStack align="center" mt={5}>
@@ -48,7 +46,9 @@ const UserScoreBoard = ({ user }) => {
             }
 
         </>
-    );
-};
-
-export default UserScoreBoard;
+  )
+}
+UserScoreBoard.propTypes = {
+  user: PropTypes.object
+}
+export default UserScoreBoard

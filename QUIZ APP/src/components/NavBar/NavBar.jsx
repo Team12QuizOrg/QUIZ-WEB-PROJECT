@@ -1,21 +1,20 @@
-import { useNavigate } from "react-router-dom";
-import { useMediaQuery, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Box, Flex, HStack, Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, useDisclosure, useColorModeValue, Stack, Spacer, Image, Heading, } from "@chakra-ui/react";
-import { ChevronRightIcon, HamburgerIcon } from "@chakra-ui/icons";
-import SearchQuizzes from "../SearchQuizzes/SearchQuizzes";
-import NavLinks from "../NavLinks/NavLinks";
-import NavUser from "../NavUser/NavUser";
-import { useColorMode } from '@chakra-ui/color-mode';
-import NavLogo from "../NavLogo/NavLogo";
-export default function NavBar() {
+import { useMediaQuery, Drawer, DrawerOverlay, DrawerContent, DrawerHeader, DrawerBody, Box, Flex, HStack, Button, useDisclosure, Spacer } from '@chakra-ui/react'
+import { ChevronRightIcon, HamburgerIcon } from '@chakra-ui/icons'
+import SearchQuizzes from '../SearchQuizzes/SearchQuizzes'
+import NavLinks from '../NavLinks/NavLinks'
+import NavUser from '../NavUser/NavUser'
+import { useColorMode } from '@chakra-ui/color-mode'
+import NavLogo from '../NavLogo/NavLogo'
+export default function NavBar () {
+  const [isSmallerThan800] = useMediaQuery('(max-width: 800px)')
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
-  const [isSmallerThan800] = useMediaQuery('(max-width: 800px)');
-  const { isOpen, onOpen, onClose } = useDisclosure();
-  const navigate = useNavigate();
-  const { colorMode } = useColorMode();
+  const { colorMode } = useColorMode()
   return (
     <Box>
       <Flex align="center" justify="space-evenly" mt={10}>
-        {isSmallerThan800 ? (
+        {isSmallerThan800
+          ? (
           <><Button
             display={['block', 'block', 'none']}
             alignItems={['left', 'left', 'none']}
@@ -43,7 +42,8 @@ export default function NavBar() {
                 </DrawerBody>
               </DrawerContent>
             </Drawer></>
-        ) : (
+            )
+          : (
           <><NavLogo />
             <NavLinks display={['none', 'none', 'block']}></NavLinks><HStack spacing="10px" display={['none', 'none', 'flex']}>
               <Spacer></Spacer>
@@ -51,8 +51,8 @@ export default function NavBar() {
               <Spacer></Spacer>
               <NavUser></NavUser>
             </HStack></>
-        )}
+            )}
       </Flex >
     </Box >
-  );
+  )
 }

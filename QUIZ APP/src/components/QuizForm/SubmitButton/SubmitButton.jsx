@@ -1,8 +1,7 @@
-import { Button } from "@chakra-ui/react";
-import PropTypes from "prop-types";
+import { Button } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
 
-const SubmitButton = ({func}) => {
-
+const SubmitButton = ({ func }) => {
   return (
     <Button
     w={120}
@@ -11,14 +10,14 @@ const SubmitButton = ({func}) => {
     variant="solid"
     size="md"
     mt={2}
-    background={"blue.400"}
+    background={'blue.400'}
   >
     Submit
   </Button>
-  );
-};
+  )
+}
 
 SubmitButton.propTypes = {
-    func: PropTypes.func,
-  };
-export default SubmitButton;
+  func: PropTypes.func
+}
+export default SubmitButton

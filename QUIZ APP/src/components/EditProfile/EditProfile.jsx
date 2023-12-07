@@ -1,51 +1,43 @@
-
-import { useContext, useState } from 'react';
-import { editUser } from '../../services/users.services';
-//import Button from '../Button/Button';
-import AppContext from '../../context/AuthContext';
+import { useState } from 'react'
+import { editUser } from '../../services/users.services'
 import { SettingsIcon } from '@chakra-ui/icons'
-import { Modal, Text, Box, ModalOverlay, ModalContent, ModalHeader, IconButton, ModalBody, ModalCloseButton, useDisclosure, FormLabel, Input, Textarea, FormControl, Button, } from "@chakra-ui/react"
-import UploadPhoto from '../Uploadphoto/UploadPhoto';
-//import PropTypes from "prop-types";
+import { Modal, Text, Box, ModalOverlay, ModalContent, ModalHeader, IconButton, ModalBody, ModalCloseButton, useDisclosure, Input, Button } from '@chakra-ui/react'
+import UploadPhoto from '../Uploadphoto/UploadPhoto'
+import PropTypes from 'prop-types'
 
-export default function EditProfile({ user, originalFirstName, originalLastName, originalCaption, onEditProfile }) {
+export default function EditProfile ({ user, originalFirstName, originalLastName, originalCaption, onEditProfile }) {
+  const [editedFirstName, setEditedFirstName] = useState(originalFirstName)
+  const [editedLastName, setEditedLastName] = useState(originalLastName)
+  const [editedCaption, setEditedCaption] = useState(originalCaption)
+  const [editedPhoneNumber, setEditedPhoneNumber] = useState('')
+  const { isOpen, onOpen, onClose } = useDisclosure()
 
-    const [editedFirstName, setEditedFirstName] = useState(originalFirstName);
-    const [editedLastName, setEditedLastName] = useState(originalLastName);
-    const [editedCaption, setEditedCaption] = useState(originalCaption)
-    const [editedPhoneNumber, setEditedPhoneNumber] = useState('');
-    // const { userData } = useContext(AppContext);
-    const { isOpen, onOpen, onClose } = useDisclosure();
+  const handleCancel = () => {
+    setEditedFirstName(originalFirstName)
+    setEditedLastName(originalLastName)
+    setEditedCaption(originalCaption)
+    onClose()
+  }
 
+  const handleSubmitEdit = () => {
+    const updatedUserData = {
+      firstName: editedFirstName,
+      lastName: editedLastName,
+      caption: editedCaption,
+      phoneNumber: editedPhoneNumber
+    }
+    onEditProfile(updatedUserData)
+    editUser(user, updatedUserData)
+      .then((updatedUser) => {
 
+      })
+      .catch((error) => {
+        console.error('Error editing user:', error)
+      })
+    onClose()
+  }
 
-    const handleCancel = () => {
-
-        setEditedFirstName(originalFirstName);
-        setEditedLastName(originalLastName);
-        setEditedCaption(originalCaption)
-        onClose();
-    };
-
-    const handleSubmitEdit = () => {
-        const updatedUserData = {
-            firstName: editedFirstName,
-            lastName: editedLastName,
-            caption: editedCaption,
-            phoneNumber: editedPhoneNumber,
-        };
-        onEditProfile(updatedUserData);
-        editUser(user, updatedUserData)
-            .then((updatedUser) => {
-
-            })
-            .catch((error) => {
-                console.error("Error editing user:", error);
-            });
-        onClose();
-    };
-
-    return (
+  return (
         <>
             <IconButton
                 onClick={onOpen}
@@ -62,31 +54,24 @@ export default function EditProfile({ user, originalFirstName, originalLastName,
                         <Input
                             color={'brand.400'}
                             type="text"
-                            placeholder={originalFirstName ? originalFirstName : "Add first name"}
+                            placeholder={originalFirstName || 'Add first name'}
                             value={editedFirstName}
                             onChange={(e) => setEditedFirstName(e.target.value)}
                         />
                         <Input
                             color={'brand.400'}
-                            placeholder={originalLastName ? originalLastName : "Add last name"}
+                            placeholder={originalLastName || 'Add last name'}
                             value={editedLastName}
                             onChange={(e) => setEditedLastName(e.target.value)}
                         />
                         <Input
                             color={'brand.400'}
-                            placeholder={originalCaption ? originalCaption : "Add caption"}
+                            placeholder={originalCaption || 'Add caption'}
                             value={editedCaption}
                             onChange={(e) => setEditedCaption(e.target.value)}
                         />
                         <Text color={'brand.200'} mt={7}> Upload photo:</Text>
                         <UploadPhoto></UploadPhoto>
-                        {/* {userData.isAdmin && (
-                                <Input
-                                    placeholder="Edit Phone Number"
-                                    value={editedPhoneNumber}
-                                    onChange={(e) => setEditedPhoneNumber(e.target.value)}
-                                />
-                            )} */}
                         <Box m={5} align={'center'}>
                             <Button onClick={handleCancel} color={'brand.200'}>Cancel</Button>
                             <Button onClick={handleSubmitEdit} bg={'brand.200'}>Submit</Button>
@@ -94,9 +79,14 @@ export default function EditProfile({ user, originalFirstName, originalLastName,
                     </ModalBody>
                 </ModalContent>
             </Modal>
-
-
-
         </>
-    );
+  )
+}
+
+EditProfile.propTypes = {
+  user: PropTypes.string,
+  originalFirstName: PropTypes.string,
+  originalLastName: PropTypes.string,
+  originalCaption: PropTypes.string,
+  onEditProfile: PropTypes.func
 }

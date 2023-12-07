@@ -1,8 +1,7 @@
-import { RadioGroup, FormLabel, HStack, Text, Radio } from "@chakra-ui/react";
-import PropTypes from "prop-types";
+import { RadioGroup, FormLabel, HStack, Text, Radio } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
 
 const ChooseTypeRadio = ({ setSelectedOption, selectedOption }) => {
-
   return (
     <RadioGroup
       colorScheme="yellow"
@@ -26,7 +25,7 @@ const ChooseTypeRadio = ({ setSelectedOption, selectedOption }) => {
 
 ChooseTypeRadio.propTypes = {
   setSelectedOption: PropTypes.func,
-  selectedOption: PropTypes.string,
-};
+  selectedOption: PropTypes.string
+}
 
 export default ChooseTypeRadio

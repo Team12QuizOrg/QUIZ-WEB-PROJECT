@@ -1,14 +1,12 @@
-
-
-import { Stack, HStack, Text, Heading, Spacer, useBreakpointValue, Box } from '@chakra-ui/react';
-import { MdEmail } from "react-icons/md";
-import { FaHouseUser } from "react-icons/fa";
+import { Stack, HStack, Text, Heading, Spacer, useBreakpointValue, Box } from '@chakra-ui/react'
+import { MdEmail } from 'react-icons/md'
+import { FaHouseUser } from 'react-icons/fa'
+import PropTypes from 'prop-types'
 
 const UserInfo = ({ currentUser }) => {
-    const includeSpacer = useBreakpointValue({ base: false, md: true });
+  const includeSpacer = useBreakpointValue({ base: false, md: true })
 
-
-    return (
+  return (
         <>
 
             <Stack
@@ -37,7 +35,10 @@ const UserInfo = ({ currentUser }) => {
                 </Text>
             )}
         </>
-    );
-};
+  )
+}
+UserInfo.propTypes = {
+  currentUser: PropTypes.object
+}
 
-export default UserInfo;
+export default UserInfo

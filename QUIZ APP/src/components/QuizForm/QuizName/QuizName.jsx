@@ -1,5 +1,5 @@
-import { FormControl, FormLabel, Input } from "@chakra-ui/react";
-import PropTypes from "prop-types";
+import { FormControl, FormLabel, Input } from '@chakra-ui/react'
+import PropTypes from 'prop-types'
 
 const QuizName = ({ quizName, setQuizName }) => {
   return (
@@ -15,16 +15,16 @@ const QuizName = ({ quizName, setQuizName }) => {
         variant="filled"
         focusBorderColor="black"
         size="md"
-        bg="brand.300"
+        bg="grey"
         w={300}
       />
     </FormControl>
-  );
-};
+  )
+}
 
 QuizName.propTypes = {
   quizName: PropTypes.string,
-  setQuizName: PropTypes.func,
-};
+  setQuizName: PropTypes.func
+}
 
-export default QuizName;
+export default QuizName

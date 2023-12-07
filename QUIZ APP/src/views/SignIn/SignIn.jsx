@@ -1,54 +1,56 @@
-import AppContext from "../../context/AuthContext";
-import { useContext, useState } from "react";
-import { loginUser } from "../../services/auth.services";
-import { useNavigate } from "react-router-dom";
+import AppContext from '../../context/AuthContext'
+import { useContext, useState } from 'react'
+import { loginUser } from '../../services/auth.services'
+import { useNavigate } from 'react-router-dom'
 import {
-    Flex, Box, FormControl, FormLabel, Input, Checkbox, Stack, Button, Heading, Text, useColorModeValue,
+  Flex, Box, FormControl, FormLabel, Input, Stack, Button, Heading, Text, useColorModeValue
 } from '@chakra-ui/react'
 
-export default function SignIn() {
-    const [form, setForm] = useState({
-        email: '',
-        password: '',
-    });
-    const { setContext } = useContext(AppContext);
+export default function SignIn () {
+  const [form, setForm] = useState({
+    email: '',
+    password: ''
+  })
+  const { setContext } = useContext(AppContext)
 
-    const navigate = useNavigate();
+  const navigate = useNavigate()
 
-    const updateForm = (field) => (e) => {
-        setForm({
-            ...form,
-            [field]: e.target.value,
-        });
+  const updateForm = (field) => (e) => {
+    setForm({
+      ...form,
+      [field]: e.target.value
+    })
+  }
+
+  const onLogin = () => {
+    if (!form.email) {
+      alert('Email is required')
+      return
+    }
+    if (!form.password && form.password.length < 6) {
+      alert('Password is required and must be at least 6 characters long')
+      return
     }
 
-    const onLogin = () => {
-        if (!form.email) {
-            alert('Email is required');
-            return;
-        }
-        if (!form.password && form.password.length < 6) {
-            alert('Password is required and must be at least 6 characters long');
-            return;
-        }
+    loginUser(form.email, form.password)
+      .then(credential => {
+        setContext({
+          user: credential.user
+        })
+      })
+      .then(() => {
+        navigate('/')
+      })
+      .catch((err) => {
+        alert('Invalid password or email')
+        throw new Error(err)
+      })
+  }
+  const handleReset = () => {
+    navigate('/reset')
+  }
 
-        loginUser(form.email, form.password)
-            .then(credential => {
-                setContext({
-                    user: credential.user
-                });
-            })
-            .then(() => {
-                navigate('/');
-            })
-            .catch((err) => alert('Invalid password or email'));
-    }
-    const handleReset = () => {
-        navigate("/reset")
-    }
-
-
-    return (
+  return (
         <Flex
             minH={'100vh'}
             align={'center'}
@@ -92,8 +94,8 @@ export default function SignIn() {
                                 bgGradient="linear(to-r, red.400,pink.400)"
                                 color={'white'}
                                 _hover={{
-                                    bgGradient: 'linear(to-r, red.400,pink.400)',
-                                    boxShadow: 'xl',
+                                  bgGradient: 'linear(to-r, red.400,pink.400)',
+                                  boxShadow: 'xl'
                                 }}>
                                 Sign in
                             </Button>
@@ -102,5 +104,5 @@ export default function SignIn() {
                 </Box>
             </Stack>
         </Flex>
-    );
+  )
 }

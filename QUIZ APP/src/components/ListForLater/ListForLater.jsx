@@ -1,10 +1,11 @@
-import { HStack, Heading, } from '@chakra-ui/react';
-import { AiOutlineFieldTime } from "react-icons/ai";
-import { useNavigate } from 'react-router-dom';
+import { HStack, Heading } from '@chakra-ui/react'
+import { AiOutlineFieldTime } from 'react-icons/ai'
+import { useNavigate } from 'react-router-dom'
+import PropTypes from 'prop-types'
 
 const ListForLater = ({ quizzes }) => {
-    const navigate = useNavigate()
-    return (
+  const navigate = useNavigate()
+  return (
         <>
             {quizzes && Object.entries(quizzes).map(([title, id]) => (
 
@@ -19,7 +20,9 @@ const ListForLater = ({ quizzes }) => {
             }
 
         </>
-    );
-};
-
-export default ListForLater;
+  )
+}
+ListForLater.propTypes = {
+  quizzes: PropTypes.object
+}
+export default ListForLater

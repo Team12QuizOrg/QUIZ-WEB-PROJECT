@@ -1,11 +1,9 @@
-import { useState } from "react";
-import { CategoryQuizzes } from "../../components/CategoryQuizzes/CategoryQuizzes";
+import { CategoryQuizzes } from '../../components/CategoryQuizzes/CategoryQuizzes'
 
 export const AllCategoriesPage = () => {
-    
-    return (
+  return (
         <div>
             <div><CategoryQuizzes/></div>
         </div>
-    );
+  )
 }

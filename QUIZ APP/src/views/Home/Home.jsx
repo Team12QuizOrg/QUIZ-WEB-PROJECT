@@ -1,18 +1,16 @@
-import HomeButtons from "../../components/HomeButtons/HomeButtons";
-import ListFeedback from "../../components/ListFeedback/ListFeedback";
-import SliderHome from "../../components/Slider/Slider";
-import SignUp from "../SignUp/SignUp";
+import HomeButtons from '../../components/HomeButtons/HomeButtons'
+import ListFeedback from '../../components/ListFeedback/ListFeedback'
+import SliderHome from '../../components/Slider/Slider'
+import SignUp from '../SignUp/SignUp'
 
 const Home = () => {
-    return (
+  return (
         <>
             <SliderHome />
             <HomeButtons />
             <ListFeedback />
             <SignUp />
         </>
-
-
-    )
+  )
 }
-export default Home;
+export default Home
