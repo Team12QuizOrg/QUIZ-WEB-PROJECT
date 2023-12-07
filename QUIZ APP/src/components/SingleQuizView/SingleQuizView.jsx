@@ -1,7 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getAllQuizzes, removePost, getQuizById, addParticipant, changeState } from '../../services/quiz.services'
-import { Box, Button, Heading, Card, CardHeader, Flex, Avatar, Checkbox, CardBody, CardFooter, Text, Grid, GridItem, Center, HStack, Spacer } from '@chakra-ui/react'
+import { Box,Icon, Button, Heading, Card, CardHeader, Flex, Avatar, Checkbox, CardBody, CardFooter, Text, Grid, GridItem, Center, HStack, Spacer } from '@chakra-ui/react'
 import AppContext from '../../context/AuthContext'
 import { addQuizForLater, getUserByHandle, removeQuizForLater, formatDate } from '../../services/users.services'
 import { StarIcon } from '@chakra-ui/icons'
@@ -10,6 +10,8 @@ import AllQuizzes from '../AllQuizzes/AllQuizzes'
 import { areMembersOfSameGroup } from '../../services/groups.services'
 import InviteStudents from '../InvitedStudents/InvitedStudents'
 import { SingleQuizButtons } from './SingleQuizButtons/SingleQuizButtons'
+import { InfoIcon, CalendarIcon, TimeIcon, QuestionIcon, CheckIcon } from '@chakra-ui/icons'
+
 const SingleQuizView = () => {
   const { userData } = useContext(AppContext)
   const { id } = useParams()
@@ -135,18 +137,15 @@ const SingleQuizView = () => {
       <GridItem as="main" colSpan={{ base: 6, lg: 4, xl: 4 }}
         p="40px">
         <Center >
-          <Card maxW='2xl' width={'70%'}>
-            <CardHeader>
-            <Heading textAlign={'center'} margin={'10px'} size='md'>{quiz && quiz.title}</Heading>
+          <Card border={'1px solid'} borderColor={'brand.200'} maxW='2xl' width={'70%'}>
+            <CardHeader >
+              <Heading textAlign={'center'} margin={'10px'} size='md'>{quiz && quiz.title}</Heading>
               <Flex spacing='4'>
                 <Flex flex='1' gap='4' alignItems='center' justify={'center'} flexWrap='wrap'>
                   <Avatar src={quizAuthor} width={70} height={70} />
                 </Flex>
               </Flex>
             </CardHeader>
-            <Checkbox ml={'20px'} isChecked={isChecked} onChange={handleCheckboxChange}>
-              Add  quiz for later
-            </Checkbox>
             <CardBody align={'left'}>
               <HStack>
                 <Heading textAlign="start" fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}>
@@ -154,22 +153,29 @@ const SingleQuizView = () => {
                 </Heading>
                 <br></br>
                 <Spacer />
+                <Checkbox ml={'20px'} isChecked={isChecked} onChange={handleCheckboxChange}>
+                    Add  quiz for later
+                  </Checkbox>
               </HStack>
               {currentUser?.caption && (
-                <Text textAlign="start">{currentUser.caption}</Text>
+                <Text color={'brand.200'} textAlign="start">{currentUser.caption}</Text>
               )}
               {quiz && (
-                <>
+                <Box >
+                  <Text align={'center'}>
+                  <InfoIcon margin={1}>Quiz Information</InfoIcon>
+                  Quiz Information
+                  </Text>
                   <br></br>
-                  <Text>Category: {quiz.category}</Text>
+                  <Text color={'orange.500'}>Category: {quiz.category}</Text>
                   <br></br>
-                  <Text>Total Points: {quiz.totalPoints * quiz.numQuestions}</Text>
+                  <Text><QuestionIcon margin={1}></QuestionIcon>Number of Questions: {quiz.numQuestions}</Text>
                   <br></br>
-                  <Text>Number of Questions: {quiz.numQuestions}</Text>
+                  <Text><CheckIcon margin={1}></CheckIcon>Total Points: {quiz.totalPoints * quiz.numQuestions}</Text>
                   <br></br>
-                  <Text>Available till: {formatDate(quiz.endTime)}</Text>
+                  <Text><CalendarIcon margin={1}></CalendarIcon>Available till: {formatDate(quiz.endTime)}</Text>
                   <br></br>
-                  <Text>Time to solve the quiz: {quiz.timer} min/hours</Text>
+                  <Text><TimeIcon margin={1}></TimeIcon>Time to solve the quiz: {quiz.timer} min/hours</Text>
                   <br></br>
                   {userData && userData.userType !== 'student' && (
                     <HStack width={'50%'} textAlign={'center'}>
@@ -177,7 +183,7 @@ const SingleQuizView = () => {
                     </HStack>
                   )}
                   <SingleQuizButtons isPrivate={quiz.selectedOption} handleQuizClick={handleQuizClick} handleDelete={handleDelete} quiz={quiz} hasInvite={userData && userData.handle} user={userData}></SingleQuizButtons>
-                </>
+                </Box>
               )}
               {userData && quiz && userData.handle === quiz.author &&
                 <CardFooter
@@ -200,16 +206,16 @@ const SingleQuizView = () => {
 
       <GridItem as="aside" colSpan={{ base: 6, lg: 2, xl: 2 }}
         minHeight={{ lg: '100%' }} p={{ base: '20px', lg: '30px' }} mt={2} >
-        <Card mb={10}>
+        <Card border={'1px solid'} borderColor={'brand.200'} mb={10}>
           <CardHeader>
             <Heading display="flex" alignItems="center" justifyContent="center" size='md' color={'brand.200'}>SCORE BOARD</Heading>
           </CardHeader>
           <HStack align="center" mt={5}>
-            <Heading ml={'6'}size='xs' textTransform='uppercase' color={'brand.200'}>
+            <Heading ml={'6'} size='xs' textTransform='uppercase' color={'brand.200'}>
               user
             </Heading>
             <Spacer></Spacer>
-            <Heading mr={'5'}size='xs' textTransform='uppercase' color={'brand.200'} >
+            <Heading mr={'5'} size='xs' textTransform='uppercase' color={'brand.200'} >
               points
             </Heading>
           </HStack>

@@ -1,5 +1,6 @@
-import { Text, Button, Flex } from '@chakra-ui/react'
+import { Text, Button, Flex, HStack } from '@chakra-ui/react'
 import { DeleteIcon } from '@chakra-ui/icons'
+import { MdOutlineTimerOff } from "react-icons/md";
 import PropTypes from 'prop-types'
 export const SingleQuizButtons = ({ isPrivate, handleQuizClick, handleDelete, quiz, hasInvite, user }) => {
   return (
@@ -19,7 +20,10 @@ export const SingleQuizButtons = ({ isPrivate, handleQuizClick, handleDelete, qu
                   )
             )
           : (
-          <Text>You missed the deadline</Text>
+            <HStack>
+              <MdOutlineTimerOff ></MdOutlineTimerOff>
+              <Text>You missed the deadline</Text>
+            </HStack>
             )}
 
         {user && quiz && (user.isAdmin || user.handle === quiz.author) && (
