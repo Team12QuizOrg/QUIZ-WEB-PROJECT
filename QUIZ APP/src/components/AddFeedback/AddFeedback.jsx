@@ -43,7 +43,6 @@ const AddFeedback = () => {
                                     <FormControl>
                                         <FormLabel>Add your feedback here...</FormLabel>
                                         <Textarea
-                                            color={'brand.400'}
                                             type="text"
                                             placeholder="If you want to share your experience or have any recommendations ... feel free to do it here! "
                                             value={feedback}
