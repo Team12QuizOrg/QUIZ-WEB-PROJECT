@@ -26,13 +26,13 @@ export default function NavUser () {
             {user === null && (
                 <>
                     <AddButton
-                        bg={'pink'}
+                        bg={'brand.100'}
                         onClick={() => navigate('/signin')}
                     >
                         Sign In
                     </AddButton>
                     <AddButton
-                        bg={'blue.400'}
+                        bg={'brand.200'}
                         onClick={() => navigate('/signup')}
                     >
                         Sign Up

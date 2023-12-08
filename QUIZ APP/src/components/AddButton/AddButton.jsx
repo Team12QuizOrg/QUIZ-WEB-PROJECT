@@ -6,8 +6,7 @@ const CustomButton = ({ children, ...props }) => {
         <Button
             css={`
             
-            box-shadow: 2px 2px #ffe00b, 4px 4px #151515;
-            color: #151515;
+           
             text-transform: lowercase;
             border: solid 2px #151515;
             text-decoration: none;
@@ -59,3 +58,6 @@ CustomButton.propTypes = {
   props: PropTypes.func
 }
 export default CustomButton
+
+// box-shadow: 1px 1px #ffe00b, 2px 2px #151515;
+//color: #151515;

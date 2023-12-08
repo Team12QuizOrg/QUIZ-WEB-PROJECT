@@ -1,7 +1,8 @@
 import { useState, useContext } from 'react'
 import AppContext from '../../context/AuthContext'
+import AddButton from '../AddButton/AddButton'
 import {
-  Modal, Input, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure,
+  Modal, Input, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, Box,
   FormLabel,
   FormControl,
   Button
@@ -69,9 +70,11 @@ const CreateGroup = () => {
                   cols={15}
                 />
               </FormControl>
-              <Button type="submit" onMouseLeave={onClose}>
+              <Box align={'center'}>
+              <AddButton type="submit" onMouseLeave={onClose} bg={'brand.200'} mt={2}>
                 Submit
-              </Button>
+              </AddButton>
+              </Box>
             </form>
           </ModalBody>
         </ModalContent>

@@ -1,30 +1,11 @@
 import { useContext, useState } from 'react'
-import './SignUp.css'
 import AppContext from '../../context/AuthContext'
 import { createUserHandle, getUserByHandle } from '../../services/users.services'
 import { registerUser } from '../../services/auth.services'
 import { useNavigate } from 'react-router-dom'
 import codes from '../../codes/codes'
 import { MAX_NAME_LENGTH, MAX_USERNAME_LENGTH, MIN_NAME_LENGTH, MIN_PASSWORD_LENGTH, MIN_USERNAME_LENGTH, PHONE_NUMBER_LENGTH } from '../../common/constants'
-import {
-  Box,
-  Flex,
-  Stack,
-  Heading,
-  Text,
-  Container,
-  Input,
-  Button,
-  SimpleGrid,
-  Avatar,
-  AvatarGroup,
-  useBreakpointValue,
-  Select,
-  FormControl,
-  InputGroup,
-  InputRightElement
-
-} from '@chakra-ui/react'
+import {Box,Flex, Stack,Heading,Text,Container,Input,Button,SimpleGrid,Avatar,AvatarGroup,useBreakpointValue,Select,FormControl, InputGroup,InputRightElement} from '@chakra-ui/react'
 import { ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
 
 const avatars = [
@@ -120,7 +101,7 @@ export default function JoinOurTeam () {
       alert('Last Name is required and must be between 1 and 30 characters')
     }
 
-    if (!form.phone || form.phone.length !== PHONE_NUMBER_LENGTH) {
+    if (form.phone || form.phone.length !== PHONE_NUMBER_LENGTH) {
       alert('Phone number is required and must be 10 characters')
     }
 
@@ -160,8 +141,9 @@ export default function JoinOurTeam () {
                 columns={{ base: 1, md: 2 }}
                 spacing={{ base: 10, lg: 32 }}
                 py={{ base: 10, sm: 20, lg: 32 }}>
-                <Stack spacing={{ base: 10, md: 20 }}>
-                    <Heading
+                <Stack spacing={{ base: 10, md: 20 }} >
+                    <Heading align={'center'} justify={'center'}
+          justifySelf={'center'}
                         lineHeight={1.1}
                         fontSize={{ base: '3xl', sm: '4xl', md: '5xl', lg: '6xl' }}
                         color={'brand.200'}>

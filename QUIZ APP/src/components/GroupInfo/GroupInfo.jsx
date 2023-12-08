@@ -1,6 +1,7 @@
 import { useState, useEffect, useContext } from 'react'
 import AppContext from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
+import AddButton from '../AddButton/AddButton.jsx'
 import {
   VStack,
   Grid,
@@ -182,21 +183,15 @@ const GroupInfo = ({ isOpen, onClose, selectedGroup }) => {
                   groupId={groupId}
                   currentMembers={groupMembers}
                 ></AddGroupMember>
-                <Button
-                  style={{
-                    border: '2px solid grey',
-                    borderRadius: '10px',
-                    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-                  }}
-                  w="100%"
-                  size="sm"
-                  _hover={{ bg: '#427575' }}
-                  mt="10px"
+                <AddButton
+                 
+                
+                  mt={5}
                   type="button"
                   onClick={handleDeleteGroup}
                 >
                   Delete Group
-                </Button>
+                </AddButton>
               </Box>
             )}
           </ModalBody>

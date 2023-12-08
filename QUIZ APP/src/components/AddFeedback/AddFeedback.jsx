@@ -1,8 +1,8 @@
 import { useState, useContext } from 'react'
 import AppContext from '../../context/AuthContext'
 import { addFeedback } from '../../services/feedback.services'
-import { Modal, ModalOverlay, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, FormLabel, Textarea, FormControl, Button } from '@chakra-ui/react'
-
+import { Modal, ModalOverlay, Box, ModalContent, ModalHeader, ModalBody, ModalCloseButton, useDisclosure, FormLabel, Textarea, FormControl, Button } from '@chakra-ui/react'
+import AddButton from '../AddButton/AddButton.jsx'
 const AddFeedback = () => {
   const { isOpen, onOpen, onClose } = useDisclosure()
   const [feedback, setFeedback] = useState('')
@@ -32,8 +32,10 @@ const AddFeedback = () => {
                 <p className="blocked-user-message">User is blocked and cannot comment.</p>
                 )
               : (
-                <>
-                    <Button bg={'brand.200'} mr={3} onClick={handleOpen}> Give us Feedback </Button>
+                <><Box align={'center'} justify={'center'}
+                justifySelf={'center'}>
+                    <AddButton bg={'brand.200'} mr={3} onClick={handleOpen}> Give us Feedback </AddButton>
+                    </Box>
                     <Modal isOpen={isOpen} onClose={onClose}>
                         <ModalOverlay />
                         <ModalContent>
@@ -52,9 +54,9 @@ const AddFeedback = () => {
                                             cols={15}
                                         />
                                     </FormControl>
-                                    <Button type="submit" >
+                                    <AddButton type="submit" bg={'brand.100'}>
                                         Submit
-                                    </Button>
+                                    </AddButton>
                                 </form>
                             </ModalBody>
                         </ModalContent>

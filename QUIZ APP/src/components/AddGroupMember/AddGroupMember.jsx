@@ -1,10 +1,11 @@
 import SearchBar from '../SearchBar/SearchBar'
-import { HStack, Spacer, Popover, PopoverTrigger, PopoverHeader, PopoverContent, Button, useToast } from '@chakra-ui/react'
+import { HStack, Spacer, Popover, PopoverTrigger, PopoverHeader,IconButton, PopoverContent, Button, useToast } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
 import { getAllUserData } from '../../services/users.services'
 import { addGroupMember } from '../../services/groups.services'
 import { MdOutlineGroupAdd } from 'react-icons/md'
 import PropTypes from 'prop-types'
+import { SearchIcon } from '@chakra-ui/icons'
 
 export default function AddGroupMember ({ group, groupId }) {
   const [searchResults, setSearchResults] = useState(null)
@@ -36,7 +37,7 @@ export default function AddGroupMember ({ group, groupId }) {
   }
 
   return (
-    <>
+    <HStack mt={2}>
       <SearchBar
         searchingFor={users}
         onSearchResults={handleSearchResults}
@@ -44,10 +45,10 @@ export default function AddGroupMember ({ group, groupId }) {
       />
       <Popover onClose={() => setSearchResults(null)}>
         <PopoverTrigger>
-          <Button>Search</Button>
+          <IconButton size={['md', 'md', 'md']} variant='outline' icon={<SearchIcon />} />
         </PopoverTrigger>
         {searchResults && searchResults.length > 0 && (
-          <PopoverContent>
+          <PopoverContent align={'end'}>
             {searchResults.map((user) => (
               <HStack
                 key={user.id}
@@ -67,7 +68,7 @@ export default function AddGroupMember ({ group, groupId }) {
           </PopoverContent>
         )}
       </Popover>
-    </>
+    </HStack>
   )
 }
 
