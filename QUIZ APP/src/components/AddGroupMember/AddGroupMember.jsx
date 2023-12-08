@@ -70,6 +70,7 @@ export default function AddGroupMember ({ group, groupId }) {
     </>
   )
 }
+
 AddGroupMember.propTypes = {
   group: PropTypes.string,
   groupId: PropTypes.string
