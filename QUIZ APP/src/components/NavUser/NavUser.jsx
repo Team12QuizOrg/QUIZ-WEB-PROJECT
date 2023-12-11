@@ -98,6 +98,25 @@ export default function NavUser () {
                                         <MenuDivider />
                                     </>
                                 )}
+                                 {userData && userData.userType === 'teacher' && (
+                                    <>
+                                        <MenuItem
+
+                                            onClick={() => navigate('/adminPanel')}
+                                            color={'brand.200'}
+                                            fontWeight={'bold'}
+                                            _hover={{
+                                              textDecoration: 'none',
+                                              color: 'brand.100',
+                                              bg: 'brand.200'
+                                            }}
+                                        >
+                                            <PiHardDrives />
+                                            Users search panel
+                                        </MenuItem>
+                                        <MenuDivider />
+                                    </>
+                                )}
                                 <MenuItem
                                     onClick={onLogout}
                                     color={'brand.200'}
