@@ -14,8 +14,7 @@ const ChooseTotalPoints = ({ totalPoints, func }) => {
         onChange={func}
         variant="filled"
         focusBorderColor="black"
-        borderColor={'brand.200'}
-        bg="#718096"
+        bg="grey"
         placeholder="Min: 5"
       />
     </FormControl>
