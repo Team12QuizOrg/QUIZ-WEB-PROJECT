@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
 import { upload } from '../../services/photo.services'
 import AppContext from '../../context/AuthContext'
-import { Input, Button, useToast } from '@chakra-ui/react'
+import { Input, Button, useToast, Tooltip } from '@chakra-ui/react'
 
 const UploadPhoto = () => {
   const { userData } = useContext(AppContext)
@@ -28,15 +28,17 @@ const UploadPhoto = () => {
 
   return (
     <>
+     <Tooltip label={`Choose photo from your files & Press Upload`} fontSize="md">
       <Input
         type="file"
         onChange={handleChange}
         placeholder="Min: 5"
-        color={'brand.400'}
+
         border={'1px'}
         borderColor={'brand.400'}
       />
-      <Button disabled={loading || !photo} onClick={handleClick} color="black">
+      </Tooltip>
+      <Button disabled={loading || !photo} onClick={handleClick} >
         Upload
       </Button>
     </>

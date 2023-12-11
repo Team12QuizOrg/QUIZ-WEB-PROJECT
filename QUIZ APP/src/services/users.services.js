@@ -91,9 +91,9 @@ export const makeEducator = (handle) => {
     })
 }
 
-export const editUser = (handle, { firstName, lastName, caption, phoneNumber }) => {
+export const editUser = (handle, { firstName, lastName, caption, phone }) => {
   const userRef = ref(db, `/users/${handle}`)
-  if (phoneNumber.length < 10 && phoneNumber.length > 10) {
+  if (phone.length < 10 && phone.length > 10) {
     alert('Invalid phone number')
     return
   }
@@ -102,7 +102,7 @@ export const editUser = (handle, { firstName, lastName, caption, phoneNumber }) 
     firstName,
     lastName,
     caption,
-    phoneNumber
+    phone
   })
     .then(() => {})
     .catch((error) => {
