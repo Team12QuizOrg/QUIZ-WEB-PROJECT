@@ -54,7 +54,7 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
     <Box
     >
       <div>
-        <Text margin={'20px'} fontSize="xl" fontWeight="bold" mb={4} align={'left'} onClick={() => navigate(`/quizzes/AllQuizzes/Category/${catName}`)}>
+        <Text margin={'90px'} fontSize="xl" fontWeight="bold" mb={4} align={'left'} onClick={() => navigate(`/quizzes/AllQuizzes/Category/${catName}`)}>
           {catName}
         </Text>
         {currentQuizzes && (
@@ -64,12 +64,12 @@ const AllQuizzes = ({ quizzes, catName, category }) => {
                 <Box
                   maxW={'250px'}
                   w={'full'}
-
                   bg={colorMode === 'dark' ? 'blue.700' : 'white.200'}
                   boxShadow={'2xl'}
                   rounded={'md'}
                   overflow={'hidden'}
-                  
+                  border={'1px'}
+                  borderColor={'brand.200'}
                 >
                   <Stack textAlign={'center'} p={6} color={'black'} align={'center'}>
                     <Text fontSize={'xs'} fontWeight={500} bg={'green.50'} p={2} px={3} color={'green.500'} rounded={'full'}>

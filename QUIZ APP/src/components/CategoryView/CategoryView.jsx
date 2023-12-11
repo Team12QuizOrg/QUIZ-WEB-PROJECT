@@ -7,7 +7,7 @@ import { feedbackFormatDate } from '../../services/feedback.services'
 import { ChevronRightIcon } from '@chakra-ui/icons'
 import AppContext from '../../context/AuthContext'
 import { declineInvitation, acceptingInvitation } from '../../services/users.services'
-
+import { SimpleGrid } from '@chakra-ui/react'
 export const CategoryView = () => {
   const { userData } = useContext(AppContext)
   const [quizzes, setQuizzes] = useState()
@@ -66,9 +66,9 @@ export const CategoryView = () => {
 
   return (
     quizzes && (
-            <Flex mt={20} wrap="wrap" justify="center" flexDirection="row">
-                {Object.entries(quizzes).map(([quizId, quizData]) => (
-                    <Center padding={'10px'} py={6} key={console.log(quizId)}>
+      <SimpleGrid columns={[1, 2, 3, 4, 5]} spacing={4} mt={20} justifyContent="center">
+                {Object.entries(quizzes).map(([quizId, quizData], index) => (
+                    <Center padding={'10px'} py={6} key={quizId}>
                         <Box
                             maxW={'250px'}
                             w={'full'}
@@ -76,6 +76,8 @@ export const CategoryView = () => {
                             boxShadow={'2xl'}
                             rounded={'md'}
                             overflow={'hidden'}
+                            border={'1px'}
+                            borderColor={'brand.200'}
                         >
                             <Stack textAlign={'center'} p={6} color={'black'} align={'center'}>
                             <Text fontSize={'xs'} fontWeight={500} bg={'green.50'} p={2} px={3} color={'green.500'} rounded={'full'}>
@@ -149,7 +151,7 @@ export const CategoryView = () => {
                     </Center>
                 ))}
                 {(!quizzes || quizzes.length === 0) && <Text align={'center'}>No {cat}</Text>}
-            </Flex>
+                </SimpleGrid>
     )
   )
 }
