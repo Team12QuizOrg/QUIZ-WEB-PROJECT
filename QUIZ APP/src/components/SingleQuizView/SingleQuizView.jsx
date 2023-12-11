@@ -1,16 +1,15 @@
 import { useContext, useEffect, useState } from 'react'
 import { useParams, useNavigate } from 'react-router-dom'
 import { getAllQuizzes, removePost, getQuizById, addParticipant, changeState } from '../../services/quiz.services'
-import { Box,Icon, Button, Heading, Card, CardHeader, Flex, Avatar, Checkbox, CardBody, CardFooter, Text, Grid, GridItem, Center, HStack, Spacer } from '@chakra-ui/react'
+import { Box, Icon, Button, Heading, Card, CardHeader, Flex, Avatar, Checkbox, CardBody, CardFooter, Text, Grid, GridItem, Center, HStack, Spacer } from '@chakra-ui/react'
 import AppContext from '../../context/AuthContext'
 import { addQuizForLater, getUserByHandle, removeQuizForLater, formatDate } from '../../services/users.services'
-import { StarIcon } from '@chakra-ui/icons'
+import { StarIcon, InfoIcon, CalendarIcon, TimeIcon, QuestionIcon, CheckIcon } from '@chakra-ui/icons'
 import GetAvatar from '../GetAvatar/GetAvatar'
 import AllQuizzes from '../AllQuizzes/AllQuizzes'
 import { areMembersOfSameGroup } from '../../services/groups.services'
 import InviteStudents from '../InvitedStudents/InvitedStudents'
 import { SingleQuizButtons } from './SingleQuizButtons/SingleQuizButtons'
-import { InfoIcon, CalendarIcon, TimeIcon, QuestionIcon, CheckIcon } from '@chakra-ui/icons'
 
 const SingleQuizView = () => {
   const { userData } = useContext(AppContext)
@@ -177,7 +176,7 @@ const SingleQuizView = () => {
                   <br></br>
                   <Text><TimeIcon margin={1}></TimeIcon>Time to solve the quiz: {quiz.timer} min/hours</Text>
                   <br></br>
-                  {userData && userData.userType !== 'student' && (
+                  {userData && quiz.state !== 'too late' && userData.userType !== 'student' && (
                     <HStack width={'50%'} textAlign={'center'}>
                       <InviteStudents quizId={quiz.id} />
                     </HStack>
