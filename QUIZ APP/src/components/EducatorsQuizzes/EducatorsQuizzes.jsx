@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react'
 import { Spinner, Text, Tooltip, Box, Button } from '@chakra-ui/react'
-import { CheckCircleIcon, UnlockIcon, LockIcon } from '@chakra-ui/icons'
+import { SiLevelsdotfyi } from "react-icons/si"
 import { getEducatorsQuizzes } from '../../services/quiz.services'
 import ListQuizzes from '../ListQuizzes/ListQuizzes'
 import PropTypes from 'prop-types'
@@ -49,8 +49,8 @@ const EducatorsQuizzes = ({ user }) => {
           <ListQuizzes user={user} quizzes={currentQuizzes} name={'On going'} />
 
           <ListQuizzes user={user} quizzes={finishedQuizzes} name={'Finished'} />
-          <Tooltip label={`${user.handle}'s Rank `} fontSize="md">
-            <Button color={'brand.200'} flex='1' variant='ghost' leftIcon={<CheckCircleIcon />}>
+          <Tooltip label={`${user.handle}'s creating Rank `} fontSize="md">
+            <Button color={'brand.200'} flex='1' variant='ghost' leftIcon={<SiLevelsdotfyi />}>
               {quizState.length < 10 && 'Novice'}
               {quizState.length >= 10 && quizState.length <= 20 && 'Experienced'}
               {quizState.length > 21 && 'Master'}

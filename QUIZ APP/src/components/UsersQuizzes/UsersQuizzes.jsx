@@ -49,7 +49,7 @@ const UsersQuizzes = ({ user }) => {
           <ListQuizzes user={user} quizzes={currentQuizzes} name={'Currently participating'} />
 
           <ListQuizzes user={user} quizzes={finishedQuizzes} name={'Participated'} />
-          <Tooltip label={`${user.handle}'s Rank`} fontSize="md">
+          <Tooltip label={`${user.handle}'s solving Rank`} fontSize="md">
             <Button color={'brand.200'} flex='1' variant='ghost' leftIcon={<CheckCircleIcon />}>
               {quizState.length < 10 && 'Beginner'}
               {quizState.length >= 10 && quizState.length <= 20 && 'Intermediate'}

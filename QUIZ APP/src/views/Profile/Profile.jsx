@@ -75,7 +75,7 @@ const Profile = () => {
                                 <Button size='md' bg={'brand.200'} fontSize={['xl', 'lg', '2xl']} style={{
                                   borderRadius: '10px',
                                   boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-                                }} color='white' leftIcon={currentUser.userType === 'teacher' ? (<FaChalkboardTeacher />) : (<PiStudentFill />)}>{currentUser.handle}</Button>
+                                }} leftIcon={currentUser.userType === 'teacher' ? (<FaChalkboardTeacher />) : (<PiStudentFill />)}>{currentUser.handle}</Button>
                                 <CardHeader>
 
                                     <Flex spacing='4'>
@@ -119,6 +119,21 @@ const Profile = () => {
                                     )}
                                 </CardFooter>
                             </Card>
+
+                            </Center>
+                        <Center>
+
+                        {currentUser.userType === 'teacher' && (
+                            <Card m={10} >
+
+                                <CardHeader>
+                                    <Heading size='md' color={'brand.200'}>SOLVED QUIZZES</Heading>
+                                </CardHeader>
+                                <CardBody ml={10}>
+                                <UsersQuizzes user={currentUser} />
+                                </CardBody>
+                            </Card>
+                        )}
                         </Center>
                     </GridItem>
 
