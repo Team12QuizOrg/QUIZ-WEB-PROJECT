@@ -11,6 +11,7 @@ const Quizzes = ({ isLogged }) => {
   const [mostPopular, setMostPopular] = useState()
   const [participatedQuizzes, setParticipatedQuizzes] = useState()
   const [activeQuizzes, setActiveQuizzes] = useState()
+  const [privateQuizzes, setPrivateQuizzes] = useState();
 
   useEffect(() => {
     getAllQuizzes()
@@ -33,7 +34,9 @@ const Quizzes = ({ isLogged }) => {
 
         const filterParticipatedQuizzes = res.filter((quiz) => quiz.participants && Object.keys(quiz.participants).length > 0)
         setParticipatedQuizzes(filterParticipatedQuizzes || [])
-        // Add more filtered quizzes
+
+        const filterPrivateQuizzes = res.filter((quiz) => quiz.selectedOption && quiz.selectedOption === 'Private' && quiz.state === 'ongoing')
+        setPrivateQuizzes(filterPrivateQuizzes);
       })
       .catch((error) => {
         console.error('Error fetching quizzes:', error)
@@ -55,6 +58,15 @@ const Quizzes = ({ isLogged }) => {
           <AllQuizzes quizzes={activeQuizzes} catName={'Ongoing Quizzes'} />
             )
           : null}
+      </Box>
+      <Box mb="50px">
+        {isLogged
+          ? (
+          <AllQuizzes quizzes={privateQuizzes} catName={'Private Quizzes'} />
+            )
+          : (
+              null
+            )}
       </Box>
       <Box mb="50px">
         {isLogged

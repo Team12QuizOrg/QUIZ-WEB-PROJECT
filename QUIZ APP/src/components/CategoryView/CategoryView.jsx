@@ -1,75 +1,76 @@
-import { useContext, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom"
-import { getAllQuizzes } from "../../services/quiz.services";
-import { MIN_LENGTH_CAT } from "../../common/constants";
-import { Center, Box, Flex, Stack, Text, Tooltip, List, ListItem, ListIcon, Button, useColorMode } from "@chakra-ui/react";
-import { feedbackFormatDate } from "../../services/feedback.services";
-import { ChevronRightIcon } from "@chakra-ui/icons";
-import AppContext from "../../context/AuthContext";
-import {declineInvitation, acceptingInvitation } from "../../services/users.services";
+import { useContext, useEffect, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom'
+import { getAllQuizzes } from '../../services/quiz.services'
+import { MIN_LENGTH_CAT } from '../../common/constants'
+import { Center, Box, Flex, Stack, Text, Tooltip, List, ListItem, ListIcon, Button, useColorMode } from '@chakra-ui/react'
+import { feedbackFormatDate } from '../../services/feedback.services'
+import { ChevronRightIcon } from '@chakra-ui/icons'
+import AppContext from '../../context/AuthContext'
+import { declineInvitation, acceptingInvitation } from '../../services/users.services'
 
 export const CategoryView = () => {
-    const {userData} = useContext(AppContext);
-    const [quizzes, setQuizzes] = useState();
-    const { cat } = useParams();
-    const getFirstCat = cat.split(" ");
-    const result1 = getFirstCat[0].toLowerCase();
-    const keyword = "for ";
-    const getCatName = cat.split(keyword);
-    const result2 = getCatName[1];
-    const [currentUser, setCurrentUser] = useState()
-    const navigate = useNavigate();
-    const { colorMode } = useColorMode();
+  const { userData } = useContext(AppContext)
+  const [quizzes, setQuizzes] = useState()
+  const { cat } = useParams()
+  const getFirstCat = cat.split(' ')
+  const result1 = getFirstCat[0].toLowerCase()
+  const keyword = 'for '
+  const getCatName = cat.split(keyword)
+  const result2 = getCatName[1]
+  const [currentUser, setCurrentUser] = useState()
+  const navigate = useNavigate()
+  const { colorMode } = useColorMode()
 
-    useEffect(() => {
-        if (userData) {
-          setCurrentUser(userData.handle)
+  useEffect(() => {
+    if (userData) {
+      setCurrentUser(userData.handle)
+    }
+  }, [])
+  useEffect(() => {
+    getAllQuizzes()
+      .then((res) => {
+        if (cat.length < MIN_LENGTH_CAT) {
+          if (result1 === 'ongoing') {
+            const filteredQuizzes = res.filter((quiz) => quiz && quiz.state == result1)
+            setQuizzes(filteredQuizzes)
+          } else if (result1 === 'active') {
+            const filterParticipatedQuizzes = res.filter((quiz) => quiz.participants && Object.keys(quiz.participants).length > 0)
+            setQuizzes(filterParticipatedQuizzes || [])
+          } else if (result1 === 'popular') {
+            const filteredPopularQuizzes = res.filter((quiz) => quiz.scoreBoards && Object.keys(quiz.scoreBoards).length > 0)
+            const sortedPopularQuizzes = filteredPopularQuizzes.sort(
+              (quizA, quizB) => quizA.scoreBoards && quizB.scoreBoards && Object.keys(quizB.scoreBoards).length - Object.keys(quizA.scoreBoards).length
+            )
+            const topPopularQuizzes = sortedPopularQuizzes.slice(0, 5)
+            setQuizzes(topPopularQuizzes || [])
+          } else if (result1 === 'all') {
+            setQuizzes(res)
+          } else if (result1 === 'private') {
+            setQuizzes(res)
+          }
+        } else {
+          const filteredQuizzes = res.filter((quiz) => quiz && quiz.category === result2)
+          setQuizzes(filteredQuizzes)
         }
-      }, [])
-    useEffect(() => {
-        getAllQuizzes()
-            .then((res) => {
-                if (cat.length < MIN_LENGTH_CAT) {
-                    if (result1 === "ongoing") {
-                        const filteredQuizzes = res.filter((quiz) => quiz && quiz.state == result1);
-                        setQuizzes(filteredQuizzes);
-                    } else if (result1 === "active") {
-                        const filterParticipatedQuizzes = res.filter((quiz) => quiz.participants && Object.keys(quiz.participants).length > 0);
-                        setQuizzes(filterParticipatedQuizzes || []);
-                    } else if (result1 === "popular") {
-                        const filteredPopularQuizzes = res.filter((quiz) => quiz.scoreBoards && Object.keys(quiz.scoreBoards).length > 0);
-                        const sortedPopularQuizzes = filteredPopularQuizzes.sort(
-                            (quizA, quizB) => quizA.scoreBoards && quizB.scoreBoards && Object.keys(quizB.scoreBoards).length - Object.keys(quizA.scoreBoards).length
-                        );
-                        const topPopularQuizzes = sortedPopularQuizzes.slice(0, 5);
-                        setQuizzes(topPopularQuizzes || []);
-                    } else if (result1 === "all") {
-                        setQuizzes(res);
-                    }
-                } else {
-                    const filteredQuizzes = res.filter((quiz) => quiz && quiz.category === result2);
-                    setQuizzes(filteredQuizzes);
-                }
+      })
+  }, [])
 
-            })
-    }, [])
+  const acceptInvitation = (handle, quizId) => {
+    acceptingInvitation(handle, quizId)
+    navigate(`${quizId}`)
+  }
+  const removeInvitation = (quizId, handle) => {
+    declineInvitation(quizId, handle)
+    navigate(0)
+  }
 
-      const acceptInvitation = (handle, quizId) => {
-        acceptingInvitation(handle, quizId);
-        navigate(`${quizId}`)
-      }
-      const removeInvitation = (quizId, handle) => {
-        declineInvitation(quizId, handle);
-        navigate(0)
-      }
-    
-    return (
-        quizzes && (
+  return (
+    quizzes && (
             <Flex mt={20} wrap="wrap" justify="center" flexDirection="row">
                 {Object.entries(quizzes).map(([quizId, quizData]) => (
                     <Center padding={'10px'} py={6} key={console.log(quizId)}>
                         <Box
-                            maxW={'250px'} 
+                            maxW={'250px'}
                             w={'full'}
                             bg={colorMode === 'dark' ? 'blue.700' : 'white.200'}
                             boxShadow={'2xl'}
@@ -115,7 +116,8 @@ export const CategoryView = () => {
                                         Total Points: {quizData.totalPoints * quizData.numQuestions}
                                     </ListItem>
                                 </List>
-                                {userData && quizData && quizData.selectedOption === "Private" && (quizData.invites && quizData.invites[currentUser] && quizData.invites[currentUser]?.inviteStatus === "false") ? (
+                                {userData && quizData && quizData.selectedOption === 'Private' && (quizData.invites && quizData.invites[currentUser] && quizData.invites[currentUser]?.inviteStatus === 'false')
+                                  ? (
                                     <>
                                         <Button mt={10} w={'full'} bg={'blue.400'}
                                             color={'white'} rounded={'xl'} boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
@@ -131,7 +133,8 @@ export const CategoryView = () => {
                                             Reject
                                         </Button>
                                     </>
-                                ) : (
+                                    )
+                                  : (
                                     <Button mt={10} w={'full'} bg={'blue.400'} color={'white'} rounded={'xl'}
                                         boxShadow={'0 5px 20px 0px rgb(72 187 120 / 43%)'}
                                         _hover={{ bg: 'brand.200' }}
@@ -140,13 +143,13 @@ export const CategoryView = () => {
                                     >
                                         View Quiz Details
                                     </Button>
-                                )}
+                                    )}
                             </Box>
                         </Box>
                     </Center>
                 ))}
                 {(!quizzes || quizzes.length === 0) && <Text align={'center'}>No {cat}</Text>}
             </Flex>
-        )
-    );
+    )
+  )
 }
