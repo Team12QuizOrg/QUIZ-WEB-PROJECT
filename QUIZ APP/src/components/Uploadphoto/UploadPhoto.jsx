@@ -1,7 +1,7 @@
 import { useState, useContext } from 'react'
-import { upload } from '../../services/photo.services'
+import { deletePhoto, upload } from '../../services/photo.services'
 import AppContext from '../../context/AuthContext'
-import { Input, Button, useToast, Tooltip } from '@chakra-ui/react'
+import { Input, Button, useToast, Tooltip, HStack } from '@chakra-ui/react'
 
 const UploadPhoto = () => {
   const { userData } = useContext(AppContext)
@@ -18,7 +18,17 @@ const UploadPhoto = () => {
   function handleClick () {
     upload(photo, userData, setLoading).then((res) =>
       toast({
-        description: 'Member added successfully.',
+        description: 'Photo added successfully.',
+        status: 'success',
+        duration: 3000,
+        isClosable: true
+      })
+    )
+  }
+  function handleDelete () {
+    deletePhoto(userData, setLoading).then((res) =>
+      toast({
+        description: 'Photo removed successfully.',
         status: 'success',
         duration: 3000,
         isClosable: true
@@ -28,19 +38,24 @@ const UploadPhoto = () => {
 
   return (
     <>
-     <Tooltip label={`Choose photo from your files & Press Upload`} fontSize="md">
+     <Tooltip label={'Choose photo from your files & Press Upload'} fontSize="md">
       <Input
         type="file"
         onChange={handleChange}
         placeholder="Min: 5"
 
         border={'1px'}
-        borderColor={'brand.400'}
+        borderColor={'grey'}
       />
       </Tooltip>
-      <Button disabled={loading || !photo} onClick={handleClick} >
+      <HStack m={'2'} ml={'20'}>
+      <Button disabled={loading || !photo} onClick={handleClick} bg={'brand.200'}>
         Upload
       </Button>
+      <Button disabled={loading || photo} onClick={handleDelete} >
+        Delete photo
+      </Button>
+      </HStack>
     </>
   )
 }

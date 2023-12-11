@@ -6,7 +6,7 @@ import UploadPhoto from '../Uploadphoto/UploadPhoto'
 import PropTypes from 'prop-types'
 import AddButton from '../AddButton/AddButton'
 
-export default function EditProfile({ user, originalFirstName, originalLastName, originalPhone, originalCaption, onEditProfile }) {
+export default function EditProfile ({ user, originalFirstName, originalLastName, originalPhone, originalCaption, onEditProfile }) {
   const [editedFirstName, setEditedFirstName] = useState(originalFirstName)
   const [editedLastName, setEditedLastName] = useState(originalLastName)
   const [editedCaption, setEditedCaption] = useState(originalCaption)
@@ -84,8 +84,11 @@ export default function EditProfile({ user, originalFirstName, originalLastName,
               onChange={(e) => setEditedCaption(e.target.value)}
               mt={2}
             />
-            <Text color={'brand.200'} mt={7} fontWeight={'bold'}> Upload photo:</Text>
-            <UploadPhoto></UploadPhoto>
+             <Box border={'1px'} borderColor={'brand.200'} rounded={'10'} mt={7} >
+            <Text color={'brand.200'} m={2} fontWeight={'bold'}> Upload photo:</Text>
+
+            <UploadPhoto ></UploadPhoto>
+            </Box>
             <Box m={5} align={'center'}>
               <AddButton onClick={handleCancel} color={'brand.200'}>Cancel</AddButton>
               <AddButton onClick={handleSubmitEdit} bg={'brand.200'}>Submit</AddButton>

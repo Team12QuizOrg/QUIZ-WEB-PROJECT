@@ -121,6 +121,17 @@ export const addUserPhotoToData = (handle, photoURL) => {
     })
 }
 
+export const removeUserPhotoFromData = (handle) => {
+  return update(ref(db), {
+    [`users/${handle}/photoURL`]: DEFAULT_AVATAR_URL
+  })
+
+    .then(() => {})
+    .catch((error) => {
+      console.error('Error changing user fields', error)
+    })
+}
+
 export const formatDate = (timestamp) => {
   const dateObj = new Date(timestamp)
 
