@@ -23,6 +23,7 @@ import AssessmentQuiz from './views/AssessmentQuiz/AssessmentQuiz'
 import { AllCategoriesPage } from './views/AllCategoriesPage/AllCategoriesPage'
 import { CategoryView } from './components/CategoryView/CategoryView'
 import SolveGuestUser from './components/SolveGuestUser/SolveGuestUser'
+import ResetPassword from './components/ResetPassword/ResetPassword'
 function App() {
   const [user] = useAuthState(auth)
   const [appState, setAppState] = useState({
@@ -78,6 +79,7 @@ function App() {
           {user === null && <Route path="/signup" element={<SignUp />} />}
           <Route path="/:profile" element={<AuthenticatedRoute><Profile /></AuthenticatedRoute>} />
           <Route path="/adminPanel" element={<AuthenticatedRoute><AdminPanel /></AuthenticatedRoute>} />
+          <Route path="/reset" element={<ResetPassword />} />
           <Route path="*" element={<Error />} />
         </Routes>
         <Footer></Footer>
