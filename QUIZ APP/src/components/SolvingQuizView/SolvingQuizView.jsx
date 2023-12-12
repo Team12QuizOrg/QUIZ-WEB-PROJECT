@@ -152,7 +152,9 @@ const SolvingQuizView = () => {
           selectedAnswers: updatedSelectedAnswers,
           wrongAnswers: wrongScoreUpdated,
           correctAnswers: updatedCorrectAnswer + 1,
-          endTime: Math.floor(timerUnix) || prev.endTime
+          endTime: Math.floor(timerUnix) || prev.endTime,
+          title: quiz.title,
+          id
         }
       } else {
         const updatedScore = prev.score || 0
@@ -163,7 +165,9 @@ const SolvingQuizView = () => {
           score: Math.floor(updatedScore),
           selectedAnswers: updatedSelectedAnswers,
           wrongAnswers: wrongScoreUpdated + 1,
-          endTime: Math.floor(timerUnix) || prev.endTime
+          endTime: Math.floor(timerUnix) || prev.endTime,
+          title: quiz.title,
+          id
         }
       }
     })

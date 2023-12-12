@@ -32,7 +32,7 @@ const ListQuizzes = ({ user, quizzes, name }) => {
           <PopoverHeader bg="brand.200" rounded='10'>{`${user.handle}'s ${name} quizzes`}</PopoverHeader>
           <PopoverBody >
             {quizzes && quizzes.map((quiz) => (
-              <HStack key={quiz.id} style={{
+              <HStack key={`quiz-${quiz.id}`} style={{
                 border: '2px solid grey',
                 borderRadius: '10px',
                 boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
