@@ -47,6 +47,7 @@ const SingleQuizView = () => {
         .catch((err) => console.error(err))
     }
   }, [userData?.handle, quiz?.author])
+
   useEffect(() => {
     getAllQuizzes()
       .then((res) => {
@@ -59,20 +60,7 @@ const SingleQuizView = () => {
         })
         setGetCat(filterSimQuizzes || {})
       })
-  }, [])
-  useEffect(() => {
-    getAllQuizzes()
-      .then((res) => {
-        const filterSimQuizzes = res.filter((singleQ) => {
-          if (singleQ && quiz) {
-            const isNotCurrentQuiz = singleQ.id !== quiz.id
-            const isSameCategory = singleQ.category === quiz.category
-            return isNotCurrentQuiz && isSameCategory
-          }
-        })
-        setGetCat(filterSimQuizzes || {})
-      })
-  }, [])
+  }, [quiz])
 
   useEffect(() => {
     if (quiz) {
@@ -224,6 +212,7 @@ const SingleQuizView = () => {
         </Card>
       </GridItem>
     </Grid>
+    {console.log(getCat)}
       <AllQuizzes quizzes={getCat} catName={getCatName}></AllQuizzes>
     </>
   )
