@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Button, Image, Box, Collapse } from '@chakra-ui/react'
+import { Button, Image, Box, Collapse, Center } from '@chakra-ui/react'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { MoonIcon, SunIcon } from '@chakra-ui/icons'
 import darkImage from '../../../assets/dartvader.png'
@@ -30,16 +30,19 @@ const ToggleColorMode = () => {
 
   return (
     <>
+    <Center>
       {isOpen && (
         <Collapse in={isOpen} animateOpacity backgroundImage={colorMode === 'dark' ? 'assets/dartvader.png' : 'assets/back1.png'}>
           <Box
             p='40px'
             color='white'
             shadow='md'
+            w={{ small: '320', md: '450', lg: '580' }}
+            h={{ base: '250', md: '350', lg: '380' }}
           >
             {colorMode === 'dark'
-              ? <Image src={darkImage} justifyContent={'center'} w={{ base: '320', md: '450', lg: '580' }} h={{ base: '250', md: '350', lg: '380' }} rounded={'md'} order={{ base: 0, lg: 1 }} alignItems={{ base: 'center', lg: 'start' }} boxShadow={'0 4px 6px rgba(0, 0, 0, 0.1)'} />
-              : <Image src={whiteImage} justifyContent={'center'} w={{ base: '320', md: '450', lg: '580' }} h={{ base: '250', md: '350', lg: '380' }} rounded={'md'} order={{ base: 0, lg: 1 }} alignItems={{ base: 'center', lg: 'start' }} boxShadow={'0 4px 6px rgba(0, 0, 0, 0.1)'} />}
+              ? <Image src={darkImage} justifyContent={'center'} w={{ small: '320', md: '450', lg: '580' }} h={{ base: '250', md: '350', lg: '380' }} rounded={'md'} order={{ base: 0, lg: 1 }} alignItems={{ base: 'center', lg: 'start' }} boxShadow={'0 4px 6px rgba(0, 0, 0, 0.1)'} />
+              : <Image src={whiteImage} justifyContent={'center'} w={{ small: '320', md: '450', lg: '580' }} h={{ base: '250', md: '350', lg: '380' }} rounded={'md'} order={{ base: 0, lg: 1 }} alignItems={{ base: 'center', lg: 'start' }} boxShadow={'0 4px 6px rgba(0, 0, 0, 0.1)'} />}
            </Box>
         </Collapse>
       )}
@@ -61,6 +64,7 @@ const ToggleColorMode = () => {
           <MoonIcon color='blue.700' />
             )}
       </Button>
+      </Center>
     </>
   )
 }
