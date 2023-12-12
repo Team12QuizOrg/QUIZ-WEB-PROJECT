@@ -3,7 +3,7 @@ import { useContext } from 'react'
 import AppContext from '../../context/AuthContext'
 import { useNavigate } from 'react-router-dom'
 import GetAvatar from '../GetAvatar/GetAvatar'
-import { Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider } from '@chakra-ui/react'
+import { Button, Menu, MenuButton, MenuList, MenuItem, MenuDivider, Text } from '@chakra-ui/react'
 import { PiHardDrives } from 'react-icons/pi'
 import { IoPersonCircle } from 'react-icons/io5'
 import { LuLogOut } from 'react-icons/lu'
@@ -29,7 +29,7 @@ export default function NavUser () {
                         bg={'brand.100'}
                         onClick={() => navigate('/signin')}
                     >
-                        Sign In
+                       <Text color={'blue.700'}> Sign In</Text>
                     </AddButton>
                     <AddButton
                         bg={'brand.200'}
@@ -116,7 +116,7 @@ export default function NavUser () {
                                         </MenuItem>
                                         <MenuDivider />
                                     </>
-                                )}
+                                 )}
                                 <MenuItem
                                     onClick={onLogout}
                                     color={'brand.200'}
