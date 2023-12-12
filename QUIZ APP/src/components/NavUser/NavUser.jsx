@@ -28,8 +28,9 @@ export default function NavUser () {
                     <AddButton
                         bg={'brand.100'}
                         onClick={() => navigate('/signin')}
+                        color={'blue.700'}
                     >
-                       <Text color={'blue.700'}> Sign In</Text>
+                     Sign In
                     </AddButton>
                     <AddButton
                         bg={'brand.200'}

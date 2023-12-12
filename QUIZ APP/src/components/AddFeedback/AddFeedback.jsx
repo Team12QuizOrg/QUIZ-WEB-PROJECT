@@ -33,7 +33,7 @@ const AddFeedback = () => {
                 )
               : (
                 <><Box align={'center'} justify={'center'}
-                justifySelf={'center'}>
+                justifySelf={'center'} m={'15'}>
                     <AddButton bg={'brand.200'} mr={3} onClick={handleOpen}> Give us Feedback </AddButton>
                     </Box>
                     <Modal isOpen={isOpen} onClose={onClose}>
