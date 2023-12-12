@@ -12,7 +12,7 @@ const CreateNewCategory = ({ category, func }) => {
         onChange={func}
         variant="filled"
         focusBorderColor="black"
-        bg="brand.300"
+        bg="grey"
       />
     </FormControl>
   )

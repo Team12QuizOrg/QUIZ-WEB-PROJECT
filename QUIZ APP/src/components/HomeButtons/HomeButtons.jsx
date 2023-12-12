@@ -2,7 +2,10 @@
 
 import { Stack, Flex, Button, Text, VStack, useBreakpointValue } from '@chakra-ui/react'
 import { useNavigate } from 'react-router-dom'
+import { useContext } from 'react'
+import AppContext from '../../context/AuthContext'
 export default function HomeButtons () {
+  const { user } = useContext(AppContext)
   const navigate = useNavigate()
   return (
         <Flex
@@ -30,22 +33,22 @@ export default function HomeButtons () {
                         become quiz master!
                     </Text>
                     <Stack direction={'row'}>
-                        <Button
+                        { !user && <Button
                             onClick={() => navigate('/signin')}
                             bg={'whiteAlpha.300'}
                             rounded={'full'}
                             color={'white'}
                             _hover={{ bg: 'blue.500' }}>
                             Sign In
-                        </Button>
-                        <Button
+                        </Button>}
+                        {!user && <Button
                             onClick={() => navigate('/signup')}
                             bg={'blue.400'}
                             rounded={'full'}
                             color={'white'}
                             _hover={{ bg: 'whiteAlpha.500' }}>
                             Sign Up
-                        </Button>
+                        </Button>}
                     </Stack>
                 </Stack>
             </VStack>

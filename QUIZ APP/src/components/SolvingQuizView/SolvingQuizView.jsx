@@ -332,7 +332,7 @@ const SolvingQuizView = () => {
               <Box>
                 <Text pt="2" fontSize="sm">
                   Total Score: {quizState?.score}
-                  {quizState?.score === questionIds.length && (
+                  {quizState?.score === 0 && (
                     <span style={{ color: 'gold' }}>
                       {' '}
                       🌟 Master of the Unknown!
