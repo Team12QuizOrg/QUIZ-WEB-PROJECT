@@ -216,6 +216,7 @@ const SolvingQuizView = () => {
           mx="auto"
           my="auto"
           p={{ base: '2%', md: '3%' }}
+          m={{ base: '-2%', md: '-3%' }}
         >
           <VStack align="center" spacing={4}>
             <Flex align="center" justify="space-between" width="100%">
@@ -259,6 +260,7 @@ const SolvingQuizView = () => {
                   <Button
                     width="100%"
                     color={'white'}
+                    whiteSpace = {'normal'}
                     onClick={() => onAnswerSelected(answer, index)}
                     variant={
                       selectedAnswerIndex === index ? 'solid' : 'outline'
