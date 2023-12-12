@@ -58,7 +58,8 @@ export default function SignIn () {
             <Stack spacing={8} mx={'auto'} maxW={'lg'} py={12} px={6}>
                 <Stack align={'center'}>
                     <Heading fontSize={'4xl'} color={'brand.200'}>Sign in to your account</Heading>
-                    <Box >
+                    <Box align={'center'} justify={'center'}
+                justifySelf={'center'} >
                         to enjoy all of our cool <Text bgGradient="linear(to-r, red.400,pink.400)" bgClip="text" fontSize={'lg'} color={'gray.600'}>features</Text> ✌️
                     </Box>
                 </Stack>

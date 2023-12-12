@@ -39,7 +39,8 @@ export default function ListFeedback () {
 
                 <Stack
                     direction={{ base: 'column', md: 'row' }}
-                    spacing={{ base: 10, md: 4, lg: 10 }}>
+                    spacing={{ base: 10, md: 4, lg: 10 }} align={'center'} justify={'center'}
+                    justifySelf={'center'} m={'15'}>
                     {feedbacks && feedbacks.map((feedback) => (
                         <Box key={feedback.timestamp}>
 
