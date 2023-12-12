@@ -295,7 +295,6 @@ const QuizForm = () => {
             </div>
           </Center>
           <Center>
-            <div>
               <Image
                 className="logo-image"
                 src="assets\logo2.png"
@@ -304,9 +303,9 @@ const QuizForm = () => {
                 h={10}
                 maxW={40}
                 maxH={40}
+                marginRight={20}
                 rounded={'full'}
               />
-            </div>
           </Center>
 
           <Center>
@@ -318,6 +317,7 @@ const QuizForm = () => {
             </div>
           </Center>
         </Box>
+        <Center marginLeft={7} marginBottom={10}>
         <CreateNewCategoryButton
           func={() => handleButtonClick('create')}
           label={'Create new category'}
@@ -326,7 +326,7 @@ const QuizForm = () => {
           func={() => handleButtonClick('choose')}
           label={'Choose category'}
         />
-
+        </Center>
         {activeButton === 'create' && (
           <CreateNewCategory
             category={category}
@@ -370,9 +370,9 @@ const QuizForm = () => {
             func={(e) => setTotalPoints(Number(e.target.value))}
           />
         </Flex>
-
+        <Center marginTop={8}>
         <CreateQuestionButton func={handleQuestionsButtonClick} />
-
+        </Center>
         {showQuestions && questionNum <= numQuestions && (
           <>
             {!isOpen && !isOpenForChoosingCategory && (
@@ -406,21 +406,27 @@ const QuizForm = () => {
                 />
               </>
             )}
+            <Center>
             <Box>
               {questionNum <= numQuestions && (
                 <AddQuestionButton func={addQuestion} />
               )}
             </Box>
+            </Center>
           </>
         )}
+        <Center>
         <Box>
           {questionNum === numQuestions + 1 && (
             <SubmitButton func={handleSubmit} />
           )}
         </Box>
+        </Center>
+        <Center>
         <Box>
           <CancelButton func={() => navigate(-1)} />
         </Box>
+        </Center>
       </Box>
     </Grid>
   )
