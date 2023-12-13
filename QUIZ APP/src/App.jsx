@@ -68,7 +68,7 @@ function App() {
           <Route path="/solve/:id" element={<SolveGuestUser />} />
           <Route path="/quizzes/AllQuizzes/:id" element={<AuthenticatedRoute> <SingleQuizView /> </AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes/:id/:id" element={<AuthenticatedRoute><SolvingQuizView /></AuthenticatedRoute>} />
-          <Route path="/About" element={<AuthenticatedRoute> <About /> </AuthenticatedRoute>} />
+          <Route path="/About" element={<About/>} />
           <Route path="/quizzes/assessment/:id" element={<AuthenticatedRoute><AssessmentQuiz /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes/Category/:cat/" element={<AuthenticatedRoute><CategoryView /></AuthenticatedRoute>} />
           <Route path="/quizzes/AllQuizzes/Category/:cat/:id" element={<AuthenticatedRoute><SingleQuizView /></AuthenticatedRoute>} />
