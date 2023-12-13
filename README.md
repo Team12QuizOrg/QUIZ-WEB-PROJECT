@@ -65,10 +65,10 @@ You can find the hosted app on this URL: [Solvr-12.web.app](https://solvr-team-1
 
 ### Install Firebase
 
-npm install
-npm run dev
+- npm install
+- npm run dev
 
 Authors:
-Samuil Kirchev
-Daniela Luchanska
-Ivan Boyadzhiev
+- Samuil Kirchev
+- Daniela Luchanska
+- Ivan Boyadzhiev
