@@ -58,7 +58,7 @@ export default function InviteStudents ({ quizId }) {
                 }}
                 cursor="pointer"
               >
-                <PopoverHeader color={'brand.400'} fontWeight={'bold'}>
+                <PopoverHeader fontWeight={'bold'}>
                   {user.handle}
                 </PopoverHeader>
                 <Spacer></Spacer>
