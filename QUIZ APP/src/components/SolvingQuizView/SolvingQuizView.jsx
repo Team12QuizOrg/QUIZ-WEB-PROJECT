@@ -348,13 +348,7 @@ const SolvingQuizView = () => {
                     ? (<>
                       <Text pt="2" fontSize="sm">
                         You are:
-                        {quizState?.score === 0 && (
-                          <span style={{ color: 'gold' }}>
-                            {' '}
-                            🌟 Master of the Unknown!
-                          </span>
-                        )}
-                        {quizState?.score > 0 && quizState?.score <= 10 && (
+                        {quizState?.score >= 0 && quizState?.score <= 10 && (
                           <span style={{ color: 'blue' }}>
                             {' '}
                             🚀 Spontaneous Adventurer!

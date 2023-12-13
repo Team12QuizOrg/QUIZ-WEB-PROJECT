@@ -101,7 +101,7 @@ export default function JoinOurTeam () {
       alert('Last Name is required and must be between 1 and 30 characters')
     }
 
-    if (form.phone || form.phone.length !== PHONE_NUMBER_LENGTH) {
+    if (!form.phone || form.phone.length !== PHONE_NUMBER_LENGTH) {
       alert('Phone number is required and must be 10 characters')
     }
 
