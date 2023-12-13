@@ -54,8 +54,6 @@ Solvr is a streamlined platform designed for educators and students, aimed at se
 
 - JavaScript
 - React
-- HTML
-- CSS
 - Chakra
 - Firebase
 - ESLint
@@ -71,7 +69,6 @@ npm install
 npm run dev
 
 Authors:
-
 Samuil Kirchev
 Daniela Luchanska
 Ivan Boyadzhiev
