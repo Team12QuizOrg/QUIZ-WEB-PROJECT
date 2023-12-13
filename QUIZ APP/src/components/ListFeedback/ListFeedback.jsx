@@ -4,7 +4,8 @@ import {
   Heading,
   Text,
   Stack,
-  Container
+  Container,
+  VStack
 
 } from '@chakra-ui/react'
 import { useState, useEffect } from 'react'
@@ -76,10 +77,11 @@ export default function ListFeedback () {
                             </Stack>
 
                             <Flex align={'center'} mt={8} direction={'column'}>
+                                
+                                <VStack spacing={-1} align={'center'}>
                                 <GetAvatar handle={feedback.user} />
-                                <Stack spacing={-1} align={'center'}>
                                     <Text fontWeight={600} color={'brand.200'} onClick={() => navigate(`/${(feedback.user)}`)}>{feedback.user}</Text>
-                                </Stack>
+                                </VStack>
                             </Flex>
                         </Box>
                     ))}

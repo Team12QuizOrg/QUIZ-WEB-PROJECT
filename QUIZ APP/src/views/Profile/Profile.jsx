@@ -91,7 +91,7 @@ const Profile = () => {
 
                                         </Flex>
                                         {currentUser.handle === userData.handle &&
-                                            <EditProfile user={currentUser.handle} originalFirstName={currentUser.firstName} originalLastName={currentUser.lastName} onEditProfile={handleEditProfile} originalPhone={currentUser.phone && currentUser.phone } originalCaption={currentUser.caption ? currentUser.caption : 'Add caption here'} />
+                                            <EditProfile user={currentUser.handle} originalFirstName={currentUser.firstName} originalLastName={currentUser.lastName} onEditProfile={handleEditProfile} originalPhone={currentUser.phone ? currentUser.phone : ''} originalCaption={currentUser.caption ? currentUser.caption : 'Add caption here'} />
                                         }
                                     </Flex>
                                 </CardHeader>
