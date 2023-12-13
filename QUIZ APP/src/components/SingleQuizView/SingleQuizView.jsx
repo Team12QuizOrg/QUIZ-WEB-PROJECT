@@ -134,7 +134,7 @@ const SingleQuizView = () => {
               </Flex>
             </CardHeader>
             <CardBody align={'left'}>
-              <HStack>
+              <HStack display={{ base: 'grid', md: 'flex' }}>
                 <Heading textAlign="start" fontSize={{ base: 'md', md: 'lg', lg: 'xl' }}>
                   Educator: {currentUser && currentUser.firstName + ' ' + currentUser.lastName}
                 </Heading>
@@ -212,7 +212,6 @@ const SingleQuizView = () => {
         </Card>
       </GridItem>
     </Grid>
-    {console.log(getCat)}
       <AllQuizzes quizzes={getCat} catName={getCatName}></AllQuizzes>
     </>
   )

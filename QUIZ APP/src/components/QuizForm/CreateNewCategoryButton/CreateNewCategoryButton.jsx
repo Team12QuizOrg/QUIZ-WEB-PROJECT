@@ -7,6 +7,7 @@ const CreateNewCategoryButton = ({ func, label }) => {
     onClick={func}
     mr={4}
     background={'blue.400'}
+    whiteSpace = {'normal'}
   >
     {label}
   </Button>

@@ -28,6 +28,7 @@ import CancelButton from './CancelButton/CancelButton'
 import CreateQuestionButton from './CreateQuestionsButton/CreateQuestionButton'
 import CreateOptions from './CreateOptions/CreateOptions'
 import SetQuizTimer from './SetQuizTimer/SetQuizTimer'
+import imgUrl4 from '../../../assets/logo2.png'
 
 const QuizForm = () => {
   const { userData } = useContext(AppContext)
@@ -78,7 +79,7 @@ const QuizForm = () => {
 
   useEffect(() => {
     getAllCategories().then((res) => setCategories(Object.entries(res)))
-  }, [categories])
+  }, [])
 
   const handleQuestionChange = (value) => {
     setCurrentQuestion((prevQuestion) => ({
@@ -278,7 +279,7 @@ const QuizForm = () => {
         maxW="100%"
       >
         <Box
-          display="flex"
+          display={{ base: 'grid', md: 'flex' }}
           flexDirection="row"
           justifyContent="space-between"
           gridColumn="span 2"
@@ -287,45 +288,42 @@ const QuizForm = () => {
           alignItems="center"
         >
           <Center>
-            <div>
-              <QuizName
-                quizName={quizName}
-                setQuizName={(e) => setQuizName(e.target.value)}
-              />
-            </div>
+            <QuizName
+              quizName={quizName}
+              setQuizName={(e) => setQuizName(e.target.value)}
+            />
           </Center>
           <Center>
-              <Image
-                className="logo-image"
-                src="assets\logo2.png"
-                alt="logo"
-                w={10}
-                h={10}
-                maxW={40}
-                maxH={40}
-                marginRight={20}
-                rounded={'full'}
-              />
+            <Image
+              className="logo-image"
+              src={imgUrl4}
+              alt="logo"
+              w={10}
+              h={10}
+              maxW={40}
+              maxH={40}
+              marginRight={20}
+              rounded={'full'}
+            />
           </Center>
 
           <Center>
-            <div>
-              <ChooseTypeRadio
-                setSelectedOption={setSelectedOption}
-                selectedOption={selectedOption}
-              />
-            </div>
+            <ChooseTypeRadio
+              setSelectedOption={setSelectedOption}
+              selectedOption={selectedOption}
+            />
           </Center>
         </Box>
         <Center marginLeft={7} marginBottom={10}>
-        <CreateNewCategoryButton
-          func={() => handleButtonClick('create')}
-          label={'Create new category'}
-        />
-        <ChooseCategoryButton
-          func={() => handleButtonClick('choose')}
-          label={'Choose category'}
-        />
+          <CreateNewCategoryButton
+            func={() => handleButtonClick('create')}
+            label={'Create new category'}
+            whiteSpace={'normal'}
+          />
+          <ChooseCategoryButton
+            func={() => handleButtonClick('choose')}
+            label={'Choose category'}
+          />
         </Center>
         {activeButton === 'create' && (
           <CreateNewCategory
@@ -342,11 +340,13 @@ const QuizForm = () => {
           />
         )}
 
-        <Flex
-          flexDirection="row"
+        <Box
+          display={{ base: 'grid', md: 'flex' }}
           justifyContent="space-between"
           gridColumn="span 2"
-          width={'maxWidth'}
+          maxW="100%"
+          mb={4}
+          alignItems="flexbox"
         >
           <SetTimeLimit
             timeLimit={availability}
@@ -369,9 +369,9 @@ const QuizForm = () => {
             totalPoints={totalPoints}
             func={(e) => setTotalPoints(Number(e.target.value))}
           />
-        </Flex>
+        </Box>
         <Center marginTop={8}>
-        <CreateQuestionButton func={handleQuestionsButtonClick} />
+          <CreateQuestionButton func={handleQuestionsButtonClick} />
         </Center>
         {showQuestions && questionNum <= numQuestions && (
           <>
@@ -407,25 +407,25 @@ const QuizForm = () => {
               </>
             )}
             <Center>
-            <Box>
-              {questionNum <= numQuestions && (
-                <AddQuestionButton func={addQuestion} />
-              )}
-            </Box>
+              <Box>
+                {questionNum <= numQuestions && (
+                  <AddQuestionButton func={addQuestion} />
+                )}
+              </Box>
             </Center>
           </>
         )}
         <Center>
-        <Box>
-          {questionNum === numQuestions + 1 && (
-            <SubmitButton func={handleSubmit} />
-          )}
-        </Box>
+          <Box>
+            {questionNum === numQuestions + 1 && (
+              <SubmitButton func={handleSubmit} />
+            )}
+          </Box>
         </Center>
         <Center>
-        <Box>
-          <CancelButton func={() => navigate(-1)} />
-        </Box>
+          <Box>
+            <CancelButton func={() => navigate(-1)} />
+          </Box>
         </Center>
       </Box>
     </Grid>

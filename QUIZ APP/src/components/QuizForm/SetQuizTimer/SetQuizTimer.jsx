@@ -11,7 +11,7 @@ const SetQuizTimer = ({ time, unit, onChangeTime, onChangeUnit }) => {
   }
 
   return (
-    <FormControl mb={2} flex="1" ml={4} maxW="30%">
+    <FormControl mb={2} flex="1" ml={4} maxW="100%">
       <FormLabel fontSize="medium" h={10}>
         Set timer:
       </FormLabel>

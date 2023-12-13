@@ -206,166 +206,214 @@ const SolvingQuizView = () => {
     >
       {!quizFinished
         ? (
-        <Box
-          align={'center'}
-          justify={'center'}
-          justifySelf={'center'}
-          borderColor="brand.200"
-          borderWidth={'thick'}
-          borderRadius="1%"
-          maxW={{ base: '100%', md: '70%' }}
-          minW={{ base: '100%', md: '70%', xl: '60%' }}
-          boxSizing="border-box"
-          bg="brand.500"
-          mx="auto"
-          my="auto"
-          p={{ base: '2%', md: '3%' }}
-          m={{ base: '-2%', md: '-3%' }}
-        >
-          <VStack align="center" spacing={4}>
-            <Flex align="center" justify="space-between" width="100%">
-              <Box>
-                <Button color={'brand.200'} onClick={() => handleBack()}>
-                  Go Back
-                </Button>
-              </Box>
-              <Flex align="center" color={'blue.600'}>
-                <Text className="active-question-no">
-                  {addLeadingZero(activeQuestion + 1)}
-                </Text>
-                <Text className="total-question">
-                  /{addLeadingZero(questionIds.length)}
-                </Text>
-              </Flex>
-            </Flex>
-            <motion.div>
-              {quiz && !quizFinished && (
-                <motion.div
-                  initial={{ opacity: 0 }}
-                  animate={{ opacity: 1 }}
-                  transition={{ delay: 0.2 }}
-                >
-                  <Timer
-                    endTimeUnix={
-                      quizState?.endTime ? quizState?.endTime : timerUnix
-                    }
-                    onTimerFinish={handleTimerFinish}
-                  />
-                </motion.div>
-              )}
-            </motion.div>
-            <Text fontSize={{ base: 'md', md: 'lg', lg: 'xl' }} fontWeight={'bold'}>{question}</Text>
-            <Grid
-              templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']}
-              gap={4}
-            >
-              {options?.map((answer, index) => (
-                <GridItem key={answer}>
-                  <Button
-                    width="100%"
-                    color={'white'}
-                    whiteSpace = {'normal'}
-                    onClick={() => onAnswerSelected(answer, index)}
-                    variant={
-                      selectedAnswerIndex === index ? 'solid' : 'outline'
-                    }
-                    colorScheme={
-                      selectedAnswerIndex === index ? 'yellow' : 'blue'
-                    }
-                    fontFamily='sans-serif;'
-                    fontSize={{ base: 'sm', md: 'md' }}
-                    _hover={{
-                      boxShadow: 'md',
-                      transform: 'scale(1.05)'
-                    }}
-                    transition="all 0.3s"
-                    bgGradient={
-                      selectedAnswerIndex === index
-                        ? 'linear(to-r, yellow.400, yellow.600)'
-                        : 'linear(to-r, blue.400, blue.600)'
-                    }
-                    _active={{
-                      bgGradient:
-                        selectedAnswerIndex === index
-                          ? 'linear(to-r, yellow.600, yellow.800)'
-                          : 'linear(to-r, blue.600, blue.800)'
-                    }}
-                  >
-                    {answer}
+          <Box
+            align={'center'}
+            justify={'center'}
+            justifySelf={'center'}
+            borderColor="brand.200"
+            borderWidth={'thick'}
+            borderRadius="1%"
+            maxW={{ base: '100%', md: '70%' }}
+            minW={{ base: '100%', md: '70%', xl: '60%' }}
+            boxSizing="border-box"
+            bg="brand.500"
+            mx="auto"
+            my="auto"
+            p={{ base: '2%', md: '3%' }}
+            m={{ base: '-2%', md: '-3%' }}
+          >
+            <VStack align="center" spacing={4}>
+              <Flex align="center" justify="space-between" width="100%">
+                <Box>
+                  <Button color={'brand.200'} onClick={() => handleBack()}>
+                    Go Back
                   </Button>
-                </GridItem>
-              ))}
-            </Grid>
-            <VStack align="start">
-              <Button
-                color={'brand.200'}
-                onClick={onClickNext}
-                disabled={selectedAnswerIndex === null}
+                </Box>
+                <Flex align="center" color={'blue.600'}>
+                  <Text className="active-question-no">
+                    {addLeadingZero(activeQuestion + 1)}
+                  </Text>
+                  <Text className="total-question">
+                    /{addLeadingZero(questionIds.length)}
+                  </Text>
+                </Flex>
+              </Flex>
+              <motion.div>
+                {quiz && !quizFinished && (
+                  <motion.div
+                    initial={{ opacity: 0 }}
+                    animate={{ opacity: 1 }}
+                    transition={{ delay: 0.2 }}
+                  >
+                    <Box
+                      maxW={{ base: '100%', md: '70%' }}
+                      minW={{ base: '100%', md: '70%', xl: '100%' }}
+                      marginBottom={3}>
+                      <Text className="quiz-name" fontSize={{ base: 'md', md: 'lg', lg: 'xl' }} fontWeight={'bold'}>
+                        {quiz.title}
+                      </Text>
+                    </Box>
+                    <Timer
+                      endTimeUnix={
+                        quizState?.endTime ? quizState?.endTime : timerUnix
+                      }
+                      onTimerFinish={handleTimerFinish}
+                    />
+                  </motion.div>
+                )}
+              </motion.div>
+              <Text fontSize={{ base: 'md', md: 'lg', lg: 'xl' }} fontWeight={'bold'}>{question}</Text>
+              <Grid
+                templateColumns={['repeat(1, 1fr)', 'repeat(2, 1fr)']}
+                gap={4}
               >
-                {activeQuestion === questionIds.length - 1 ? ' Finish' : 'Next'}
-              </Button>
+                {options?.map((answer, index) => (
+                  <GridItem key={answer}>
+                    <Button
+                      width="100%"
+                      color={'white'}
+                      whiteSpace={'normal'}
+                      onClick={() => onAnswerSelected(answer, index)}
+                      variant={
+                        selectedAnswerIndex === index ? 'solid' : 'outline'
+                      }
+                      colorScheme={
+                        selectedAnswerIndex === index ? 'yellow' : 'blue'
+                      }
+                      fontFamily='sans-serif;'
+                      fontSize={{ base: 'sm', md: 'md' }}
+                      _hover={{
+                        boxShadow: 'md',
+                        transform: 'scale(1.05)'
+                      }}
+                      transition="all 0.3s"
+                      bgGradient={
+                        selectedAnswerIndex === index
+                          ? 'linear(to-r, yellow.400, yellow.600)'
+                          : 'linear(to-r, blue.400, blue.600)'
+                      }
+                      _active={{
+                        bgGradient:
+                          selectedAnswerIndex === index
+                            ? 'linear(to-r, yellow.600, yellow.800)'
+                            : 'linear(to-r, blue.600, blue.800)'
+                      }}
+                    >
+                      {answer}
+                    </Button>
+                  </GridItem>
+                ))}
+              </Grid>
+              <VStack align="start">
+                <Button
+                  color={'brand.200'}
+                  onClick={onClickNext}
+                  disabled={selectedAnswerIndex === null}
+                >
+                  {activeQuestion === questionIds.length - 1 ? ' Finish' : 'Next'}
+                </Button>
+              </VStack>
             </VStack>
-          </VStack>
-        </Box>
+          </Box>
           )
         : (
-        <Card
-          maxW={{ base: '100%', md: '60%' }}
-          align={'center'}
-          borderColor={'brand.200'}
-          borderBottomWidth={{ base: 10, md: 20 }}
-          justify={'center'}
-          justifySelf={'center'}
-          bg="brand.500"
-          p={{ base: 3, md: 6 }}
-          borderRadius="lg"
-          boxShadow="xl"
-        >
-          <CardHeader>
-            <Heading size="md">Quiz Report</Heading>
-          </CardHeader>
+          <Card
+            maxW={{ base: '100%', md: '60%' }}
+            align={'center'}
+            borderColor={'brand.200'}
+            borderBottomWidth={{ base: 10, md: 20 }}
+            justify={'center'}
+            justifySelf={'center'}
+            bg="brand.500"
+            p={{ base: 3, md: 6 }}
+            borderRadius="lg"
+            boxShadow="xl"
+          >
+            <CardHeader>
+              <Heading size="md">Quiz Report</Heading>
+            </CardHeader>
 
-          <CardBody>
-            <Stack divider={<StackDivider borderColor={'black'} />} spacing="4">
-              <Box>
-                <Heading size="xs" textTransform="uppercase">
-                  Summary
-                </Heading>
-                <Text pt="2" fontSize="sm">
-                  Total Questions: {questionIds.length}
-                </Text>
-              </Box>
-              <Box>
-                <Text pt="2" fontSize="sm">
-                  Total Score: {quizState?.score}
-                  {quizState?.score === 0 && (
-                    <span style={{ color: 'gold' }}>
-                      {' '}
-                      🌟 Master of the Unknown!
-                    </span>
-                  )}
-                </Text>
-              </Box>
-              <Box>
-                <Text pt="2" fontSize="sm">
-                  Correct Answers: {quizState.correctAnswers || 0}
-                  {quizState.correctAnswers === questionIds.length && (
-                    <span style={{ color: 'green' }}>
-                      {' '}
-                      🎉 Sage of Infinite Knowledge!
-                    </span>
-                  )}
-                </Text>
-              </Box>
-              <Box>
-                <Text pt="2" fontSize="sm">
-                  Wrong Answers: {quizState.correctAnswers ? questionIds.length - quizState.correctAnswers : questionIds.length}
-                </Text>
-              </Box>
-            </Stack>
-          </CardBody>
-        </Card>
-          )}
+            <CardBody>
+              <Stack divider={<StackDivider borderColor={'black'} />} spacing="4">
+                <Box>
+                  <Heading size="xs" textTransform="uppercase">
+                    Summary
+                  </Heading>
+                  <Text pt="2" fontSize="sm">
+                    Total Questions: {questionIds.length}
+                  </Text>
+                </Box>
+                <Box>
+                  {quiz && quiz.selectedOption === 'kartof'
+                    ? (<>
+                      <Text pt="2" fontSize="sm">
+                        Total Score: {quizState?.score}
+                        {quizState?.score === 0 && (
+                          <span style={{ color: 'gold' }}>
+                            {' '}
+                            🌟 Master of the Unknown!
+                          </span>
+                        )}
+                        {quizState?.score > 0 && quizState?.score <= 10 && (
+                          <span style={{ color: 'blue' }}>
+                            {' '}
+                            🚀 Spontaneous Adventurer!
+                          </span>
+                        )}
+                        {quizState?.score > 10 && quizState?.score <= 20 && (
+                          <span style={{ color: 'green' }}>
+                            {' '}
+                            🌴 Luxury Explorer!
+                          </span>
+                        )}
+                        {quizState?.score > 20 && quizState?.score <= 30 && (
+                          <span style={{ color: 'purple' }}>
+                            {' '}
+                            🌍 Cultural Voyager!
+                          </span>
+                        )}
+                        {quizState?.score > 30 && (
+                          <span style={{ color: 'orange' }}>
+                            {' '}
+                            🌿 Nature Wanderer!
+                          </span>
+                        )}
+                      </Text>
+                    </>
+                      )
+                    : (
+                      <Text pt="2" fontSize="sm">
+                        Total Score: {quizState?.score}
+                        {quizState?.score === 0 && (
+                          <span style={{ color: 'gold' }}>
+                            {' '}
+                            🌟 Master of the Unknown!
+                          </span>
+                        )}
+                      </Text>
+                      )}
+                </Box>
+                {quiz && quiz.selectedOption !== 'kartof' && <Box>
+                  <Text pt="2" fontSize="sm">
+                    Correct Answers: {quizState.correctAnswers || 0}
+                    {quizState.correctAnswers === questionIds.length && (
+                      <span style={{ color: 'green' }}>
+                        {' '}
+                        🎉 Sage of Infinite Knowledge!
+                      </span>
+                    )}
+                  </Text>
+                </Box>}
+                {quiz && quiz.selectedOption !== 'kartof' && <Box>
+                  <Text pt="2" fontSize="sm">
+                    Wrong Answers: {quizState.correctAnswers ? questionIds.length - quizState.correctAnswers : questionIds.length}
+                  </Text>
+                </Box>}
+              </Stack>
+            </CardBody>
+          </Card>
+          )
+      }
     </Grid>
   )
 }
