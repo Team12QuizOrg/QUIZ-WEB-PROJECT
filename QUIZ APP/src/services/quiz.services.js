@@ -187,6 +187,7 @@ export const setScoreBoards = (handle, quizId, quizTitle, score) => {
   const newScore1 = {
     quizTitle,
     score,
+    id: quizId,
     timestamp: formatTimestamp()
   }
   const newScore2 = {

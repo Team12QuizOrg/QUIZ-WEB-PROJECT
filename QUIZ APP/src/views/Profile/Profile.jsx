@@ -75,12 +75,12 @@ const Profile = () => {
                                 <Button size='md' bg={'brand.200'} fontSize={['xl', 'lg', '2xl']} style={{
                                   borderRadius: '10px',
                                   boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)'
-                                }} leftIcon={currentUser.userType === 'teacher' ? (<FaChalkboardTeacher />) : (<PiStudentFill />)}>{currentUser.handle}</Button>
+                                }} leftIcon={currentUser.userType === 'teacher' ? (<FaChalkboardTeacher />) : (<PiStudentFill />)}>{currentUser && currentUser.handle}</Button>
                                 <CardHeader>
 
                                     <Flex spacing='4'>
                                         <Flex flex='1' gap='4' alignItems='center' flexWrap='wrap'>
-                                            <GetAvatar handle={currentUser.handle} size={'xl'} />
+                                            <GetAvatar handle={currentUser && currentUser.handle} size={'xl'} />
 
                                             {currentUser.userType === 'student' && (
                                                 <UsersQuizzes user={currentUser} />

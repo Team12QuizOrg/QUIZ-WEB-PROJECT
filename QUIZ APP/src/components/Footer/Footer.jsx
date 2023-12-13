@@ -1,7 +1,7 @@
 import { Box, Container, Stack, Text, Image, Heading } from '@chakra-ui/react'
 import { useColorMode } from '@chakra-ui/color-mode'
 import { useNavigate } from 'react-router-dom'
-
+import imgUrl4 from '../../../assets/logo2.png'
 export default function Footer () {
   const { colorMode } = useColorMode()
   const navigate = useNavigate()
@@ -27,7 +27,7 @@ export default function Footer () {
                     </Heading>
                     <Image
                         className="logo-image"
-                        src="assets\logo2.png"
+                        src={imgUrl4}
                         alt="logo"
                         w={10}
                         h={10}
