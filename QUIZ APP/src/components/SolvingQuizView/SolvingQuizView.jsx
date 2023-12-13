@@ -347,7 +347,7 @@ const SolvingQuizView = () => {
                   {quiz && quiz.selectedOption === 'kartof'
                     ? (<>
                       <Text pt="2" fontSize="sm">
-                        Total Score: {quizState?.score}
+                        You are:
                         {quizState?.score === 0 && (
                           <span style={{ color: 'gold' }}>
                             {' '}
