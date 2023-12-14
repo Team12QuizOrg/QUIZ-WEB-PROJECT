@@ -95,14 +95,17 @@ export default function JoinOurTeam () {
 
     if (!form.firstName || form.firstName.length < MIN_NAME_LENGTH || form.firstName.length > MAX_NAME_LENGTH) {
       alert('First Name is required and must be between 1 and 30 characters')
+      return
     }
 
     if (!form.lastName || form.lastName.length < MIN_NAME_LENGTH || form.lastName.length > MAX_NAME_LENGTH) {
       alert('Last Name is required and must be between 1 and 30 characters')
+      return
     }
 
     if (!form.phone || form.phone.length !== PHONE_NUMBER_LENGTH) {
       alert('Phone number is required and must be 10 characters')
+      return
     }
 
     if (form.userType === 'teacher' && !codes.includes(form.code)) {
